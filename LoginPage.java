@@ -62,7 +62,7 @@ public class LoginPage implements ActionListener {
         } else if (username.equals("omar") && password.equals("123456")) {
             loginstatus.setText("Login is successful complete the code please :)");
         }else{
-            loginstatus.setText("Login is faild :( ");
+            loginstatus.setText("Login is faild :( Try again");
         }
 
     }
