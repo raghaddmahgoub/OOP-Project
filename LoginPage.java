@@ -5,18 +5,17 @@ import java.util.Scanner;
 public class LoginPage {
     static String username;
     static String password;
-    static Scanner in=new Scanner(System.in);
-    public static void Login(){
+    static Scanner in = new Scanner(System.in);
+
+    public static void Login() {
 
         System.out.println("/t Welcome To our Facebook");
         System.out.println("Enter Username :");
         username = in.next();
         System.out.println("Enter Password :");
-        password=in.next();
+        password = in.next();
 
     }
-
-
 
 
     public static void main(String[] args) {
@@ -24,5 +23,5 @@ public class LoginPage {
         System.out.printf("Hello and welcome!");
 
 
-
     }
+}
