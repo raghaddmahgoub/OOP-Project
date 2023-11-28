@@ -8,7 +8,6 @@ public abstract class Text {
     protected int userId;
     protected String content;
     protected LocalDateTime timestamp;
-    //protected Reply reply;
     protected int cntReacts=0;
    //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Text(int id) {

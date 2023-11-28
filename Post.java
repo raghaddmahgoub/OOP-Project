@@ -7,7 +7,6 @@ public class Post extends Text {
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private LocalDateTime timestamp;
     private List<USER> taggedUsers;
-    // private List<Reply> replies;
     // private Fiendship fiendship ;
     // private List<Comment> comments;
 
@@ -37,12 +36,7 @@ public class Post extends Text {
 //    public List<Comment> getComment(){
 //        return comments;
 //    }
-//    public void AddReply(Reply reply){
-//       reply.addReply();
-//    }
-//    public List<Reply> getReply(){
-//        return replies;
-//    }
+
 
 
 }
