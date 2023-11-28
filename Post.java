@@ -9,7 +9,7 @@ public class Post extends Text {
     private List<USER> taggedUsers;
     // private Fiendship fiendship ;
     // private List<Comment> comments;
-
+// add atribute privacy ya haneen
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Post() {
         super(Id++);
@@ -17,26 +17,31 @@ public class Post extends Text {
     }
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
 
+    @Override
+    public int getCntReacts() {
+        return cntReacts;
+    }
+
     public void addReact(Post post) {
         post.cntReacts++;
     }
 
-    public int getReact() {
-        return cntReacts;
-    }
 //    public void  addTaggedUser(USER taggedUsers){
+//        //friends ? -> privacy (addPost in user -> go back to the friendship to check the status )
 //        taggedUsers.addPost();
 //    }
 //    public List<USER> getTaggedUsers() {
 //        return taggedUsers;
 //    }
 //    public void AddComment(Comments comment){
+//
 //       comment.addComment();
 //    }
 //    public List<Comment> getComment(){
 //        return comments;
 //    }
-
+//    public String SetPrivacy (){} // --> status of friends privacy of post
+//    //addpost
 
 
 }

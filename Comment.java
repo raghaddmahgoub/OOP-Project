@@ -39,7 +39,7 @@ public class Comment extends Text{
         return null;
     }
     @Override
-    public void addReact(Post post, int postId) {
+    public void addReact(Post post) {
 
     }
 

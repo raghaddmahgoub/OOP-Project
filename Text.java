@@ -1,8 +1,6 @@
 import java.time.LocalDateTime;
 
 public abstract class Text {
-
-
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     protected int Id;
     protected int userId;
@@ -12,7 +10,6 @@ public abstract class Text {
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Text(int id) {
         this.Id = id;
-
 
     }
 
@@ -29,9 +26,7 @@ public abstract class Text {
         return timestamp;
     }
 
-    public int getCntReacts() {
-        return cntReacts;
-    }
+
     public String getContent() {
         return content;
     }
@@ -39,6 +34,6 @@ public abstract class Text {
     public void setContent(String content) {
         this.content = content;
     }
+    public abstract int getCntReacts();
     public abstract void   addReact(Post post);
-    public  abstract int getReact();
 }
