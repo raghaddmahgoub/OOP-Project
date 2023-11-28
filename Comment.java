@@ -8,8 +8,8 @@ public class Comment extends Text{
     private USER authorID;
 
 
-    public Comment(int id, int userId, String content, LocalDateTime timestamp, int cntReacts, List<Reply> userReplies) {
-        super(id, userId, content, timestamp, cntReacts);
+    public Comment(int id, int userId, List<Reply> userReplies) {
+        super(id, userId, cntReacts);
         this.userReplies = userReplies;
     }
 
@@ -39,7 +39,7 @@ public class Comment extends Text{
         return null;
     }
     @Override
-    public void addReact(Post post, int postId) {
+    public void addReact(Post post) {
 
     }
 
