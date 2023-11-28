@@ -3,9 +3,23 @@ import java.time.LocalDateTime;
 public class Post extends Text {
 
     private USER taggedUser;
-    // private Fiendship fiendship ;
+    // private Friendship friendship ;
     // private List<Comment> comments;
 private LocalDateTime timestamp;
+
+    public Post(int id, int userId, String content, LocalDateTime timestamp, int cntReacts) {
+        super(id, userId, content, timestamp, cntReacts);
+    }
+
+    @Override
+    public void addReact(Post post, int postId) {
+
+    }
+
+    @Override
+    public int getReact() {
+        return 0;
+    }
 
 //    public Post (int Id, String username, String content){
 //        super(int id, int userId, String content, LocalDateTime timestamp, int cntReacts);
