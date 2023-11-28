@@ -1,27 +1,48 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Post extends Text {
-
-    private USER taggedUser;
+    private static int Id;
+    ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
+    private LocalDateTime timestamp;
+    private List<USER> taggedUsers;
+    // private List<Reply> replies;
     // private Fiendship fiendship ;
     // private List<Comment> comments;
-private LocalDateTime timestamp;
 
-//    public Post (int Id, String username, String content){
-//        super(int id, int userId, String content, LocalDateTime timestamp, int cntReacts);
-//       // this.comments = new ArrayList<>();
+    //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
+    public Post() {
+        super(Id++);
+        this.taggedUsers = new ArrayList<>();
+    }
+    ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
+
+    public void addReact(Post post) {
+        post.cntReacts++;
+    }
+
+    public int getReact() {
+        return cntReacts;
+    }
+//    public void  addTaggedUser(USER taggedUsers){
+//        taggedUsers.addPost();
 //    }
-//
-//    public void   addReact( Post post , int postId){
-//    post.cntReacts++;
+//    public List<USER> getTaggedUsers() {
+//        return taggedUsers;
 //    }
-//    public  int getReact(){
-//    return cntReacts;
+//    public void AddComment(Comments comment){
+//       comment.addComment();
 //    }
-//    public void  addTaggedUser(){}
-//    public String AddComment(){}
-//    public getComments(){}
-//    public  getPrivacyLevel()
+//    public List<Comment> getComment(){
+//        return comments;
+//    }
+//    public void AddReply(Reply reply){
+//       reply.addReply();
+//    }
+//    public List<Reply> getReply(){
+//        return replies;
+//    }
 
 
 }
