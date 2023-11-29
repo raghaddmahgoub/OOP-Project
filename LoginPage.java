@@ -16,6 +16,22 @@ public class LoginPage {
         password = in.next();
 
     }
+    private void register (User user)
+    {
+        System.out.println("Enter your name: ");
+        Name = scanner.nextLine();
+        System.out.println("Enter your email: ");
+        Email = scanner.nextLine();
+        System.out.println("Enter your password: ");
+        Password = scanner.nextLine();
+        System.out.println("Enter your gender: ");
+        Gender = scanner.nextLine();
+        System.out.println("Enter your phone number: ");
+        Phonenumber = scanner.nextInt();
+        System.out.println("Enter your birthdate: ");
+        Birthdate = scanner.nextLine();
+        UserID+=1;
+    }
 
 
     public static void main(String[] args) {
