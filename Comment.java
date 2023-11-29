@@ -5,7 +5,7 @@ public class Comment extends Text{
 
     private List<Reply> userReplies;
     private int counterLikes;
-    private USER authorID;
+    private User authorID;
 
 
     public Comment(int id, int userId, List<Reply> userReplies) {

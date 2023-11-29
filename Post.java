@@ -6,7 +6,7 @@ public class Post extends Text {
     private static int Id;
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private LocalDateTime timestamp;
-    private List<USER> taggedUsers;
+    private List<User> taggedUsers;
     // private Fiendship fiendship ;
     // private List<Comment> comments;
 
