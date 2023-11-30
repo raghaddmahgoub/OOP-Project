@@ -1,9 +1,9 @@
 import java.util.Scanner;
-import java.util.Vector;
-
+import java.util.ArrayList;
 
 public class User
 {
+
     static int UserID;
     private String Name;
     private String Email;
@@ -12,10 +12,10 @@ public class User
     private String Birthdate;
     private int PhoneNumber;
     Scanner scanner = new Scanner(System.in);
-    Vector<String> Notifications = new Vector<>();
-    Vector<String> Friends = new Vector<>();
-    Vector<String> Posts = new Vector<>();
-    Vector<String> Conversations = new Vector<>();
+    ArrayList <String> Posts = new ArrayList <String>();
+    ArrayList <String> Notifications = new ArrayList <String>();
+    ArrayList <String> Friends = new ArrayList <String>();
+    ArrayList <String> Conversations = new ArrayList <String>();
 
     public static int getUserID() {
         return UserID;
@@ -65,6 +65,13 @@ public class User
 
     public void setPhoneNumber(int phoneNumber) {
         PhoneNumber = phoneNumber;
+    }
+
+    void updateProfile (String Name, String Birthdate, int PhoneNumber)
+    {
+        this.Name = Name;
+        this.Birthdate = Birthdate;
+        this.PhoneNumber = PhoneNumber;
     }
 
 
