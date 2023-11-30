@@ -74,6 +74,11 @@ public class User
         this.PhoneNumber = PhoneNumber;
     }
 
+    void changePassword (String Password)
+    {
+        this.Password = Password;
+    }
+
 
 }
 
