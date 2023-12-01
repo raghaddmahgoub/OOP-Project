@@ -69,10 +69,25 @@ public class User
 
     void updateProfile (String Name, String Birthdate, int PhoneNumber)
     {
-          this.Name = Name;
-          this.Birthdate = Birthdate;
-          this.PhoneNumber = PhoneNumber;
+        this.Name = Name;
+        this.Birthdate = Birthdate;
+        this.PhoneNumber = PhoneNumber;
     }
+
+    void changePassword (String Password)
+    {
+        this.Password = Password;
+    }
+    void viewNotifications(ArrayList <String> Notifications)
+    {
+        System.out.println ("Notifications");
+        for (String Notification : Notifications)
+        {
+            System.out.println(Notification);
+        }
+    }
+
+
 
 
 }
