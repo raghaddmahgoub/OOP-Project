@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import javax.sound.midi.Soundbank;
 import java.util.Scanner;
 import java.util.Vector;
@@ -18,9 +19,11 @@ public class User
     Vector<String> Posts = new Vector<>();
     Vector<String> Conversations = new Vector<>();
 
+
     public static int getUserID() {
         return UserID;
     }
+
     public static void setUserID(int userID) {
         UserID = userID;
     }
@@ -66,9 +69,11 @@ public class User
     public int getPhoneNumber() {
         return PhoneNumber;
     }
+
     public void setPhoneNumber(int phoneNumber) {
         PhoneNumber = phoneNumber;
     }
+
 
 
 
@@ -77,12 +82,29 @@ public class User
         for (User Desired_User : Main.vec) {
             if (Desired_User.User_Name.equals(UserName)) {
                 // To Display Options of a user
-                Searched_User_Menu (UserName);
-            }
-            else return;
+                Searched_User_Menu(UserName);
+            } else return;
         }
     }
+    void updateProfile (String Name, String Birthdate, int PhoneNumber)
+    {
+        this.Name = Name;
+        this.Birthdate = Birthdate;
+        this.PhoneNumber = PhoneNumber;
+    }
 
+    void changePassword (String Password)
+    {
+        this.Password = Password;
+    }
+    void viewNotifications(ArrayList <String> Notifications)
+    {
+        System.out.println ("Notifications");
+        for (String Notification : Notifications)
+        {
+            System.out.println(Notification);
+        }
+    }
 
 
     public void Searched_User_Menu (String UserName){
