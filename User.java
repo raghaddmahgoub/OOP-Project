@@ -78,6 +78,16 @@ public class User
     {
         this.Password = Password;
     }
+    void viewNotifications(ArrayList <String> Notifications)
+    {
+        System.out.println ("Notifications");
+        for (String Notification : Notifications)
+        {
+            System.out.println(Notification);
+        }
+    }
+
+
 
 
 }
