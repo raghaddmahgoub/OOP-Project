@@ -1,11 +1,14 @@
 import java.util.ArrayList;
 import javax.sound.midi.Soundbank;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
+import java.time.LocalDateTime;
+
 
 public class User
 {
-    static int UserID;
+    private static int UserID;
     private String User_Name;
     private String Name;
     private String Email;
@@ -14,13 +17,15 @@ public class User
     private String Birthdate;
     private int PhoneNumber;
     Scanner scanner = new Scanner(System.in);
-    Vector<String> Notifications = new Vector<>();
     Vector<String> Friends = new Vector<>();
-    Vector<String> Posts = new Vector<>();
     Vector<String> Conversations = new Vector<>();
+    private String userPrivacy;
+    private ArrayList<Notification> Notifications = new ArrayList<Notification>();
+    private ArrayList<Post> Posts=new ArrayList<Post>();
 
 
-    public static int getUserID() {
+
+    public int getUserID() {
         return UserID;
     }
 
@@ -97,14 +102,7 @@ public class User
     {
         this.Password = Password;
     }
-    void viewNotifications(ArrayList <String> Notifications)
-    {
-        System.out.println ("Notifications");
-        for (String Notification : Notifications)
-        {
-            System.out.println(Notification);
-        }
-    }
+
 
 
     public void Searched_User_Menu (String UserName){
@@ -201,6 +199,30 @@ public class User
     }
     public void Get_Posts_By_PrivacyLevel(){
     }
+    public String getUserPrivacy() {
+        return userPrivacy;
+    }
+    void viewNotifications()
+    {
+        System.out.println ("Notifications");
+        for (Notification Notifi : Notifications)
+        {
+            System.out.println(Notifi);
+        }
+    }
+    public void addNotification(String content){
+        Notification newNotification= new Notification();
+        newNotification.setContent(content);
+        Notifications.add(newNotification);
+    }
+    public void setUserPrivacy(String userPrivacy) {
+        this.userPrivacy = userPrivacy;
+    }
+    public void AddPost(String content) {
+       Post post= new Post(content);
+        Posts.add(post);
+    }
+
 }
 
 

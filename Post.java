@@ -1,42 +1,60 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Post extends Text {
-    private static int Id;
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
-    private LocalDateTime timestamp;
-    private List<User> taggedUsers;
-    // private Fiendship fiendship ;
-    // private List<Comment> comments;
+    private static int Id;
+    private ArrayList<User> taggedUsers = new ArrayList<User>();
+    private FriendShip fiendship;
+    private final ArrayList<Comment> comments = new ArrayList<Comment>();
 
+    private String privacy;
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Post() {
         super(Id++);
-        this.taggedUsers = new ArrayList<>();
+    }
+
+    public Post(String content) {
+        super(content);
     }
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
-
-    public void addReact(Post post) {
-        post.cntReacts++;
+    public String getPrivacy() {
+        return privacy;
     }
 
-    public int getReact() {
+    public void setPrivacy(User poster) {
+        this.privacy = poster.getUserPrivacy();
+    }
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
+    @Override
+    public int getReacts() {
         return cntReacts;
     }
-//    public void  addTaggedUser(USER taggedUsers){
-//        taggedUsers.addPost();
-//    }
-//    public List<USER> getTaggedUsers() {
-//        return taggedUsers;
-//    }
-//    public void AddComment(Comments comment){
-//       comment.addComment();
-//    }
-//    public List<Comment> getComment(){
-//        return comments;
-//    }
 
+    public void addReact() {
+        cntReacts++;
+    }
+
+    public void addTaggedUser(User taggedUsers) {
+//        //friends ? -> privacy (addPost in user -> go back to the friendship to check the status )
+        this.taggedUsers.add(taggedUsers);
+    }
+
+    public ArrayList<User> getTaggedUsers() {
+        return taggedUsers;
+    }
+
+    public void addComment(User commenter , String content){
+//       Comment comment= new Comment(commenter.getUserID(),);
+//       this.comments.add(comment);
+    }
+
+    public ArrayList<Comment> getComment() {
+        return comments;
+    }
 
 
 }

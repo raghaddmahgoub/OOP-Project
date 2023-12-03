@@ -12,8 +12,9 @@ public abstract class Text {
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Text(int id) {
         this.Id = id;
-
-
+    }
+    public Text(String content){
+        this.content=content;
     }
 
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
@@ -25,20 +26,23 @@ public abstract class Text {
         return userId;
     }
 
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
     public LocalDateTime getTimestamp() {
         return timestamp;
-    }
-
-    public int getCntReacts() {
-        return cntReacts;
-    }
-    public String getContent() {
-        return content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
-    public abstract void   addReact(Post post);
-    public  abstract int getReact();
+    public void displayContent() {
+        System.out.println(content);
+    }
+
+
+
+    public abstract void addReact();
+
+    public abstract int getReacts();
 }

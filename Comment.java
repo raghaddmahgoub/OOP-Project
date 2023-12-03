@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Comment extends Text{
@@ -8,8 +7,8 @@ public class Comment extends Text{
     private User authorID;
 
 
-    public Comment(int id, int userId, List<Reply> userReplies) {
-        super(id, userId, cntReacts);
+    public Comment(int userId, List<Reply> userReplies) {
+        super(id++, userId, cntReacts);
         this.userReplies = userReplies;
     }
 
@@ -39,12 +38,13 @@ public class Comment extends Text{
         return null;
     }
     @Override
-    public void addReact(Post post) {
-
+    public void addReact() {
+        cntReacts++;
     }
 
     @Override
-    public int getReact() {
-        return 0;
+    public int getReacts() {
+        return cntReacts;
     }
+
 }
