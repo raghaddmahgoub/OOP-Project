@@ -17,8 +17,8 @@ public class User
     private String Birthdate;
     private int PhoneNumber;
     Scanner scanner = new Scanner(System.in);
-    Vector<String> Friends = new Vector<>();
-    Vector<String> Conversations = new Vector<>();
+    ArrayList <String> Friends = new ArrayList <String>();
+    ArrayList <String> Conversations = new ArrayList <String>();
     private String userPrivacy;
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
     private ArrayList<Post> Posts=new ArrayList<Post>();
