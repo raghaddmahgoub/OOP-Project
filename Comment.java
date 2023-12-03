@@ -1,42 +1,56 @@
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Comment extends Text{
-
+    ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
     private int counterLikes;
     private User authorID;
+    private static int commentId;
 
-
-    public Comment(int userId, List<Reply> userReplies) {
-        super(id++, userId, cntReacts);
-        this.userReplies = userReplies;
+    //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
+    public Comment(User authorID, String content) {
+        super(commentId++);
+        this.counterLikes = 0;
+        this.userReplies = new ArrayList<>();
+        this.authorID = authorID;
+        this.content =content;
     }
+
+////////////////////////////////////////////METHODS//////////////////////////////////////////
 
     public void addComment(){
-
+        Comment newComment = new Comment(authorID,content);
     }
     public void addReply(Reply reply){
-    userReplies.add(reply);
+        userReplies.add(reply);
     }
     public void addReaction(){
-    counterLikes++;
+        counterLikes++;
     }
     public List<Reply> getUserReplies(){
-    return userReplies;
+        return userReplies;
     }
-    public void editContent(String newContent){
+    public void editContent(User authorID,String newContent){
+        if (authorID) {
+            setContent(newContent);
+            System.out.println("Comment edited");
+        }
+        else{
+            System.out.println("cant edit");
+        }
+    }
+    public void deleteContent(User authorID){
+        if (authorID) {
+            setContent(null);
+            System.out.println("Comment deleted");
+        }
+        else{
+            System.out.println("cant delete");
+        }
+    }
 
-    }
-    public void deleteContent(){
-
-    }
-    public void getReaction(){
-
-    }
-    public String getContent(){
-
-        return null;
-    }
     @Override
     public void addReact() {
         cntReacts++;
@@ -46,5 +60,4 @@ public class Comment extends Text{
     public int getReacts() {
         return cntReacts;
     }
-
 }
