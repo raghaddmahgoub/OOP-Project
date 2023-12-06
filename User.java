@@ -97,7 +97,17 @@ public class User
     }
     public void AddPost(String content) {
         Post post= new Post(content);
-        Posts.add(post);
+        System.out.println("do you want to tag a friend ? \n yes or no \n");
+        String answer =scanner.next();
+        if (answer== "yes") {
+            System.out.println("which friend?\n");
+            answer=scanner.next();
+            User friend =new User();
+           // post.addTaggedUser();
+            Posts.add(post);
+        }
+        else
+            Posts.add(post);
     }
 
     public void likeComments(Comment comment){
