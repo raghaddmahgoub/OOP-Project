@@ -104,7 +104,7 @@ public class User
         comment.addReaction();
     }
     public void likeReply(Reply reply){
-        reply.addReaction();
+        reply.addReact();
     }
     public void viewNotifications()
     {

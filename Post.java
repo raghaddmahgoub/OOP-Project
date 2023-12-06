@@ -39,9 +39,12 @@ public class Post extends Text {
         cntReacts++;
     }
 
-    public void addTaggedUser(User taggedUsers) {
-//        //friends ? -> privacy (addPost in user -> go back to the friendship to check the status )
-        this.taggedUsers.add(taggedUsers);
+    public void addTaggedUser(User taggedUser) {
+        //are they friends ? -> privacy (go back to the friendship to check the status )
+        if (taggedUser.Check_Friendship(taggedUser.getName()))
+         this.taggedUsers.add(taggedUser);
+        else
+            System.out.println("you're not friends with "+taggedUser.getName());
     }
 
     public ArrayList<User> getTaggedUsers() {
@@ -49,8 +52,8 @@ public class Post extends Text {
     }
 
     public void addComment(User commenter , String content){
-//       Comment comment= new Comment(commenter.getUserID(),);
-//       this.comments.add(comment);
+       Comment comment= new Comment(commenter.getUserID(),content);
+       this.comments.add(comment);
     }
 
     public ArrayList<Comment> getComment() {
