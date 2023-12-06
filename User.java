@@ -99,14 +99,14 @@ public class User
         Post post= new Post(content);
         System.out.println("do you want to tag a friend ? \n yes or no \n");
         String answer =scanner.next();
-        if (answer== "yes") {
+
+            while(answer== "yes"){
             System.out.println("which friend?\n");
             answer=scanner.next();
             User friend =new User();
-           // post.addTaggedUser();
-            Posts.add(post);
+            friend=GetUserData(answer);
+            post.addTaggedUser(friend);
         }
-        else
             Posts.add(post);
     }
 
@@ -266,9 +266,4 @@ public class User
     }
 
 }
-
-
-
-
-
 

@@ -46,7 +46,6 @@ public class Post extends Text {
         else
             System.out.println("you're not friends with "+taggedUser.getName());
     }
-
     public ArrayList<User> getTaggedUsers() {
         return taggedUsers;
     }
