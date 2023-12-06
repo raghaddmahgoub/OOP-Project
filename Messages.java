@@ -8,7 +8,11 @@ public class Messages {
     private int Recipient_ID;
     private String Status;
     private Date Message_Time;
+
+
+
     private String Content;
+    public Messages (){}
     public Messages(ArrayList<String> messageReplies, int reactionCounter, int sender_ID, int recipient_ID, String status, Date message_Time, String content) {
         Message_ID++;
         MessageReplies = messageReplies;
@@ -46,5 +50,8 @@ public class Messages {
     }
     public void setMessage_Time(Date message_Time) {
         Message_Time = message_Time;
+    }
+    public void setContent(String content) {
+        Content = content;
     }
 }

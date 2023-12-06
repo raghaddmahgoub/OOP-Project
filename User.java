@@ -80,6 +80,45 @@ public class User
         PhoneNumber = phoneNumber;
     }
 
+    public void updateProfile (String Name, String Birthdate, int PhoneNumber)
+    {
+        this.Name = Name;
+        this.Birthdate = Birthdate;
+        this.PhoneNumber = PhoneNumber;
+    }
+
+    public void changePassword (String Password)
+    {
+        this.Password = Password;
+    }
+    public void sendMessage (String content){
+        Messages newMessage = new Messages ();
+        newMessage.setContent(content);
+    }
+    public void AddPost(String content) {
+        Post post= new Post(content);
+        Posts.add(post);
+    }
+
+    public void likeComments(Comment comment){
+        comment.addReaction();
+    }
+    public void likeReply(Reply reply){
+        reply.addReaction();
+    }
+    public void viewNotifications()
+    {
+        System.out.println ("Notifications");
+        for (Notification Notifi : Notifications)
+        {
+            System.out.println(Notifi);
+        }
+    }
+    public void addNotification(String content){
+        Notification newNotification= new Notification();
+        newNotification.setContent(content);
+        Notifications.add(newNotification);
+    }
     public void SearchForUser (String UserName) {
 
         for (User Desired_User : Main.vec) {
@@ -89,17 +128,7 @@ public class User
             } else return;
         }
     }
-    void updateProfile (String Name, String Birthdate, int PhoneNumber)
-    {
-        this.Name = Name;
-        this.Birthdate = Birthdate;
-        this.PhoneNumber = PhoneNumber;
-    }
 
-    void changePassword (String Password)
-    {
-        this.Password = Password;
-    }
     public static User GetUserData(String username) {
         for (User Targeted : Main.vec) {
             if (Targeted.User_Name.equals(username)) {
@@ -221,25 +250,9 @@ public class User
         return userPrivacy;
     }
 
-    void viewNotifications()
-    {
-        System.out.println ("Notifications");
-        for (Notification Notifi : Notifications)
-        {
-            System.out.println(Notifi);
-        }
-    }
-    public void addNotification(String content){
-        Notification newNotification= new Notification();
-        newNotification.setContent(content);
-        Notifications.add(newNotification);
-    }
+
     public void setUserPrivacy(String userPrivacy) {
         this.userPrivacy = userPrivacy;
-    }
-    public void AddPost(String content) {
-       Post post= new Post(content);
-        Posts.add(post);
     }
 
 }
