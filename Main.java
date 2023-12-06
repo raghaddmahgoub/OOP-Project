@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -5,7 +6,7 @@ import java.util.Vector;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
 
-    public static Vector<User> vec = new Vector<User>();
+    public static ArrayList<User> vec = new ArrayList<>();
 
     public static void main(String[] args) {
         UserInterface.ProgramStart();

@@ -160,7 +160,7 @@ public class User
         char choice = scanner.next().charAt(0);
         switch (choice){
             case 1:
-                AddFriend(UserName);
+                sendFriendRequest(GetUserData(UserName));
                 break;
             case 2:
                 See_Mutual_Posts(UserName);

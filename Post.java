@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+
 public class Post extends Text {
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private static int Id;
