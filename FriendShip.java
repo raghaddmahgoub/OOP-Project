@@ -63,16 +63,28 @@ class FriendShip {
 
    public void Set_Friendship_status(Pair Friendship_ID) {
         //Friendship_ID will be pair after that
-        if (FriendShipID == 0)
-            Friendship_status= "Declined";
-        else if (FriendShipID == 2)
-            Friendship_status= "Accepted";
-        else  Friendship_status= "Pending";
+        if (Friendship_Status.getKey().equals(0) && Friendship_Status.getValue().equals(0))
+            Friendship_status = "Declined";
+
+        else if (Friendship_Status.getKey().equals(1) && Friendship_Status.getValue().equals(1))
+            Friendship_status = "Accepted";
+
+  }
+    public void acceptFriendRequest() {
+        //change pair
+        status_user1=1; status_user2=1;
+        Friendship_Status = new Pair<>(status_user1, status_user1);
+        Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
+        System.out.println("You accepted friend request from " + User2.getUserName() +"Now you are Friends" );
+        User1.AddFriend(User2);
+        User2.AddFriend(User1);
     }
-    public void Get_Friend_Role(int friend_role){
-        if (friend_role == 0)
-            Friendship_Role = "Restricted";
-        else  Friendship_Role = "Regular";
+
+    public void declineFriendRequest() {
+        status_user1 = 0; status_user2 = 0;
+        Friendship_Status = new Pair<>(status_user1, status_user1);
+        Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
+        System.out.println("You declined friend request from " + User2.getUserName());
     }
 
 }
