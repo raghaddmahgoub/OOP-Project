@@ -32,6 +32,7 @@ public class Comment extends Text{
     public List<Reply> getUserReplies(){
         return userReplies;
     }
+    /*
     public void editContent(User authorID,String newContent){
         if (authorID) {
             setContent(newContent);
@@ -41,6 +42,8 @@ public class Comment extends Text{
             System.out.println("cant edit");
         }
     }
+
+
     public void deleteContent(User authorID){
         if (authorID) {
             setContent(null);
@@ -50,7 +53,7 @@ public class Comment extends Text{
             System.out.println("cant delete");
         }
     }
-
+*/
     @Override
     public void addReact() {
         cntReacts++;

@@ -7,7 +7,7 @@ public class UserInterface {
 
     public static void ProgramStart(){
         int choice;
-        System.out.println("/t Welcome To our Facebook");
+        System.out.println("\t Welcome To our Facebook");
         System.out.println("1.Login");
         System.out.println("2.Signup");
         System.out.print("Enter a choice :");
@@ -76,7 +76,7 @@ public class UserInterface {
     }
     public static boolean CheckUserIsUnique (String Username){
         for (User user:Main.vec){
-            if(user.get_UserName().equals(Username)){
+            if(user.getUserName().equals(Username)){
                 return false;
             }
         }
@@ -84,7 +84,7 @@ public class UserInterface {
     }
     public static boolean LoginStatus(String Username,String Password){
         for (User user:Main.vec){
-            if(user.get_UserName().equals(Username) && user.getPassword().equals(Password)){
+            if(user.getUserName().equals(Username) && user.getPassword().equals(Password)){
                 return true;
             }
         }
