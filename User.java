@@ -20,8 +20,7 @@ public class User
     ArrayList <String> Friends = new ArrayList <String>();
     ArrayList <String> Conversations = new ArrayList <String>();
     ArrayList <User> friendRequests = new ArrayList <User>();
-    ArrayList<FriendShip> Relations=new ArrayList<>();
-    //
+    ArrayList<FriendShip> Relations = new ArrayList<>();
     private String userPrivacy;
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
     private ArrayList<Post> Posts=new ArrayList<Post>();
