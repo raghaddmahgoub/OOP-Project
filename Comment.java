@@ -7,13 +7,13 @@ public class Comment extends Text{
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
     private int counterLikes;
-    private int authorID;
+    private User authorID;
     private static int commentId;
 
 
 
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
-    public Comment(int authorID, String content) {
+    public Comment(User authorID, String content) {
         super(commentId++);
         this.counterLikes = 0;
         this.userReplies = new ArrayList<>();
@@ -21,15 +21,14 @@ public class Comment extends Text{
         this.content =content;
     }
 
-////////////////////////////////////////////METHODS//////////////////////////////////////////
-public User getAuthorID() {
-    return authorID;
-}
+    ////////////////////////////////////////////METHODS//////////////////////////////////////////
+    public User getAuthorID() {
+        return authorID;
+    }
     public void addComment(){
         Comment newComment = new Comment(authorID,content);
     }
-    public void addReply(String content){
-        Reply reply= new Reply(content);
+    public void addReply(Reply reply){
         userReplies.add(reply);
     }
 
@@ -39,7 +38,6 @@ public User getAuthorID() {
     public List<Reply> getUserReplies(){
         return userReplies;
     }
-    /*
     public void editContent(User authorID,String newContent){
         if (authorID.equals(getAuthorID())) {
             setContent(newContent);
@@ -49,8 +47,6 @@ public User getAuthorID() {
             System.out.println("cant edit");
         }
     }
-
-
     public void deleteContent(User authorID){
         if (authorID.equals(getAuthorID())) {
             setContent(null);
@@ -60,7 +56,7 @@ public User getAuthorID() {
             System.out.println("cant delete");
         }
     }
-*/
+
     @Override
     public void addReact() {
         cntReacts++;

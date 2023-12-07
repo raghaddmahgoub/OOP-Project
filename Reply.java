@@ -1,25 +1,30 @@
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Reply extends Text{
-    private static int replyID;
+public class Reply extends Comment{
+    private int replyID;
+    private int replyreaction;
 
-    private int reaction;
-
-    public Reply( String content) {
-        super(content);
-
+    public Reply(User authorID, String content) {
+        super(authorID, content);
         replyID++;
     }
+    public int getReplyID() {
+        return replyID;
+    }
 
-    @Override
-    public void addReact() {
-        reaction++;
+    public void setReplyID(int replyID) {
+        this.replyID = replyID;
     }
 
     @Override
-    public int getReacts() {
-        return reaction;
+    public void addReaction() {
+        replyreaction++;
+    }
+    public int getReplyreaction() {
+        return replyreaction;
+    }
+    public String toString(){
+        return getReplyID() + "replied to " +getAuthorID().getUserName() + "at" + getTimestamp() + "likes: " + getReplyreaction();
     }
 }
-
