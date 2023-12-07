@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
+
 public class Messages {
     private static int Message_ID;
     private ArrayList<String> MessageReplies = new ArrayList<>();
@@ -8,10 +10,8 @@ public class Messages {
     private int Recipient_ID;
     private String Status;
     private Date Message_Time;
-
-
-
     private String Content;
+    Scanner in=new Scanner(System.in);
     public Messages (){}
     public Messages(ArrayList<String> messageReplies, int reactionCounter, int sender_ID, int recipient_ID, String status, Date message_Time, String content) {
         Message_ID++;
@@ -23,14 +23,16 @@ public class Messages {
         Message_Time = message_Time;
         Content = content;
     }
-    private String EditMessage(Messages mes, String NewContent) {
+    private String EditMessage(Messages mes) {
+        String NewContent=in.next();
         mes.Content = NewContent;
         return NewContent;
     }
     private void DeleteMessage(Messages mes) {
         mes.Content = null;
     }
-    private void AddReply(Messages mes, String Reply) {
+    private void AddReply(Messages mes) {
+        String Reply=in.next();
         mes.MessageReplies.add(Reply);
     }
     private void Status(Messages mes, String value) {
