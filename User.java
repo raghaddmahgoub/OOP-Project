@@ -19,10 +19,11 @@ public class User
     Scanner scanner = new Scanner(System.in);
     ArrayList <String> Friends = new ArrayList <String>();
     ArrayList <String> Conversations = new ArrayList <String>();
+    ArrayList <User> friendRequests = new ArrayList <User>();
+    ArrayList<FriendShip> Relations = new ArrayList<>();
     private String userPrivacy;
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
     private ArrayList<Post> Posts=new ArrayList<Post>();
-
 
 
     public int getUserID() {
@@ -33,7 +34,7 @@ public class User
         UserID = userID;
     }
 
-    public String get_UserName() {return User_Name;}
+    public String getUserName() {return User_Name;}
     public void setUser_Name(String user_name) {User_Name = user_name;}
 
     public String getName() {
@@ -79,9 +80,55 @@ public class User
         PhoneNumber = phoneNumber;
     }
 
+    public void updateProfile (String Name, String Birthdate, int PhoneNumber)
+    {
+        this.Name = Name;
+        this.Birthdate = Birthdate;
+        this.PhoneNumber = PhoneNumber;
+    }
 
+    public void changePassword (String Password)
+    {
+        this.Password = Password;
+    }
+    public void sendMessage (String content){
+        Messages newMessage = new Messages ();
+        newMessage.setContent(content);
+    }
+    public void AddPost(String content) {
+        Post post= new Post(content);
+        System.out.println("do you want to tag a friend ? \n yes or no \n");
+        String answer =scanner.next();
 
+            while(answer== "yes"){
+            System.out.println("which friend?\n");
+            answer=scanner.next();
+            User friend =new User();
+            friend=GetUserData(answer);
+            post.addTaggedUser(friend);
+        }
+            Posts.add(post);
+    }
 
+    public void likeComments(Comment comment){
+        comment.addReaction();
+    }
+    public void likeReply(Reply reply){
+        reply.addReact();
+    }
+    public void viewNotifications()
+    {
+        System.out.println ("Notifications");
+        for (Notification Notifi : Notifications)
+        {
+            System.out.println(Notifi);
+        }
+    }
+    public void addNotification(String content){
+        Notification newNotification= new Notification();
+        newNotification.setContent(content);
+        Notifications.add(newNotification);
+    }
     public void SearchForUser (String UserName) {
 
         for (User Desired_User : Main.vec) {
@@ -91,19 +138,18 @@ public class User
             } else return;
         }
     }
-    void updateProfile (String Name, String Birthdate, int PhoneNumber)
-    {
-        this.Name = Name;
-        this.Birthdate = Birthdate;
-        this.PhoneNumber = PhoneNumber;
+
+    public static User GetUserData(String username) {
+        for (User Targeted : Main.vec) {
+            if (Targeted.User_Name.equals(username)) {
+                return Targeted;
+            }
+        }
+        return null;
     }
-
-    void changePassword (String Password)
-    {
-        this.Password = Password;
-    }
-
-
+    //string  username
+    //friendship --> id
+    //user name -----> user object
 
     public void Searched_User_Menu (String UserName){
         System.out.println("1. View Profile");
@@ -160,7 +206,7 @@ public class User
         char choice = scanner.next().charAt(0);
         switch (choice){
             case 1:
-                AddFriend(UserName);
+                sendFriendRequest(GetUserData(UserName));
                 break;
             case 2:
                 See_Mutual_Posts(UserName);
@@ -184,11 +230,22 @@ public class User
         System.out.println("The User\'s Birth Date is: " + Birthdate);
         System.out.println("The User\'s Phone Number is: " + PhoneNumber);
     }
-    public void AddFriend(String UserName) {
-        Friends.add(UserName);
+    /////////
+    public List<User> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void sendFriendRequest(User friend) {
+        friend.getFriendRequests().add(this);
+        System.out.println("Friend request sent to " + friend.getUserName());
+        //new friendship
+    }
+
+    public void AddFriend(User New_Friend_User) {
+        Friends.add(New_Friend_User.getUserName());
     }
     public void RemoveFriend(String UserName){
-        Friends.removeElement(UserName);
+
     }
 
     public void Add_Role_Of_a_Friend(){
@@ -202,31 +259,11 @@ public class User
     public String getUserPrivacy() {
         return userPrivacy;
     }
-    void viewNotifications()
-    {
-        System.out.println ("Notifications");
-        for (Notification Notifi : Notifications)
-        {
-            System.out.println(Notifi);
-        }
-    }
-    public void addNotification(String content){
-        Notification newNotification= new Notification();
-        newNotification.setContent(content);
-        Notifications.add(newNotification);
-    }
+
+
     public void setUserPrivacy(String userPrivacy) {
         this.userPrivacy = userPrivacy;
     }
-    public void AddPost(String content) {
-       Post post= new Post(content);
-        Posts.add(post);
-    }
 
 }
-
-
-
-
-
 

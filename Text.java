@@ -16,6 +16,7 @@ public abstract class Text {
     public Text(String content){
         this.content=content;
     }
+    public Text(){}
 
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
     public int getId() {
