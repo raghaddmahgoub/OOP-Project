@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Comment extends Text{
@@ -8,6 +9,8 @@ public class Comment extends Text{
     private int counterLikes;
     private User authorID;
     private static int commentId;
+
+
 
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
     public Comment(User authorID, String content) {
@@ -19,13 +22,16 @@ public class Comment extends Text{
     }
 
 ////////////////////////////////////////////METHODS//////////////////////////////////////////
-
+public User getAuthorID() {
+    return authorID;
+}
     public void addComment(){
         Comment newComment = new Comment(authorID,content);
     }
     public void addReply(Reply reply){
         userReplies.add(reply);
     }
+
     public void addReaction(){
         counterLikes++;
     }
@@ -33,7 +39,7 @@ public class Comment extends Text{
         return userReplies;
     }
     public void editContent(User authorID,String newContent){
-        if (authorID) {
+        if (authorID.equals(getAuthorID())) {
             setContent(newContent);
             System.out.println("Comment edited");
         }
@@ -42,7 +48,7 @@ public class Comment extends Text{
         }
     }
     public void deleteContent(User authorID){
-        if (authorID) {
+        if (authorID.equals(getAuthorID())) {
             setContent(null);
             System.out.println("Comment deleted");
         }
