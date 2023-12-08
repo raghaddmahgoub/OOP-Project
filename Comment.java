@@ -1,19 +1,16 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Comment extends Text{
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
     private int counterLikes;
-    private User authorID;
+    private String authorID;
     private static int commentId;
 
-
-
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
-    public Comment(User authorID, String content) {
+    public Comment(String authorID, String content) {
         super(commentId++);
         this.counterLikes = 0;
         this.userReplies = new ArrayList<>();
@@ -21,25 +18,26 @@ public class Comment extends Text{
         this.content =content;
     }
 
-    ////////////////////////////////////////////METHODS//////////////////////////////////////////
-    public User getAuthorID() {
-        return authorID;
-    }
+////////////////////////////////////////////METHODS//////////////////////////////////////////
+   public String getAuthorID() {
+    return authorID;
+   }
     public void addComment(){
         Comment newComment = new Comment(authorID,content);
     }
-    public void addReply(Reply reply){
-        userReplies.add(reply);
+    public void addReply(String content){
+       // Reply reply= new Reply(content);
+       // userReplies.add(reply);
     }
-
     public void addReaction(){
         counterLikes++;
     }
     public List<Reply> getUserReplies(){
         return userReplies;
     }
+    /*
     public void editContent(User authorID,String newContent){
-        if (authorID.equals(getAuthorID())) {
+        if (authorID) {
             setContent(newContent);
             System.out.println("Comment edited");
         }
@@ -47,8 +45,10 @@ public class Comment extends Text{
             System.out.println("cant edit");
         }
     }
+
+
     public void deleteContent(User authorID){
-        if (authorID.equals(getAuthorID())) {
+        if (authorID) {
             setContent(null);
             System.out.println("Comment deleted");
         }
@@ -56,7 +56,7 @@ public class Comment extends Text{
             System.out.println("cant delete");
         }
     }
-
+*/
     @Override
     public void addReact() {
         cntReacts++;

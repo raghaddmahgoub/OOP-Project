@@ -1,3 +1,4 @@
+
 import java.util.*;
 import javafx.util.Pair;
 import org.w3c.dom.ls.LSOutput;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 
 class FriendShip {
 
-    private int User1_ID, User2_ID;
+    private String User1_ID, User2_ID;
     private User User1, User2;
     Pair User_IDs =new Pair(User1_ID,User2_ID);
     private int status_user1, status_user2;
@@ -23,10 +24,10 @@ class FriendShip {
         this.User2 =user2;
         Friendship_status= "Pending";
     }
-    public int getUser1_ID() {
+    public String getUser1_ID() {
         return User1_ID;
     }
-    public int getUser2_ID() {
+    public String getUser2_ID() {
         return User2_ID;
     }
     public Pair getUser_IDs() {
@@ -61,7 +62,7 @@ class FriendShip {
         else  Friendship_Role = "Regular";
     }
 
-   public void Set_Friendship_status(Pair Friendship_ID) {
+    public void Set_Friendship_status(Pair Friendship_ID) {
         //Friendship_ID will be pair after that
         if (Friendship_Status.getKey().equals(0) && Friendship_Status.getValue().equals(0))
             Friendship_status = "Declined";
@@ -69,15 +70,15 @@ class FriendShip {
         else if (Friendship_Status.getKey().equals(1) && Friendship_Status.getValue().equals(1))
             Friendship_status = "Accepted";
 
-  }
+    }
     public void acceptFriendRequest() {
         //change pair
         status_user1=1; status_user2=1;
         Friendship_Status = new Pair<>(status_user1, status_user1);
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
         System.out.println("You accepted friend request from " + User2.getUserName() +"Now you are Friends" );
-        User1.AddFriend(User2);
-        User2.AddFriend(User1);
+//        User1.AddFriend(User2);
+//        User2.AddFriend(User1);
     }
 
     public void declineFriendRequest() {
