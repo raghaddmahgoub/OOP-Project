@@ -6,7 +6,7 @@ public class Reply extends Comment{
     private int replyreaction;
 
     public Reply(User authorID, String content) {
-        super(authorID, content);
+        super(*authorID, content);
         replyID++;
     }
     public int getReplyID() {
@@ -24,7 +24,7 @@ public class Reply extends Comment{
     public int getReplyreaction() {
         return replyreaction;
     }
-    public String toString(){
-        return getReplyID() + "replied to " +getAuthorID().getUserName() + "at" + getTimestamp() + "likes: " + getReplyreaction();
-    }
+//    public String toString(){
+//        return getReplyID() + "replied to " +getAuthorID().getUserName() + "at" + getTimestamp() + "likes: " + getReplyreaction();
+//    }
 }
