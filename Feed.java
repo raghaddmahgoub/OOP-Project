@@ -1,9 +1,12 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Feed {
-    //List of Notifications
-    User user;
+    ArrayList <String> Notifications = new ArrayList<>();
+    User  user;
+    ArrayList <Post> getALLposts = user.getPosts();
+
     static Scanner in = new Scanner(System.in);
     UserDashBoard dashboard;
     public Feed(User user){
@@ -11,20 +14,20 @@ public class Feed {
         viewUserFeed();
     }
     public void viewUserFeed(){
-        System.out.println("To View Posts Press 1");
-        System.out.println("To View Your Notifications Press 2");
-        System.out.println("To View Your Friends Menu Press 3");
-        System.out.println("To View Your Dashboard Press 4");
-        System.out.println("To Add Post Press 5");
-        System.out.println("To view Posts Press 6");
-        System.out.println("To Exit Press 7");
+        System.out.println("1-View Posts");
+        System.out.println("2-View Your Notifications");
+        System.out.println("3-View Your Friends Menu");
+        System.out.println("4-View Your Dashboard");
+        System.out.println("5-Add Post");
+        System.out.println("6-view Posts");
+        System.out.println("7-Sign Out");
         int choice = in.nextInt();
         switch (choice){
             case 1:
                 System.out.println("Posts");
                 break;
             case 2:
-                System.out.println("Notifications");
+                viewNotifications();
                 break;
             case 3:
                 System.out.println("Friends");
@@ -36,9 +39,26 @@ public class Feed {
                 addPost();
                 break;
             case 6:
-
+                ViewPosts();
+                break;
             case 7 :
-                return;
+                UserInterface.ProgramStart();
+        }
+    }
+    void viewNotifications()
+    {
+        System.out.println ("Notifications");
+        for (String Notification : Notifications)
+        {
+            System.out.println(Notification);
+        }
+    }
+    void ViewPosts()
+    {
+        System.out.println ("Posts");
+        for (Post Posts : getALLposts)
+        {
+            System.out.println(Posts);
         }
     }
     public void SearchForUser (String UserName) {
@@ -83,12 +103,12 @@ public class Feed {
                 Searched_User_Menu(UserName);
         }
     }
-    public void likeComments(Comment comment){
-        comment.addReaction();
-    }
-    public void likeReply(Reply reply){
-        reply.addReact();
-    }
+//    public void likeComments(Comment comment){
+//        comment.addReaction();
+//    }
+//    public void likeReply(Reply reply){
+//        reply.addReact();
+//    }
     public void Friend_Menu (String UserName){
         System.out.println("1. Remove Friend");
         System.out.println("2. See Mutual Friends");
