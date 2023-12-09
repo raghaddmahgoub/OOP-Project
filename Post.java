@@ -24,9 +24,6 @@ public class Post extends Text {
         return privacy;
     }
 
-    public void setPrivacy(User poster) {
-        this.privacy = poster.getUserPrivacy();
-    }
     public void setPrivacy(String privacy) {
         this.privacy = privacy;
     }
@@ -40,13 +37,11 @@ public class Post extends Text {
         cntReacts++;
     }
 
-    public void addTaggedUser(User taggedUser) {
-        //are they friends ? -> privacy (go back to the friendship to check the status )
-//        if (taggedUser.Check_Friendship(taggedUser.getName()))
-//         this.taggedUsers.add(taggedUser);
-//        else
-//            System.out.println("you're not friends with "+taggedUser.getName());
+    public void TagUser(User taggedUser) {
+
+         this.taggedUsers.add(taggedUser);
     }
+
     public ArrayList<User> getTaggedUsers() {
         return taggedUsers;
     }

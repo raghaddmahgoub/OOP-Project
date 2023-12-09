@@ -15,7 +15,9 @@ public class Feed {
         System.out.println("To View Your Notifications Press 2");
         System.out.println("To View Your Friends Menu Press 3");
         System.out.println("To View Your Dashboard Press 4");
-        System.out.println("To Exit Press 5");
+        System.out.println("To Add Post Press 5");
+        System.out.println("To view Posts Press 6");
+        System.out.println("To Exit Press 7");
         int choice = in.nextInt();
         switch (choice){
             case 1:
@@ -31,23 +33,14 @@ public class Feed {
                 dashboard = new UserDashBoard(user);
                 break;
             case 5:
+                addPost();
+                break;
+            case 6:
+
+            case 7 :
                 return;
         }
     }
-    //    public void AddPost(String content) {
-//       Post post= new Post(content);
-//        System.out.println("do you want to tag a friend ? \n yes or no \n");
-//        String answer =in.next();
-//
-//        while(answer== "yes"){
-//            System.out.println("which friend?\n");
-//            answer=in.next();
-//            User friend =new User();
-//            friend=GetUserData(answer);
-//            post.addTaggedUser(friend);
-//        }
-//        user.Posts.add(post);
-//    }
     public void SearchForUser (String UserName) {
 
         for (User Desired_User : Main.vec) {
@@ -143,7 +136,7 @@ public class Feed {
     }
 
     public void AddFriend(User New_Friend_User) {
-        user.Friends.add(New_Friend_User.getUserName());
+        user.Friends.add(New_Friend_User);
     }
     public void RemoveFriend(String UserName){
         //user.Friends.remove()
@@ -160,17 +153,70 @@ public class Feed {
         }
         return null;
     }
+    public void editPost(Post post){
+        String edittedContent= in.next();
+        post.setContent(edittedContent);
+    }
+    public void addPost(){
+        System.out.println("enter the content of the post");
+        Post post = new Post();
+        String content= in.next();
+        post.setContent(content);
+        System.out.println("do you want to tag a friend ? y or n");
+        char choice = in.next().charAt(0);
+        if (choice=='y'||choice=='Y' ){
+            addTaggedUser(post);
+        }
+        System.out.println("want to set privacy ? y or n");
+        char ch = in.next().charAt(0);
+        if (ch=='y'||ch=='Y' ){setPostPrivacy(post);}
+        System.out.println("post added");
+        user.addApost(post);
+        viewUserFeed();
+    }
+    public void addTaggedUser(Post post) {
+        for (User friendlist:user.Friends) {
+            System.out.println(friendlist.getUserName());
+            System.out.println('\n');
+        }
+        System.out.println("enter your friend name");
+        String friendName=in.next();
+        for (User friend:user.Friends) {
+            if(friendName.equals(friend.getUserName())) {
+                post.TagUser(friend);
+                System.out.println("tagged friends done");
+            }
+            else {
+                System.out.println("invalid name");
+                addTaggedUser(post);
+            }
+        }
+    }
+    public void setPostPrivacy(Post post){
+
+        System.out.println("for public press 1 \n for private press 2 for default press 3");
+        int privacy = in.nextInt();
+        switch (privacy){
+            case 1: post.setPrivacy("public"); break;
+            case 2: post.setPrivacy("private"); break;
+            case 3: post.setPrivacy(user.getUserPrivacy()); break;
+            default:
+                System.out.println("invalid input");
+                setPostPrivacy(post);
+        }
+    }
     public void Add_Role_Of_a_Friend(){
     }
     public void See_Mutual_Posts(String Username2){
     }
     public void See_Mutual_Friends(String Username2) {
     }
-    public boolean Check_Friendship(String UserName) {
-//        for (String Friend: user.getFriends()) {
-//            if (Friend.equals(UserName))
-//                return true;
-//        }
+
+    public  boolean Check_Friendship(String UserName) {
+        for (User Friend: user.getFriends()) {
+            if (Friend.getUserName().equals(UserName))
+                return true;
+        }
         return false;
     }
     public void Get_Posts_By_PrivacyLevel(){

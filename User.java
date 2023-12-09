@@ -20,13 +20,15 @@ public class User
     private GenderOptions Gender = GenderOptions.NONE;
     private String Birthdate;
     private String PhoneNumber;
-    ArrayList <String> Friends = new ArrayList <String>();
+
+    ArrayList <User> Friends = new ArrayList <User>();
     ArrayList <String> Conversations = new ArrayList <String>();
     ArrayList <User> friendRequests = new ArrayList <User>();
     ArrayList<FriendShip> Relations = new ArrayList<>();
     private String userPrivacy;
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
-    ArrayList<Post> Posts = new ArrayList<Post>();
+
+    private ArrayList<Post> Posts = new ArrayList<Post>();
 
     public User(String User_Name, String Password){
         this.User_Name = User_Name;
@@ -39,13 +41,18 @@ public class User
         this.Password = Password;
         this.Email = Email;
     }
-
+    public ArrayList<User> getFriends() {
+        return Friends;
+    }
     public String getUserID() {
         return this.User_ID;
     }
 
     public void setUserID(String userID) {
         this.User_ID = userID;
+    }
+    public void addApost(Post post) {
+        Posts.add(post) ;
     }
 
     public String getUserName() {
