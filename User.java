@@ -28,6 +28,10 @@ public class User
     private String userPrivacy;
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
 
+    public ArrayList<Post> getPosts() {
+        return Posts;
+    }
+
     private ArrayList<Post> Posts = new ArrayList<Post>();
 
     public User(String User_Name, String Password){
