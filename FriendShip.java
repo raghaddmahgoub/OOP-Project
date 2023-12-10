@@ -16,6 +16,8 @@ class FriendShip {
     Pair Friendship_ID = new Pair(User_IDs,Friendship_Status);
     private String Friendship_status;
     private String Friendship_Role;
+    ArrayList<Post> Mutual_Posts = new ArrayList<>();
+
 
     public FriendShip(User user1,User user2){
         this.User1_ID= user1.getUserID();
@@ -88,4 +90,11 @@ class FriendShip {
         System.out.println("You declined friend request from " + User2.getUserName());
     }
 
+    ///mutual posts
+    public void setMutual_Posts(ArrayList<Post> mutual_Posts) {
+        Mutual_Posts = mutual_Posts;
+    }
+    public ArrayList<Post> getMutual_Posts() {
+        return Mutual_Posts;
+    }
 }
