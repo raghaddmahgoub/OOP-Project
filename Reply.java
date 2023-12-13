@@ -5,7 +5,7 @@ public class Reply extends Comment{
     private int replyID;
     private int replyreaction;
 
-    public Reply(String authorID, String content) {
+    public Reply(int authorID, String content) {
         super(authorID, content);
         replyID++;
     }

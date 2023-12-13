@@ -20,11 +20,9 @@ public class UserInterface {
         switch (choice){
             case 1:
                 user = LogIn();
-                new Feed(user);
                 break;
             case 2:
                 user = SignUp();
-                new Feed(user);
                 break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
@@ -52,6 +50,7 @@ public class UserInterface {
             System.out.println("Username or Password is not correct please Try again :( ");
             LogIn();
         }
+        new Feed(Feed.GetUserData(username));
         return Feed.GetUserData(username);
     }
 
@@ -105,8 +104,8 @@ public class UserInterface {
         String gender=new String();
         gender = in.next();
         gender.toUpperCase();
-        while (gender.isEmpty() || !gender.equals("FEMALE") || !gender.equals("MALE")){
-            System.out.println("Username is not valid please Try again :( ");
+        while (gender.isEmpty() || (!gender.equals("FEMALE")) || (!gender.equals("MALE"))){
+            System.out.println("gender is not valid please Try again :( ");
             System.out.println("Enter gender :");
             gender = in.next();
         }
@@ -137,6 +136,7 @@ public class UserInterface {
         Main.vec.add(user);
         System.out.println("Wish you enjoy our facebook :)");
         //=============================
+        new Feed(user);
         return user;
     }
     public static boolean CheckUserIsUnique (String Username){

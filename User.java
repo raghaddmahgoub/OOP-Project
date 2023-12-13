@@ -27,12 +27,12 @@ public class User
     ArrayList<FriendShip> Relations = new ArrayList<>();
     private String userPrivacy;
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
-
+    private ArrayList<Post> Posts = new ArrayList<Post>();
     public ArrayList<Post> getPosts() {
         return Posts;
     }
 
-    private ArrayList<Post> Posts = new ArrayList<Post>();
+
 
     public User(String User_Name, String Password){
         this.User_Name = User_Name;

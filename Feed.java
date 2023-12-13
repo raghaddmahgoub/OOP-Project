@@ -8,14 +8,15 @@ public class Feed {
 
     ArrayList <String> Notifications = new ArrayList<>();
     User  user;
-    ArrayList <Post> getALLposts = user.getPosts();
+
 
     UserDashBoard dashboard;
     public Feed(User user){
         this.user = user;
-        //viewUserFeed();
+        viewUserFeed();
     }
-    /*    public void viewUserFeed(){
+   // ArrayList <Post> getALLposts = user.getPosts();
+      public void viewUserFeed(){
             System.out.println("1- View Posts");
             System.out.println("2- View Your Notifications");
             System.out.println("3- View Your Friends Menu");
@@ -41,7 +42,7 @@ public class Feed {
                     //addPost();
                     break;
                 case 6:
-                    ViewPosts();
+                    //ViewPosts();
                     break;
                 case 7 :
                     UserInterface.ProgramStart();
@@ -55,7 +56,7 @@ public class Feed {
                 System.out.println(Notification);
             }
         }
-        void ViewPosts()
+     /*   void ViewPosts()
         {
             System.out.println ("Posts");
             for (Post Posts : getALLposts)
