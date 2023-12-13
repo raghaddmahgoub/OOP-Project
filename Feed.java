@@ -13,10 +13,8 @@ public class Feed {
     UserDashBoard dashboard;
     public Feed(User user){
         this.user = user;
-      //  viewUserFeed();
+        //viewUserFeed();
     }
-
-
     /*    public void viewUserFeed(){
             System.out.println("1- View Posts");
             System.out.println("2- View Your Notifications");
@@ -326,7 +324,7 @@ public class Feed {
     }
 
     public boolean Check_Friendship(User Friend) {
-        for (User friend: user.getFriends()) 
+        for (User friend: user.getFriends())
             if (friend == Friend)
                 return true;
         return false;
