@@ -10,7 +10,7 @@ public class Comment extends Text{
     private static int commentId;
 
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
-    public Comment(int authorID, String content) {
+    public Comment( int authorID, String content) {
         super(commentId++);
         this.counterLikes = 0;
         this.userReplies = new ArrayList<>();
