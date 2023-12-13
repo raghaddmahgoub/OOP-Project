@@ -6,11 +6,11 @@ public class Comment extends Text{
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
     private int counterLikes;
-    private String authorID;
+    private int authorID;
     private static int commentId;
 
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
-    public Comment(String authorID, String content) {
+    public Comment(int authorID, String content) {
         super(commentId++);
         this.counterLikes = 0;
         this.userReplies = new ArrayList<>();
@@ -19,7 +19,7 @@ public class Comment extends Text{
     }
 
 ////////////////////////////////////////////METHODS//////////////////////////////////////////
-   public String getAuthorID() {
+   public int getAuthorID() {
     return authorID;
    }
     public void addComment(){

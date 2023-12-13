@@ -11,15 +11,15 @@ public class User
     public enum GenderOptions {
         MALE, FEMALE, NONE
     }
-
-    private String User_ID;
+    private static int Number_Of_Users=0;
+    private int User_ID;
     private String User_Name;
     private String Name;
     private String Email;
     private String Password;
     private GenderOptions Gender = GenderOptions.NONE;
     private String Birthdate;
-    private String PhoneNumber;
+    private Integer PhoneNumber;
 
     ArrayList <User> Friends = new ArrayList <User>();
     ArrayList <String> Conversations = new ArrayList <String>();
@@ -37,9 +37,10 @@ public class User
     public User(String User_Name, String Password){
         this.User_Name = User_Name;
         this.Password = Password;
-    }
 
-    public User(String User_ID, String User_Name, String Password, String Email){
+    }
+// there is problem here you must
+    public User(int User_ID, String User_Name, String Password, String Email){
         this.User_ID = User_ID;
         this.User_Name = User_Name;
         this.Password = Password;
@@ -48,11 +49,11 @@ public class User
     public ArrayList<User> getFriends() {
         return Friends;
     }
-    public String getUserID() {
+    public int getUserID() {
         return this.User_ID;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(int userID) {
         this.User_ID = userID;
     }
     public void addApost(Post post) {
@@ -101,11 +102,11 @@ public class User
         Birthdate = birthdate;
     }
 
-    public String getPhoneNumber() {
+    public int getPhoneNumber() {
         return PhoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(int phoneNumber) {
         PhoneNumber = phoneNumber;
     }
 

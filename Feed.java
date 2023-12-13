@@ -13,8 +13,10 @@ public class Feed {
     UserDashBoard dashboard;
     public Feed(User user){
         this.user = user;
-        viewUserFeed();
+      //  viewUserFeed();
     }
+
+
     /*    public void viewUserFeed(){
             System.out.println("1- View Posts");
             System.out.println("2- View Your Notifications");

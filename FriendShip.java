@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 class FriendShip {
 
-    private String User1_ID, User2_ID;
+    private int User1_ID, User2_ID;
     private User User1, User2;
     Pair User_IDs =new Pair(User1_ID,User2_ID);
     private int status_user1, status_user2;
@@ -26,10 +26,10 @@ class FriendShip {
         this.User2 =user2;
         Friendship_status= "Pending";
     }
-    public String getUser1_ID() {
+    public int getUser1_ID() {
         return User1_ID;
     }
-    public String getUser2_ID() {
+    public int getUser2_ID() {
         return User2_ID;
     }
     public Pair getUser_IDs() {
