@@ -15,7 +15,8 @@ public class UserDashBoard {
     public void viewDashboard() {
         System.out.println("1-View Your Profile");
         System.out.println("2-Update Your Profile");
-        System.out.println("3-Back To Your Feed");
+        System.out.println("3-view my post");
+        System.out.println("4-Back To Your Feed");
         boolean InvalidChoice = true;
         while (InvalidChoice = true) {
             int choice = in.nextInt();
@@ -141,6 +142,17 @@ public class UserDashBoard {
             System.out.println("Enter your current password: ");
             NewPassword = in.next();
         }
+    }
+    void ViewPostsOfMe() {
+        System.out.println ("Posts");
+        for (Post Posts : user.getPosts())
+        {
+            System.out.println(Posts);
+        }
+    }
+    public void editPost(Post post){
+        String edittedContent= in.next();
+        post.setContent(edittedContent);
     }
 
     public void backToFeed() {

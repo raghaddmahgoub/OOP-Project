@@ -7,7 +7,7 @@ public class Post extends Text {
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private static int Id;
     private ArrayList<User> taggedUsers = new ArrayList<User>();
-    private FriendShip fiendship;
+    private FriendShip friendship;
     private final ArrayList<Comment> comments = new ArrayList<Comment>();
 
     private String privacy;
@@ -38,7 +38,6 @@ public class Post extends Text {
     }
 
     public void TagUser(User taggedUser) {
-
          this.taggedUsers.add(taggedUser);
     }
 
@@ -54,6 +53,4 @@ public class Post extends Text {
     public ArrayList<Comment> getComment() {
         return comments;
     }
-
-
 }

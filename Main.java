@@ -5,10 +5,11 @@ import java.util.ArrayList;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
 
-    public static ArrayList<User> vec = new ArrayList<>();
-
+    public static  ArrayList<User> vec = new ArrayList<>();
+    public static  ArrayList<FriendShip> friendship = new ArrayList<>();
     public static  ArrayList<User> friends = new ArrayList<User>();
     public static  ArrayList<User> not_friends = new ArrayList<User>();
+
     public static void populate_friends(){
         friends.add(new User("aaa", "kjfnkjewnkle"));
         friends.add(new User("ggg", "jkfnlksnksdlc"));

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 public class User
 {
+    //////////////////////////////////////////////////////////////////attributes/////////////////////////////////////
     public enum GenderOptions {
         MALE, FEMALE, NONE
     }
@@ -20,32 +21,38 @@ public class User
     private GenderOptions Gender = GenderOptions.NONE;
     private String Birthdate;
     private Integer PhoneNumber;
-
-    ArrayList <User> Friends = new ArrayList <User>();
-    ArrayList <String> Conversations = new ArrayList <String>();
-    ArrayList <User> friendRequests = new ArrayList <User>();
-    ArrayList<FriendShip> Relations = new ArrayList<>();
     private String userPrivacy;
+    ArrayList <User> Friends = new ArrayList <User>();
+    private ArrayList <String> Conversations = new ArrayList <String>();
+    private ArrayList <User> friendRequests = new ArrayList <User>();
+
+
+    ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
     private ArrayList<Post> Posts = new ArrayList<Post>();
+    private ArrayList<Post> Feed = new ArrayList<Post>();
     public ArrayList<Post> getPosts() {
         return Posts;
     }
+    public ArrayList<Post> getFeedPosts() {
+        return Feed;
+    }
 
-
+////////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
 
     public User(String User_Name, String Password){
         this.User_Name = User_Name;
         this.Password = Password;
 
     }
-// there is problem here you must
+
     public User(int User_ID, String User_Name, String Password, String Email){
         this.User_ID = User_ID;
         this.User_Name = User_Name;
         this.Password = Password;
         this.Email = Email;
     }
+    ////////////////////////////////////////////////////////////methods//////////////////////////////////////////////////////////////
     public ArrayList<User> getFriends() {
         return Friends;
     }
@@ -122,5 +129,8 @@ public class User
         this.userPrivacy = userPrivacy;
     }
 
+    public ArrayList<FriendShip> getRelations() {
+        return relations;
+    }
 }
 

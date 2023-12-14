@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+//user1=3 user2=5
+//pair=35;
+// pair (35,accepted)
+
 class FriendShip {
 
     private int User1_ID, User2_ID;
@@ -75,7 +80,7 @@ class FriendShip {
     }
     public void acceptFriendRequest() {
         //change pair
-        status_user1=1; status_user2=1;
+        status_user1 = 1; status_user2 = 1;
         Friendship_Status = new Pair<>(status_user1, status_user1);
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
         System.out.println("You accepted friend request from " + User2.getUserName() +"Now you are Friends" );
@@ -89,12 +94,22 @@ class FriendShip {
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
         System.out.println("You declined friend request from " + User2.getUserName());
     }
-
-    ///mutual posts
-    public void setMutual_Posts(ArrayList<Post> mutual_Posts) {
-        Mutual_Posts = mutual_Posts;
+    public void addMutualPost(Post post){
+        Mutual_Posts.add(post);
     }
+    //mutual posts
     public ArrayList<Post> getMutual_Posts() {
         return Mutual_Posts;
     }
+    public static FriendShip getFriendship(User First_User,User Second_User ) {
+
+        Pair Searched_Users_IDs1 = new Pair(First_User.getUserID(), Second_User.getUserID());
+        Pair Searched_Users_IDs2 = new Pair(Second_User.getUserID(), First_User.getUserID());
+        for (FriendShip friendship : Main.friendship) {
+            if (friendship.User_IDs == Searched_Users_IDs1 || friendship.User_IDs == Searched_Users_IDs2 ) {
+            return friendship;
+            }
+        }
+    return null;
+   }
 }

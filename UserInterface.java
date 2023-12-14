@@ -58,9 +58,9 @@ public class UserInterface {
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("/t Welcome To our Facebook");
-        System.out.println("Enter Username :");
+        System.out.println("Enter Username (at least 8 chars):");
         username = in.next();
-        while (username.isEmpty()){
+        while (username.length() < 8){
             System.out.println("Username is Empty please Try again :( ");
             System.out.println("Enter Username :");
             username = in.next();
@@ -74,7 +74,7 @@ public class UserInterface {
         System.out.println("Enter Password :");
         password = in.next();
 
-        while (password.isEmpty()){
+        while (password.length()<8){
             System.out.println("Password is Empty please Try again :( ");
             System.out.println("Enter Password :");
             password = in.next();
@@ -102,9 +102,10 @@ public class UserInterface {
         }
         System.out.println("Enter gender :");
         String gender=new String();
+        String Gender=new String();
         gender = in.next();
-        gender.toUpperCase();
-        while (gender.isEmpty() || (!gender.equals("FEMALE")) || (!gender.equals("MALE"))){
+        Gender = gender.toLowerCase();
+        while ((!Gender.equals("female")) && (!Gender.equals("male"))){
             System.out.println("gender is not valid please Try again :( ");
             System.out.println("Enter gender :");
             gender = in.next();
@@ -128,7 +129,7 @@ public class UserInterface {
         user.setName(name);
         user.setPhoneNumber(phonenumber);
         user.setEmail(email);
-        if(gender.equals("FEMALE")){
+        if(gender.equals("female")){
             user.setGender(User.GenderOptions.FEMALE);
         }else{
             user.setGender(User.GenderOptions.MALE);
