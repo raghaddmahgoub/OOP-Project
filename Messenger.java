@@ -27,18 +27,18 @@ public class Messenger {
       }
    }
 
-//    public void deleteConversation(int conversationId) {
-//        boolean removed = conversations.removeIf(conv -> conv.getId() == conversationId);
-//        if (removed) {
-//            System.out.println("Conversation " + conversationId + " deleted successfully.");
-//        } else {
-//            System.out.println("Conversation " + conversationId + " not found.");
-//        }
-//    }
-//
-//    public void sortConversations() {
-//        // Sorting conversations based on timestamp from newest to oldest
-//        conversations.sort(Comparator.comparingLong(Conversation::getTimestamp).reversed());
-//    }
+   public void deleteConversation(int conversationId) {
+       boolean removed = conversations.removeIf(conv -> conv.getId() == conversationId);
+      if (removed) {
+        System.out.println("Conversation " + conversationId + " deleted successfully.");
+       } else {
+            System.out.println("Conversation " + conversationId + " not found.");
+       }
+ }
+
+ public void sortConversations() {
+Sorting conversations based on timestamp from newest to oldest
+        conversations.sort(Comparator.comparingLong(Conversation::getTimestamp).reversed());
+    }
 
 }
