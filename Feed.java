@@ -98,7 +98,7 @@ public class Feed {
         }
         public void addTaggedUser(Post post) {
         if (user.getFriends().size()>0) {
-            for (User friendlist : user.Friends) {
+            for (User friendlist : user.getFriends()) {
                 System.out.println(friendlist.getUserName());
                 System.out.println('\n');
             }
@@ -107,6 +107,7 @@ public class Feed {
             for (User friend : user.getFriends()) {
                 if (friendName.equals(friend.getUserName())) {
                     post.TagUser(friend);
+                    //mutual posts
                     FriendShip f=FriendShip.getFriendship(friend,user);
                     f.addMutualPost(post);
                     System.out.println("tagged friends successfully\n");
@@ -145,6 +146,9 @@ public class Feed {
         }
         viewUserFeed();
     }
+
+    //comments methods
+
     ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
     /*public void sendMessage (String content){
         Messages newMessage = new Messages ();
