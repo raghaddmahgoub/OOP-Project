@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,27 +10,28 @@ public class Feed {
 
     ArrayList <String> Notifications = new ArrayList<>();
     User  user;
-    ArrayList <Post> getALLposts = user.getPosts();
+
 
     UserDashBoard dashboard;
     public Feed(User user){
         this.user = user;
-      //  viewUserFeed();
+        viewUserFeed();
     }
-
-
-    /*    public void viewUserFeed(){
-            System.out.println("1- View Posts");
-            System.out.println("2- View Your Notifications");
+   // ArrayList <Post> getALLposts = user.getPosts();
+      public void viewUserFeed(){
+            System.out.println("1- View Posts");//haneen
+            System.out.println("2- View Your Notifications");//haneen
             System.out.println("3- View Your Friends Menu");
-            System.out.println("4- View Your Dashboard");
-            System.out.println("5- Add Post");
-            System.out.println("6- view Posts");
-            System.out.println("7- Sign Out");
+            System.out.println("4- View Your Dashboard");//renad
+            System.out.println("5- Add Post");//haneen
+            System.out.println("6- view Posts Me");
+            System.out.println("7- Search");
+            System.out.println("8- Sign Out");
             int choice = in.nextInt();
             switch (choice){
                 case 1:
                     System.out.println("Posts");
+                    Get_Posts_By_PrivacyLevel();
                     break;
                 case 2:
                     viewNotifications();
@@ -40,13 +43,24 @@ public class Feed {
                     dashboard = new UserDashBoard(user);
                     break;
                 case 5:
-                    //addPost();
+                    addPost();
                     break;
                 case 6:
-                    ViewPosts();
+                    //ViewPosts();
                     break;
                 case 7 :
+                    SearchForUser();
+                    break;
+                case 8 :
                     UserInterface.ProgramStart();
+                    break;
+                case 9 :
+                    UserInterface.ProgramStart();
+                    break;
+                default:
+                    System.out.println("invalid choice");
+                    viewUserFeed();
+
             }
         }
         void viewNotifications()
@@ -57,14 +71,6 @@ public class Feed {
                 System.out.println(Notification);
             }
         }
-        void ViewPosts()
-        {
-            System.out.println ("Posts");
-            for (Post Posts : getALLposts)
-            {
-                System.out.println(Posts);
-            }
-        }*/
 
     //    public void likeComments(Comment comment){
 //        comment.addReaction();
@@ -72,11 +78,7 @@ public class Feed {
 //    public void likeReply(Reply reply){
 //        reply.addReact();
 //    }
-
-    /*    public void editPost(Post post){
-            String edittedContent= in.next();
-            post.setContent(edittedContent);
-        }
+    //////////////////////////////////////////////////////////////POST///////////////////////////////////////////////////////////////
         public void addPost(){
             System.out.println("enter the content of the post");
             Post post = new Post();
@@ -95,26 +97,32 @@ public class Feed {
             viewUserFeed();
         }
         public void addTaggedUser(Post post) {
-            for (User friendlist:user.Friends) {
+        if (user.getFriends().size()>0) {
+            for (User friendlist : user.Friends) {
                 System.out.println(friendlist.getUserName());
                 System.out.println('\n');
             }
             System.out.println("enter your friend name");
-            String friendName=in.next();
-            for (User friend:user.Friends) {
-                if(friendName.equals(friend.getUserName())) {
+            String friendName = in.next();
+            for (User friend : user.getFriends()) {
+                if (friendName.equals(friend.getUserName())) {
                     post.TagUser(friend);
-                    System.out.println("tagged friends done");
-                }
-                else {
+                    FriendShip f=FriendShip.getFriendship(friend,user);
+                    f.addMutualPost(post);
+                    System.out.println("tagged friends successfully\n");
+                } else {
                     System.out.println("invalid name");
                     addTaggedUser(post);
                 }
             }
+
+        }
+        else {
+            System.out.println("you do not have friends yet");
+        }
         }
         public void setPostPrivacy(Post post){
-
-            System.out.println("for public press 1 \n for private press 2 for default press 3");
+            System.out.println("for public press 1 \n for private press 2 \n for default press 3");
             int privacy = in.nextInt();
             switch (privacy){
                 case 1: post.setPrivacy("public"); break;
@@ -124,7 +132,20 @@ public class Feed {
                     System.out.println("invalid input");
                     setPostPrivacy(post);
             }
-        }*/
+        }
+    public void Get_Posts_By_PrivacyLevel() {
+        for (FriendShip friendship:user.getRelations()) {
+            if(friendship.getFriendship_Role().equals("Regular")){
+                for (User friend: user.getFriends()) {
+                    friend.getPosts().indexOf(0);
+                    System.out.println("\n");
+                    friend.getPosts().indexOf(1);
+                }
+            }
+        }
+        viewUserFeed();
+    }
+    ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
     /*public void sendMessage (String content){
         Messages newMessage = new Messages ();
         newMessage.setContent(content);
@@ -134,7 +155,13 @@ public class Feed {
         User New_User = GetUserData(UserName);
         if (New_User == null){
             System.out.println("The username you entered was not found. PLease try again :( ");
-            SearchForUser();
+            System.out.println("Do You want to search again? (Y/N)");
+            char choice =  in.next().charAt(0);
+            while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+                System.out.println("Invalid Choice please try again :( ");
+            if (choice == 'Y' || choice == 'y')
+                SearchForUser();
+            else viewUserFeed();
         }
         Searched_User_Menu(New_User);
     }
@@ -185,12 +212,11 @@ public class Feed {
     }
     public void ViewProfile(){
         //Display all user data:
-/*      System.out.println("The User\'s Name is: " + Name);
-        System.out.println("The User\'s Email is: " + Email);
-        System.out.println("The User\'s Gender is: " + Gender);
-        System.out.println("The User\'s Birth Date is: " + Birthdate);
-        System.out.println("The User\'s Phone Number is: " + PhoneNumber);
-        */
+        System.out.println("The User\'s Name is: " + user.getName());
+        System.out.println("The User\'s Email is: " + user.getEmail());
+        System.out.println("The User\'s Gender is: " + user.getGender());
+        System.out.println("The User\'s Birth Date is: " + user.getBirthdate());
+        System.out.println("The User\'s Phone Number is: " + user.getPhoneNumber());
 
         //Display posts & friends
     }
@@ -198,7 +224,7 @@ public class Feed {
         System.out.println("1. View Profile");
         System.out.println("2. Check Friendship");
         System.out.print("Enter a choice :");
-        char choice = in.next().charAt(0);
+        int choice = in.nextInt();
         switch (choice){
             case 1:
                 ViewProfile();
@@ -218,6 +244,7 @@ public class Feed {
                 System.out.println("Invalid Choice please try again :( ");
                 Searched_User_Menu(Searched_User);
         }
+        viewUserFeed();
     }
 
     public void Friend_Menu (User Friend){
@@ -226,7 +253,7 @@ public class Feed {
         System.out.println("3. See Mutual Posts");
         System.out.println("4. Add A Role (Regular/Restricted)");
         System.out.print("Enter a choice :");
-        char choice = in.next().charAt(0);
+        int choice = in.nextInt();
         switch (choice){
             case 1:
                 RemoveFriend(Friend);
@@ -235,19 +262,23 @@ public class Feed {
                 Get_Mutual_Friends(user, Friend);
                 break;
             case 3:
-                Get_Mutual_Posts(user, Friend);
+               Get_Mutual_Posts(user, Friend);
+                break;
+            case 4:
+                Add_Role_Of_a_Friend(Friend);
                 break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
                 Friend_Menu(Friend);
         }
+        viewUserFeed();
     }
 
     public void Not_Friend_Menu (User Friend){
         System.out.println("1. Add Friend");
         System.out.println("2. See Mutual Friends");
         System.out.print("Enter a choice :");
-        char choice = in.next().charAt(0);
+        int choice = in.nextInt();
         switch (choice){
             case 1:
                 sendFriendRequest(Friend);
@@ -259,6 +290,7 @@ public class Feed {
                 System.out.println("Invalid Choice please try again :( ");
                 Friend_Menu(Friend);
         }
+        viewUserFeed();
     }
     public void sendFriendRequest(User friend) {
         friend.getFriendRequests().add(user);
@@ -282,28 +314,27 @@ public class Feed {
     }
 
     public void Add_Role_Of_a_Friend(User friend) {
-        FriendShip friendShip = new FriendShip(user, friend);
+        FriendShip friendShip = FriendShip.getFriendship(user, friend);
         System.out.println("Choose a role to add to this friend (Regular(1)/Restricted(0)");
         int choice = in.nextInt();
         switch(choice) {
             case 1:
-                friendShip.setFriendship_Role(1);
+                friendShip.setFriendship_Role(1,friend);
                 break;
             case 0:
-                friendShip.setFriendship_Role(0);
+                friendShip.setFriendship_Role(0,friend);
                 break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
                 Add_Role_Of_a_Friend(friend);
         }
     }
+
     public void Get_Mutual_Posts(User First_User, User Second_User){
-        FriendShip friendShip = new FriendShip(First_User, Second_User);
-        if (friendShip.getFriendship_status() == "Accepted")
+        FriendShip A_Friendship = FriendShip.getFriendship(First_User, Second_User);
+        if (A_Friendship != null)
         {
-            ArrayList <Post> Mutual_Posts = new ArrayList<>();
-            Mutual_Posts = friendShip.getMutual_Posts();
-            for (Post post: Mutual_Posts){
+            for (Post post: A_Friendship.getMutual_Posts()){
                 //Post Data
             }
         }
@@ -326,11 +357,9 @@ public class Feed {
     }
 
     public boolean Check_Friendship(User Friend) {
-        for (User friend: user.getFriends()) 
+        for (User friend: user.getFriends())
             if (friend == Friend)
                 return true;
         return false;
-    }
-    public void Get_Posts_By_PrivacyLevel(){
     }
 }
