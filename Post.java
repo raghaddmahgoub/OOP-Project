@@ -46,7 +46,7 @@ public class Post extends Text {
     }
 
     public void addComment(User commenter , String content){
-        Comment comment= new Comment(commenter.getUserID(),content);
+        Comment comment= new Comment(content);
         this.comments.add(comment);
     }
 

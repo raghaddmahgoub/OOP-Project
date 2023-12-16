@@ -30,6 +30,8 @@ public class User
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
     private ArrayList<Post> Posts = new ArrayList<Post>();
+
+
     private ArrayList<Post> Feed = new ArrayList<Post>();
     public ArrayList<Post> getPosts() {
         return Posts;

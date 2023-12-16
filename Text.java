@@ -2,10 +2,9 @@ import java.time.LocalDateTime;
 
 public abstract class Text {
 
-
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     protected int Id;
-    protected int userId;
+    protected User author;
     protected String content;
     protected LocalDateTime timestamp;
     protected int cntReacts=0;
@@ -21,10 +20,6 @@ public abstract class Text {
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
     public int getId() {
         return Id;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
     public void setTimestamp(LocalDateTime timestamp) {

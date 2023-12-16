@@ -322,7 +322,7 @@ public class Feed {
     public void Get_Mutual_Posts(User First_User, User Second_User){
         Pair Searched_Users_IDs = new Pair(First_User.getUserID(), Second_User.getUserID());
         for (FriendShip friendship: Main.friendship){
-            if (friendship.User_IDs == Searched_Users_IDs && friendship.getFriendship_status().equals("Accepted"))
+            if (friendship.getUser_IDs() == Searched_Users_IDs && friendship.getFriendship_status().equals("Accepted"))
             {
                 for (Post post: friendship.getMutual_Posts()){
                     //Post Data
