@@ -19,7 +19,6 @@ public class Feed {
         System.out.println("3-View Your Friends Menu");
         System.out.println("4-View Your Dashboard");
         System.out.println("5-Add Post");
-        System.out.println("6-view Posts");
         System.out.println("7-Sign Out");
         int choice = in.nextInt();
         switch (choice){
@@ -37,9 +36,6 @@ public class Feed {
                 break;
             case 5:
                 addPost();
-                break;
-            case 6:
-                ViewPosts();
                 break;
             case 7 :
                 UserInterface.ProgramStart();
