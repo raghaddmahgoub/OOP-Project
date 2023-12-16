@@ -37,7 +37,7 @@ public class Messenger {
  }
 
  public void sortConversations() {
-Sorting conversations based on timestamp from newest to oldest
+//Sorting conversations based on timestamp from newest to oldest
         conversations.sort(Comparator.comparingLong(Conversation::getTimestamp).reversed());
     }
 
