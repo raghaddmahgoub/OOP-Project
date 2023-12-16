@@ -1,3 +1,4 @@
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public abstract class Text {
@@ -6,8 +7,13 @@ public abstract class Text {
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     protected int Id;
     protected int userId;
+
+    public String getContent() {
+        return content;
+    }
+
     protected String content;
-    protected LocalDateTime timestamp;
+    protected Timestamp timestamp;
     protected int cntReacts=0;
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Text(int id) {
@@ -27,10 +33,10 @@ public abstract class Text {
         return userId;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-    public LocalDateTime getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 

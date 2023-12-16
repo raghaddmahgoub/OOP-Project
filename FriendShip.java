@@ -5,22 +5,22 @@ import org.w3c.dom.ls.LSOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
-//user1=3 user2=5
-//pair=35;
-// pair (35,accepted)
 
 class FriendShip {
 
     private int User1_ID, User2_ID;
     private User User1, User2;
+    Timestamp FriendsSince ;
     Pair User_IDs =new Pair(User1_ID,User2_ID);
     private int status_user1, status_user2;
     Pair Friendship_Status =new Pair(status_user1,status_user2);
     Pair Friendship_ID = new Pair(User_IDs,Friendship_Status);
     private String Friendship_status;
-    private String Friendship_Role;
+    private String Friendship_Role ="Regular";
     ArrayList<Post> Mutual_Posts = new ArrayList<>();
 
 
@@ -84,8 +84,15 @@ class FriendShip {
         Friendship_Status = new Pair<>(status_user1, status_user1);
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
         System.out.println("You accepted friend request from " + User2.getUserName() +"Now you are Friends" );
-//        User1.AddFriend(User2);
-//        User2.AddFriend(User1);
+        User1.AddFriend(User2);
+        User2.AddFriend(User1);
+        FriendsSince = Timestamp.valueOf(LocalDateTime.now());
+    }
+    public long GetRelationTimeInDays (){
+        Timestamp t=Timestamp.valueOf(LocalDateTime.now());
+        long x=t.getTime()-FriendsSince.getTime();
+        x=x/86400000;
+        return x;
     }
 
     public void declineFriendRequest() {
@@ -111,5 +118,19 @@ class FriendShip {
             }
         }
     return null;
+   }
+   public long getRelationScore(){
+        long x=GetRelationTimeInDays();
+        if(x>180){
+            return 15;
+        } else if (x>=60) {
+            return 12;
+        } else if (x>=30) {
+            return 9;
+        } else if (x>=15) {
+            return 6;
+        } else {
+            return 3;
+        }
    }
 }
