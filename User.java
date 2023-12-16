@@ -26,7 +26,7 @@ public class User
     ArrayList <User> friendRequests = new ArrayList <User>();
     ArrayList<FriendShip> Relations = new ArrayList<>();
     private String userPrivacy;
-    private ArrayList<Notification> Notifications = new ArrayList<Notification>();
+    private ArrayList<Notification> Notifications = new ArrayList<>();
 
     public ArrayList<Post> getPosts() {
         return Posts;
