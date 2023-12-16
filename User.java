@@ -43,7 +43,9 @@ public class User
         this.Password = Password;
 
     }
-
+    public void AddFriend(User New_Friend_User) {
+        Friends.add(New_Friend_User);
+    }
     public User(int User_ID, String User_Name, String Password, String Email){
         this.User_ID = User_ID;
         this.User_Name = User_Name;
@@ -71,7 +73,9 @@ public class User
     public int getUserID() {
         return this.User_ID;
     }
-
+    public void RemoveFriend(User Friend_User){
+        Friends.remove(Friend_User);
+    }
     public void setUserID(int userID) {
         this.User_ID = userID;
     }
