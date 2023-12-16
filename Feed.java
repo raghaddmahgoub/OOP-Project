@@ -155,7 +155,13 @@ public class Feed {
         User New_User = GetUserData(UserName);
         if (New_User == null){
             System.out.println("The username you entered was not found. PLease try again :( ");
-            SearchForUser();
+            System.out.println("Do You want to search again? (Y/N)");
+            char choice =  in.next().charAt(0);
+            while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+                System.out.println("Invalid Choice please try again :( ");
+            if (choice == 'Y' || choice == 'y')
+                SearchForUser();
+            else viewUserFeed();
         }
         Searched_User_Menu(New_User);
     }
@@ -238,6 +244,7 @@ public class Feed {
                 System.out.println("Invalid Choice please try again :( ");
                 Searched_User_Menu(Searched_User);
         }
+        viewUserFeed();
     }
 
     public void Friend_Menu (User Friend){
@@ -257,10 +264,14 @@ public class Feed {
             case 3:
                Get_Mutual_Posts(user, Friend);
                 break;
+            case 4:
+                Add_Role_Of_a_Friend(Friend);
+                break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
                 Friend_Menu(Friend);
         }
+        viewUserFeed();
     }
 
     public void Not_Friend_Menu (User Friend){
@@ -279,12 +290,12 @@ public class Feed {
                 System.out.println("Invalid Choice please try again :( ");
                 Friend_Menu(Friend);
         }
+        viewUserFeed();
     }
     public void sendFriendRequest(User friend) {
         friend.getFriendRequests().add(user);
         System.out.println("Friend request sent to " + friend.getUserName());
         //new friendship
-        viewUserFeed();
     }
 
     public void AddFriend(User New_Friend_User) {
@@ -308,10 +319,10 @@ public class Feed {
         int choice = in.nextInt();
         switch(choice) {
             case 1:
-                friendShip.setFriendship_Role(1);
+                friendShip.setFriendship_Role(1,friend);
                 break;
             case 0:
-                friendShip.setFriendship_Role(0);
+                friendShip.setFriendship_Role(0,friend);
                 break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
@@ -320,16 +331,14 @@ public class Feed {
     }
 
     public void Get_Mutual_Posts(User First_User, User Second_User){
-        Pair Searched_Users_IDs = new Pair(First_User.getUserID(), Second_User.getUserID());
-        for (FriendShip friendship: Main.friendship){
-            if (friendship.User_IDs == Searched_Users_IDs && friendship.getFriendship_status().equals("Accepted"))
-            {
-                for (Post post: friendship.getMutual_Posts()){
-                    //Post Data
-                }
+        FriendShip A_Friendship = FriendShip.getFriendship(First_User, Second_User);
+        if (A_Friendship != null)
+        {
+            for (Post post: A_Friendship.getMutual_Posts()){
+                //Post Data
             }
-            else System.out.println("There are no mutual posts between these two users because they are not friends! ");
         }
+        else System.out.println("There are no mutual posts between these two users because they are not friends! ");
     }
     public ArrayList<User> Get_Mutual_Friends(User First_User, User Second_User){
         ArrayList<User> friendsList1 = First_User.getFriends();
