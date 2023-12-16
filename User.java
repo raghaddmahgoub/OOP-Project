@@ -132,5 +132,8 @@ public class User
     public ArrayList<FriendShip> getRelations() {
         return relations;
     }
+    public void addFriend (User friend){
+        Friends.add(friend);
+    }
 }
 

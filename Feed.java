@@ -104,7 +104,7 @@ public class Feed {
             }
             System.out.println("enter your friend name");
             String friendName = in.next();
-            for (User friend : user.Friends) {
+            for (User friend : user.getFriends()) {
                 if (friendName.equals(friend.getUserName())) {
                     post.TagUser(friend);
                     FriendShip f=FriendShip.getFriendship(friend,user);
