@@ -16,10 +16,12 @@ class FriendShip {
     private User User1, User2;
     private Pair User_IDs =new Pair(User1.getUserID(),User2.getUserID());
     private int status_user1, status_user2;
-    Pair Friendship_Status =new Pair(status_user1,status_user2);
-    Pair Friendship_ID = new Pair(User_IDs,Friendship_Status);
+    private Pair Friendship_Status =new Pair(status_user1,status_user2);
+    private Pair Friendship_ID = new Pair(User_IDs,Friendship_Status);
     private String StringFriendship_status;
-    private String Friendship_Role;
+    private int Friend1_Role, Friend2_Role;
+    private Pair Friends_Roles = new Pair (Friend1_Role, Friend2_Role);
+    private Pair Friendship_Role = new Pair (User_IDs, Friends_Roles);
     ArrayList<Post> Mutual_Posts = new ArrayList<>();
 
     //////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////
@@ -42,7 +44,7 @@ class FriendShip {
     public String getFriendship_status() {
         return StringFriendship_status;
     }
-    public String getFriendship_Role() {
+    public Pair getFriendship_Role() {
         return Friendship_Role;
     }
     public ArrayList<Post> getMutual_Posts() {
@@ -72,10 +74,13 @@ class FriendShip {
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
     }
 
-    public void setFriendship_Role(int Friend_Role) {
-        if (Friend_Role == 0)
-            Friendship_Role = "Restricted";
-        else  Friendship_Role = "Regular";
+    public void setFriendship_Role(int friend_role, User user) {
+        if (user == this.User1)
+            Friend1_Role = friend_role;
+        if (user == this.User2)
+            Friend2_Role = friend_role;
+        Friends_Roles= new Pair<> (Friend1_Role, Friend2_Role);
+        Friendship_Role = new Pair<>(User_IDs, Friends_Roles);
     }
 
     public void acceptFriendRequest() {
