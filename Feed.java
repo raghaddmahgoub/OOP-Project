@@ -1,4 +1,3 @@
-import javafx.geometry.Pos;
 import javafx.util.Pair;
 
 import java.io.BufferedReader;
@@ -12,6 +11,7 @@ public class Feed {
     ArrayList <String> Notifications = new ArrayList<>();
     User  user;
     public static ArrayList <Post> FeedPosts=new ArrayList<>();
+
     UserDashBoard dashboard;
     public Feed(User user){
         this.user = user;
@@ -31,7 +31,6 @@ public class Feed {
             switch (choice){
                 case 1:
                     System.out.println("Posts");
-                    //Get_Posts_By_PrivacyLevel();
                     break;
                 case 2:
                     viewNotifications();
@@ -104,7 +103,7 @@ public class Feed {
             }
             System.out.println("enter your friend name");
             String friendName = in.next();
-            for (User friend : user.Friends) {
+            for (User friend : user.getFriends()) {
                 if (friendName.equals(friend.getUserName())) {
                     post.TagUser(friend);
                     FriendShip f=FriendShip.getFriendship(friend,user);
@@ -132,25 +131,7 @@ public class Feed {
                     System.out.println("invalid input");
                     setPostPrivacy(post);
             }
-        }
-
-        /*
-    public void Get_Posts_By_PrivacyLevel() {
-        for (FriendShip friendship:user.getRelations()) {
-            if(friendship.getFriendship_Role().equals("Regular")){
-                for (User friend: user.getFriends()) {
-                    friend.getPosts().indexOf(0);
-                    System.out.println("\n");
-                    friend.getPosts().indexOf(1);
-                }
-            }
-        }
-        viewUserFeed();
-    }
-    */
-
-
-    ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
+        }/*
     /*public void sendMessage (String content){
         Messages newMessage = new Messages ();
         newMessage.setContent(content);
@@ -160,7 +141,13 @@ public class Feed {
         User New_User = GetUserData(UserName);
         if (New_User == null){
             System.out.println("The username you entered was not found. PLease try again :( ");
-            SearchForUser();
+            System.out.println("Do You want to search again? (Y/N)");
+            char choice =  in.next().charAt(0);
+            while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+                System.out.println("Invalid Choice please try again :( ");
+            if (choice == 'Y' || choice == 'y')
+                SearchForUser();
+            else viewUserFeed();
         }
         Searched_User_Menu(New_User);
     }
@@ -205,8 +192,8 @@ public class Feed {
             System.out.println("One/Two of the usernames you entered was/were not found. PLease try again :( ");
             See_Friendship();
         }
-        if (index_of_split == index_of_and)
-            Get_Mutual_Posts(First_User, Second_User);
+        if (index_of_split == index_of_and){
+            Get_Mutual_Posts(First_User, Second_User);}
         else Get_Mutual_Friends(First_User, Second_User);
     }
     public void ViewProfile(){
@@ -243,6 +230,7 @@ public class Feed {
                 System.out.println("Invalid Choice please try again :( ");
                 Searched_User_Menu(Searched_User);
         }
+        viewUserFeed();
     }
 
     public void Friend_Menu (User Friend){
@@ -260,12 +248,16 @@ public class Feed {
                 Get_Mutual_Friends(user, Friend);
                 break;
             case 3:
-               Get_Mutual_Posts(user, Friend);
+              // Get_Mutual_Posts(user, Friend);
+                break;
+            case 4:
+                Add_Role_Of_a_Friend(Friend);
                 break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
                 Friend_Menu(Friend);
         }
+        viewUserFeed();
     }
 
     public void Not_Friend_Menu (User Friend){
@@ -284,6 +276,7 @@ public class Feed {
                 System.out.println("Invalid Choice please try again :( ");
                 Friend_Menu(Friend);
         }
+        viewUserFeed();
     }
     public void sendFriendRequest(User friend) {
         friend.getFriendRequests().add(user);
@@ -309,10 +302,10 @@ public class Feed {
         int choice = in.nextInt();
         switch(choice) {
             case 1:
-                friendShip.setFriendship_Role(1);
+                friendShip.setFriendship_Role(1,friend);
                 break;
             case 0:
-                friendShip.setFriendship_Role(0);
+                friendShip.setFriendship_Role(0,friend);
                 break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
@@ -323,7 +316,7 @@ public class Feed {
     public void Get_Mutual_Posts(User First_User, User Second_User){
         Pair Searched_Users_IDs = new Pair(First_User.getUserID(), Second_User.getUserID());
         for (FriendShip friendship: Main.friendship){
-            if (friendship.User_IDs == Searched_Users_IDs && friendship.getFriendship_status().equals("Accepted"))
+            if (friendship.getUser_IDs() == Searched_Users_IDs && friendship.getFriendship_status().equals("Accepted"))
             {
                 for (Post post: friendship.getMutual_Posts()){
                     //Post Data
@@ -354,68 +347,14 @@ public class Feed {
                 return true;
         return false;
     }
-
-    public void showposts (int counter){
-        if (counter>FeedPosts.size()){
-            counter=0;
-        }
-        for (int i = 0; i < 3 && FeedPosts.size()>=(i+counter); i++) {
-            Post post=FeedPosts.get(i+counter);
-            System.out.println(i+1+"."+post.getAuthor());
-            System.out.println(post.getContent().substring(0,50));
-            long p=post.GetPostTimeInMin();
-            if (p>60){
-                System.out.print("since "+post.GetPostTimeInHours()+"h     ");
-            }else{
-                System.out.print("since "+post.GetPostTimeInMin()+"min  ");
-            }
-            System.out.print(post.getReacts()+"likes    ");
-            System.out.print(post.getNumberOfComments()+"comments");
-            System.out.println("==================================================");
-
-        }
-
+    public void Get_Posts_By_PrivacyLevel(){
     }
-    public void ViewFeed(){
-        int counter=0;
-        Boolean checker=new Boolean(true);
-        showposts(counter);
-        while (checker){
-            System.out.println("If you want to expand post Enter the number of the post");
-            System.out.println("4.Next posts");
-            System.out.println("5.Return to main");
-            System.out.print("Enter your choice : ");
-            int choice=in.nextInt();
 
-            switch (choice){
-                case 1:FeedPosts.get(counter).Expandpost();
-                    break;
-                case 2:FeedPosts.get(counter+1).Expandpost();
-                    break;
-                case 3:FeedPosts.get(counter+2).Expandpost();
-                    break;
-                case 4:
-                    counter+=3;
-                    showposts(counter);
-                    break;
-                case 5:
-                    checker=false;
-                    break;
-                default:
-                    System.out.println("invalid choice");
-                    ViewFeed();
-
-            }
-
-            counter+=3;
-        }
-        viewUserFeed();
-    }
 
     public void evaluatePosts (){
         for (User userd: user.getFriends()) {
             FriendShip f=FriendShip.getFriendship(user,userd);
-            String s=f.getFriendship_Role();
+           Pair s=f.getFriendship_Role();
             if(s.equals("Restricted")){
                 continue;
             }else {

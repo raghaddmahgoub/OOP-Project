@@ -11,32 +11,28 @@ import java.time.LocalDateTime;
 
 
 class FriendShip {
-
-    private int User1_ID, User2_ID;
+////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////////////
     private User User1, User2;
     Timestamp FriendsSince ;
-    Pair User_IDs =new Pair(User1_ID,User2_ID);
+    private Pair User_IDs =new Pair(User1.getUserID(),User2.getUserID());
     private int status_user1, status_user2;
-    Pair Friendship_Status =new Pair(status_user1,status_user2);
-    Pair Friendship_ID = new Pair(User_IDs,Friendship_Status);
-    private String Friendship_status;
-    private String Friendship_Role ="Regular";
+    private Pair Friendship_Status =new Pair(status_user1,status_user2);
+    private Pair Friendship_ID = new Pair(User_IDs,Friendship_Status);
+    private String StringFriendship_status;
+    private int Friend1_Role, Friend2_Role;
+    private Pair Friends_Roles = new Pair (Friend1_Role, Friend2_Role);
+    private Pair Friendship_Role = new Pair (User_IDs, Friends_Roles);
     ArrayList<Post> Mutual_Posts = new ArrayList<>();
 
-
+    //////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////
     public FriendShip(User user1,User user2){
-        this.User1_ID= user1.getUserID();
-        this.User2_ID= user2.getUserID();
         this.User1 =user1;
         this.User2 =user2;
-        Friendship_status= "Pending";
+        StringFriendship_status= "Pending";
     }
-    public int getUser1_ID() {
-        return User1_ID;
-    }
-    public int getUser2_ID() {
-        return User2_ID;
-    }
+    ////////////////////////////////////////////////////METHODS//////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////getters//////////////////////////////////////////////////
     public Pair getUser_IDs() {
         return User_IDs;
     }
@@ -46,11 +42,13 @@ class FriendShip {
     public Pair getFriendship_ID() { return Friendship_ID;}
 
     public String getFriendship_status() {
-        return Friendship_status;
+        return StringFriendship_status;
     }
-    public String getFriendship_Role() {
+    public Pair getFriendship_Role() {
         return Friendship_Role;
     }
+
+    ////////////////////////////////////////////////////setters//////////////////////////////////////////////////
 
     public void setUser_IDs(int user1_id, int user2_id) {
         User_IDs = new Pair<>(user1_id,user1_id);
@@ -63,21 +61,16 @@ class FriendShip {
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
     }
 
-    public void setFriendship_Role(int Friend_Role) {
-        if (Friend_Role == 0)
-            Friendship_Role = "Restricted";
-        else  Friendship_Role = "Regular";
+    public void setFriendship_Role(int friend_role, User user) {
+        if (user == this.User1)
+            Friend1_Role = friend_role;
+        if (user == this.User2)
+            Friend2_Role = friend_role;
+        Friends_Roles= new Pair<> (Friend1_Role, Friend2_Role);
+        Friendship_Role = new Pair<>(User_IDs, Friends_Roles);
     }
 
-    public void Set_Friendship_status(Pair Friendship_ID) {
-        //Friendship_ID will be pair after that
-        if (Friendship_Status.getKey().equals(0) && Friendship_Status.getValue().equals(0))
-            Friendship_status = "Declined";
 
-        else if (Friendship_Status.getKey().equals(1) && Friendship_Status.getValue().equals(1))
-            Friendship_status = "Accepted";
-
-    }
     public void acceptFriendRequest() {
         //change pair
         status_user1 = 1; status_user2 = 1;
@@ -99,12 +92,13 @@ class FriendShip {
         status_user1 = 0; status_user2 = 0;
         Friendship_Status = new Pair<>(status_user1, status_user1);
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
+        StringFriendship_status = "Declined";
         System.out.println("You declined friend request from " + User2.getUserName());
     }
     public void addMutualPost(Post post){
         Mutual_Posts.add(post);
     }
-    //mutual posts
+
     public ArrayList<Post> getMutual_Posts() {
         return Mutual_Posts;
     }
