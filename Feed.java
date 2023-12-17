@@ -356,6 +356,9 @@ public class Feed {
     }
 
     public void showposts (int counter){
+        if (counter>FeedPosts.size()){
+            counter=0;
+        }
         for (int i = 0; i < 3 && FeedPosts.size()>=(i+counter); i++) {
             Post post=FeedPosts.get(i+counter);
             System.out.println(i+1+"."+post.getAuthor());
@@ -376,14 +379,14 @@ public class Feed {
     public void ViewFeed(){
         int counter=0;
         Boolean checker=new Boolean(true);
+        showposts(counter);
         while (checker){
-            showposts(counter);
-
             System.out.println("If you want to expand post Enter the number of the post");
             System.out.println("4.Next posts");
             System.out.println("5.Return to main");
             System.out.print("Enter your choice : ");
             int choice=in.nextInt();
+
             switch (choice){
                 case 1:FeedPosts.get(counter).Expandpost();
                     break;
@@ -392,18 +395,21 @@ public class Feed {
                 case 3:FeedPosts.get(counter+2).Expandpost();
                     break;
                 case 4:
+                    counter+=3;
+                    showposts(counter);
                     break;
                 case 5:
-                    viewUserFeed();
+                    checker=false;
                     break;
                 default:
                     System.out.println("invalid choice");
+                    ViewFeed();
 
             }
 
             counter+=3;
         }
-
+        viewUserFeed();
     }
 
     public void evaluatePosts (){

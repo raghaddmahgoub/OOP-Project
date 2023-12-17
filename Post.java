@@ -87,7 +87,7 @@ public class Post extends Text {
     }
     public static int getTimeScore (long x) {
         if (x >= 72) {
-            return 1;
+            return -50;
         } else if (x >= 48) {
             return 2;
         } else if (x >= 24) {
