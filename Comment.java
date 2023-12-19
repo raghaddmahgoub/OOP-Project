@@ -22,8 +22,8 @@ public class Comment extends Text{
         Comment newComment = new Comment( content);
     }
     public void addReply(String content){
-       Reply reply= new Reply(content);
-       userReplies.add(reply);
+       Reply newReply= new Reply(content);
+       userReplies.add(newReply);
     }
     public void addReaction(){
         counterLikes++;

@@ -30,8 +30,10 @@ public class User
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
     private ArrayList<Post> Posts = new ArrayList<Post>();
-    private ArrayList<Comment> comments= new ArrayList<Comment>();
-    private ArrayList<Reply> replies = new ArrayList<Reply>();
+
+    public static ArrayList<Comment> comments= new ArrayList<Comment>();
+
+    public static ArrayList<Reply> replies = new ArrayList<Reply>();
 
 
     private ArrayList<Post> Feed = new ArrayList<Post>();
@@ -54,6 +56,14 @@ public class User
     public ArrayList<Post> getPosts() {
         return Posts;
     }
+    public static ArrayList<Comment> getComments() {
+        return comments;
+    }
+    public static ArrayList<Reply> getReplies() {
+        return replies;
+    }
+
+
     public ArrayList<Post> getFeedPosts() {
         return Feed;
     }
