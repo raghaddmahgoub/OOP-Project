@@ -13,6 +13,8 @@ public class Feed {
 
 
     UserDashBoard dashboard;
+    private String content;
+
     public Feed(User user){
         this.user = user;
         viewUserFeed();
@@ -200,33 +202,26 @@ public void display_replies (Post post ,int commentId){
     for (Reply reply :comment.getUserReplies()) {
         reply.displayContent();
     }
-    //do u want to add reply ?
+    System.out.println("do you want to add a reply ? y or n");
+    char c= in.next().charAt(0);
+    if(c== 'y'|| c=='Y')
+        addReply(user.getUserID());
+    Get_Posts_By_PrivacyLevel();
 
     Get_Posts_By_PrivacyLevel();
 }
     public void addComment(int userid){
-        //hata5dy el content tsagelyh fel comment
-        //hat5aznyh fel arraylist in user
+        Comment newComment = new Comment( content);
+        User.comments.add(newComment);
+
     }
     public void addReply(int userid){
+        Reply newReply= new Reply(content);
+        User.replies.add(newReply);
 
     }
-//Raghad
-//            System.out.println("Posts");getPosts();
-//   inside get posts() should be method for getting comments and replies
-//        }
-//    System.out.println("do you want to add a comment ? y or n");
-//            char choice = in.next().charAt(0);
-//            if (choice=='y'||choice=='Y' ){
-//                addComment();
-//    System.out.println("do you want to add a reply ? y or n");
-//            char choice = in.next().charAt(0);
-//            if (choice=='y'||choice=='Y' ){
-//                addReply();//
-//System.out.println("Posts");
-// getPosts();
-//        }
-
+//need to add reacts to comments and replies, need to implement userId parameters in addcomment and addreply methods
+//RAGHAD
 
     ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
     /*public void sendMessage (String content){
