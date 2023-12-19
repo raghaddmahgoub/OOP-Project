@@ -5,15 +5,15 @@ import org.w3c.dom.ls.LSOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
-//user1=3 user2=5
-//pair=35;
-// pair (35,accepted)
 
 class FriendShip {
 ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////////////
     private User User1, User2;
+    Timestamp FriendsSince ;
     private Pair User_IDs =new Pair(User1.getUserID(),User2.getUserID());
     private int status_user1, status_user2;
     private Pair Friendship_Status =new Pair(status_user1,status_user2);
@@ -63,6 +63,8 @@ class FriendShip {
    }
     ////////////////////////////////////////////////////setters//////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////setters//////////////////////////////////////////////////
+
     public void setUser_IDs(int user1_id, int user2_id) {
         User_IDs = new Pair<>(user1_id,user1_id);
     }
@@ -88,10 +90,16 @@ class FriendShip {
         status_user1 = 1; status_user2 = 1;
         Friendship_Status = new Pair<>(status_user1, status_user1);
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
-        StringFriendship_status = "Accepted";
-        System.out.println("You accepted friend request from " + User2.getUserName() +" \nNow you are Friends" );
-        User1.addFriend(User2);
-        User2.addFriend(User1);
+        System.out.println("You accepted friend request from " + User2.getUserName() +"Now you are Friends" );
+        User1.AddFriend(User2);
+        User2.AddFriend(User1);
+        FriendsSince = Timestamp.valueOf(LocalDateTime.now());
+    }
+    public long GetRelationTimeInDays (){
+        Timestamp t=Timestamp.valueOf(LocalDateTime.now());
+        long x=t.getTime()-FriendsSince.getTime();
+        x=x/86400000;
+        return x;
     }
 
     public void declineFriendRequest() {
@@ -104,5 +112,33 @@ class FriendShip {
     public void addMutualPost(Post post){
         Mutual_Posts.add(post);
     }
-    //mutual posts
+
+    public ArrayList<Post> getMutual_Posts() {
+        return Mutual_Posts;
+    }
+    public static FriendShip getFriendship(User First_User,User Second_User ) {
+
+        Pair Searched_Users_IDs1 = new Pair(First_User.getUserID(), Second_User.getUserID());
+        Pair Searched_Users_IDs2 = new Pair(Second_User.getUserID(), First_User.getUserID());
+        for (FriendShip friendship : Main.friendship) {
+            if (friendship.User_IDs == Searched_Users_IDs1 || friendship.User_IDs == Searched_Users_IDs2 ) {
+            return friendship;
+            }
+        }
+    return null;
+   }
+   public long getRelationScore(){
+        long x=GetRelationTimeInDays();
+        if(x>180){
+            return 15;
+        } else if (x>=60) {
+            return 12;
+        } else if (x>=30) {
+            return 9;
+        } else if (x>=15) {
+            return 6;
+        } else {
+            return 3;
+        }
+   }
 }
