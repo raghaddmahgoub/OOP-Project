@@ -40,10 +40,10 @@ public class UserDashBoard {
     public void viewProfile() {
         System.out.println("Profile:");
         System.out.println("UserName " + user.getUserName());
-//        System.out.println("Email: " + user.getEmail());
-//        System.out.println("Gender: " + user.getGender());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Gender: " + user.getGender());
 //        System.out.println("Date Of Birth: " + user.getBirthdate());
-//        System.out.println("Phone Number: " + user.getPhoneNumber());
+        System.out.println("Phone Number: " + user.getPhoneNumber());
         System.out.println("1- Return back to dashboard");
         System.out.println("2- Return back to feed");
         boolean InvalidChoice = true;
