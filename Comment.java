@@ -6,22 +6,20 @@ public class Comment extends Text{
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
     private int counterLikes;
-    //pair between comment and the user
     private static int commentId;
-    private int authorId;
 
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
-    public Comment( int authorId,String content) {
+    public Comment( String content) {
         super(commentId++);
         this.counterLikes = 0;
         this.userReplies = new ArrayList<>();
         this.content =content;
-        this.authorId = authorId;
+
     }
 
 ////////////////////////////////////////////METHODS//////////////////////////////////////////
     public void addComment(){
-        Comment newComment = new Comment(authorId, content);
+        Comment newComment = new Comment( content);
     }
     public void addReply(String content){
        Reply reply= new Reply(content);

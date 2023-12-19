@@ -4,7 +4,7 @@ public abstract class Text {
 
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     protected int Id;
-    protected User author;
+    protected int authorid;
     protected String content;
     protected LocalDateTime timestamp;
     protected int cntReacts=0;
@@ -36,6 +36,13 @@ public abstract class Text {
         System.out.println(content);
     }
 
+    public int getAuthorid() {
+        return authorid;
+    }
+
+    public void setAuthorid(int authorid) {
+        this.authorid = authorid;
+    }
 
 
     public abstract void addReact();

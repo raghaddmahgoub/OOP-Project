@@ -50,8 +50,8 @@ public class Post extends Text {
         return taggedUsers;
     }
 
-    public void addComment(User commenter , String content){
-        Comment comment= new Comment(commenter.getUserID(), content);
+    public void addComment(String content){
+        Comment comment= new Comment( content);
         this.comments.add(comment);
     }
 

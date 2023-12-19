@@ -180,7 +180,10 @@ public class Feed {
            int commentId = in.nextInt();
            display_replies(post,commentId);
        }
-       //do u want to add comment ?
+       System.out.println("do you want to add a comment ? y or n");
+       char c= in.next().charAt(0);
+       if(c== 'y'|| c=='Y')
+           addComment(user.getUserID());
        Get_Posts_By_PrivacyLevel();
     }
     public Comment get_comment_by_id(Post post, int commentId){
@@ -201,6 +204,13 @@ public void display_replies (Post post ,int commentId){
 
     Get_Posts_By_PrivacyLevel();
 }
+    public void addComment(int userid){
+        //hata5dy el content tsagelyh fel comment
+        //hat5aznyh fel arraylist in user
+    }
+    public void addReply(int userid){
+
+    }
 //Raghad
 //            System.out.println("Posts");getPosts();
 //   inside get posts() should be method for getting comments and replies
