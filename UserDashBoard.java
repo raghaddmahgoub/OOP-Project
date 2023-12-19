@@ -6,17 +6,20 @@ public class UserDashBoard {
     static Scanner in = new Scanner(System.in);
     static User user;
     Feed feed;
+
     public UserDashBoard(User user) {
         this.user = user;
         viewDashboard();
     }
+
     public void viewDashboard() {
         System.out.println("1-View Your Profile");
         System.out.println("2-Update Your Profile");
-        System.out.println("3-Back To Your Feed");
+        System.out.println("3-view my post");
+        System.out.println("4-Back To Your Feed");
         boolean InvalidChoice = true;
-      while (InvalidChoice = true){
-          int choice = in.nextInt();
+        while (InvalidChoice = true) {
+            int choice = in.nextInt();
             switch (choice) {
                 case 1:
                     viewProfile();
@@ -33,13 +36,14 @@ public class UserDashBoard {
             }
         }
     }
+
     public void viewProfile() {
         System.out.println("Profile:");
         System.out.println("UserName " + user.getUserName());
-//        System.out.println("Email: " + user.getEmail());
-//        System.out.println("Gender: " + user.getGender());
-//        System.out.println("Date Of Birth: " + user.getBirthdate());
-//        System.out.println("Phone Number: " + user.getPhoneNumber());
+        System.out.println("Email: " + user.getEmail());
+        // System.out.println("Gender: " + user.getGender());
+        //  System.out.println("Date Of Birth: " + user.getBirthdate());
+        System.out.println("Phone Number: " + user.getPhoneNumber());
         System.out.println("1- Return back to dashboard");
         System.out.println("2- Return back to feed");
         boolean InvalidChoice = true;
@@ -58,12 +62,13 @@ public class UserDashBoard {
             }
         }
     }
+
     public void updateProfile() {
         System.out.println("1- Update Your UserName");
         System.out.println("2- Change Your Password");
         System.out.println("3- Return To Dashboard");
         boolean InvalidChoice = true;
-        while (InvalidChoice = true){
+        while (InvalidChoice = true) {
             int choice = in.nextInt();
             switch (choice) {
                 case 1:
@@ -81,14 +86,14 @@ public class UserDashBoard {
             }
         }
     }
+
     public void updateUserName() {
         boolean InvalidChoice = true;
         System.out.println("Current User Name: " + user.getUserName());
-        System.out.println("\nEnter your New Name: ");
+        System.out.println("Enter your New Name: ");
         user.setUser_Name(in.next());
-        while (user.getUserName().isEmpty())
-        {
-            System.out.println("Username Can't be Empty");
+        while (user.getUserName().length() < 8) {
+            System.out.println("Username Should be More Than 8 Characters, Try Again: ");
             System.out.println("Enter Username :");
             user.setUser_Name(in.next());
         }
@@ -114,30 +119,37 @@ public class UserDashBoard {
             }
         }
     }
-        public void changePassword () {
-            String oldPassword;
-            String NewPassword;
-            System.out.println("Enter your current password: ");
+
+    public void changePassword() {
+        String oldPassword;
+        String NewPassword;
+        System.out.println("Enter your current password: ");
+        oldPassword = in.next();
+        while (!user.getPassword().equals(oldPassword)) {
+            System.out.println("Wrong Password, Please try again: ");
             oldPassword = in.next();
-            while (oldPassword.isEmpty()) {
-                System.out.println("Password is Empty please Try again :( ");
-                System.out.println("Enter your current password: ");
-                oldPassword = in.next();
-            }
-            while (!user.getPassword().equals(oldPassword)) {
-                System.out.println("Enter your current password: ");
-                oldPassword = in.next();
-            }
-            System.out.println("Enter your New password: ");
+        }
+        System.out.println("Enter your New password: ");
+        NewPassword = in.next();
+        while (NewPassword.length() < 8){
+            System.out.println("Password Should be More Than 8 Characters, Try Again: ");
             NewPassword = in.next();
-            user.setPassword(NewPassword);
-            while (NewPassword.isEmpty()) {
-                System.out.println("Password is Empty please Try again :( ");
-                System.out.println("Enter your current password: ");
-                NewPassword = in.next();
-            }
         }
-        public void backToFeed () {
-            feed = new Feed(user);
+        user.setPassword(NewPassword);
+    }
+    void ViewPostsOfMe() {
+        System.out.println ("Posts");
+        for (Post Posts : user.getPosts())
+        {
+            System.out.println(Posts);
         }
+    }
+    public void editPost(Post post){
+        String edittedContent= in.next();
+        post.setContent(edittedContent);
+    }
+
+    public void backToFeed() {
+        feed = new Feed(user);
+    }
 }
