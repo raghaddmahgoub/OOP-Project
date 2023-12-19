@@ -30,13 +30,13 @@ public class User
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList<Notification> Notifications = new ArrayList<Notification>();
     private ArrayList<Post> Posts = new ArrayList<Post>();
+
+    public static ArrayList<Comment> comments= new ArrayList<Comment>();
+
+    public static ArrayList<Reply> replies = new ArrayList<Reply>();
+
+
     private ArrayList<Post> Feed = new ArrayList<Post>();
-    public ArrayList<Post> getPosts() {
-        return Posts;
-    }
-    public ArrayList<Post> getFeedPosts() {
-        return Feed;
-    }
 
 ////////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
 
@@ -55,6 +55,20 @@ public class User
         this.Email = Email;
     }
     ////////////////////////////////////////////////////////////methods//////////////////////////////////////////////////////////////
+    public ArrayList<Post> getPosts() {
+        return Posts;
+    }
+    public static ArrayList<Comment> getComments() {
+        return comments;
+    }
+    public static ArrayList<Reply> getReplies() {
+        return replies;
+    }
+
+
+    public ArrayList<Post> getFeedPosts() {
+        return Feed;
+    }
     public ArrayList<User> getFriends() {
         return Friends;
     }

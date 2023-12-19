@@ -1,25 +1,31 @@
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Reply extends Comment{
+public class Reply extends Text{
+    /////////////////////////////////////////ATTRIBUTES//////////////////////////////////
     private int replyID;
+    //pair between reply and the user
     private int replyreaction;
 
-    public Reply(int authorID, String content) {
-        super(authorID, content);
+    public Reply( String content) {
+        super(content);
         replyID++;
     }
+
     public int getReplyID() {
         return replyID;
     }
     public void setReplyID(int replyID) {
         this.replyID = replyID;
     }
+
     @Override
-    public void addReaction() {
+    public void addReact() {
         replyreaction++;
     }
-    public int getReplyreaction() {
+
+    @Override
+    public int getReacts() {
         return replyreaction;
     }
 

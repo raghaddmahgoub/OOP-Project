@@ -13,6 +13,8 @@ public class Feed {
     public static ArrayList <Post> FeedPosts=new ArrayList<>();
 
     UserDashBoard dashboard;
+    private String content;
+
     public Feed(User user){
         this.user = user;
         viewUserFeed();
@@ -97,7 +99,7 @@ public class Feed {
         }
         public void addTaggedUser(Post post) {
         if (user.getFriends().size()>0) {
-            for (User friendlist : user.Friends) {
+            for (User friendlist : user.getFriends()) {
                 System.out.println(friendlist.getUserName());
                 System.out.println('\n');
             }
@@ -106,6 +108,7 @@ public class Feed {
             for (User friend : user.getFriends()) {
                 if (friendName.equals(friend.getUserName())) {
                     post.TagUser(friend);
+                    //mutual posts
                     FriendShip f=FriendShip.getFriendship(friend,user);
                     f.addMutualPost(post);
                     System.out.println("tagged friends successfully\n");
@@ -131,7 +134,95 @@ public class Feed {
                     System.out.println("invalid input");
                     setPostPrivacy(post);
             }
-        }/*
+        }
+    public void Get_Posts_By_PrivacyLevel() {
+        for (FriendShip friendship:user.getRelations()) {
+            if(friendship.getFriendship_Role().equals("Regular")){
+                for (User friend: user.getFriends()) {
+                    System.out.println(friend.getPosts().get(0).getId());
+                    friend.getPosts().indexOf(0);
+                    System.out.println("\n");
+                    System.out.println(friend.getPosts().get(1).getId());
+                    friend.getPosts().indexOf(1);
+                }
+            }
+        }
+            System.out.println("do u want to access comments y or n ?");
+             char choice = in.next().charAt(0);
+                if (choice=='y'||choice=='Y' ){
+                    System.out.println("enter the post id you would like to view comments on");
+                    int postId = in.nextInt();
+                   display_comments(postId);
+                }
+        viewUserFeed();
+    }
+     public Post get_post_by_id(int postId){
+         for (User friend: user.getFriends()) {
+             for (Post friendpost: friend.getPosts()) {
+                    if (friendpost.getId()== postId){
+                        return friendpost;
+                    }
+             }
+         }
+         return null;
+     }
+
+    //comments methods
+   public void display_comments (int postId){
+       //getArray of comments
+       Post post= get_post_by_id(postId);
+       for (Comment comment: post.getComments()) {
+           comment.displayContent();
+       }
+       System.out.println("do u want to access replies y or n ?");
+       char choice = in.next().charAt(0);
+       if (choice=='y'||choice=='Y' ){
+           System.out.println("enter the comment id you would like to view replies on");
+           int commentId = in.nextInt();
+           display_replies(post,commentId);
+       }
+       System.out.println("do you want to add a comment ? y or n");
+       char c= in.next().charAt(0);
+       if(c== 'y'|| c=='Y')
+           addComment(user.getUserID());
+       Get_Posts_By_PrivacyLevel();
+    }
+    public Comment get_comment_by_id(Post post, int commentId){
+        for (Comment targetcomment: post.getComments()) {
+                if (targetcomment.getId()==commentId)
+                    return targetcomment;
+        }
+        return null;
+    }
+
+public void display_replies (Post post ,int commentId){
+
+    Comment comment =get_comment_by_id(post,commentId);
+    for (Reply reply :comment.getUserReplies()) {
+        reply.displayContent();
+    }
+    System.out.println("do you want to add a reply ? y or n");
+    char c= in.next().charAt(0);
+    if(c== 'y'|| c=='Y')
+        addReply(user.getUserID());
+    Get_Posts_By_PrivacyLevel();
+
+    Get_Posts_By_PrivacyLevel();
+}
+    public void addComment(int userid){
+        Comment newComment = new Comment( content);
+        User.comments.add(newComment);
+
+    }
+    public void addReply(int userid){
+        Reply newReply= new Reply(content);
+        User.replies.add(newReply);
+
+    }
+//need to add reacts to comments and replies, need to implement userId parameters in addcomment and addreply methods
+//RAGHAD
+
+    ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
     /*public void sendMessage (String content){
         Messages newMessage = new Messages ();
         newMessage.setContent(content);
@@ -315,23 +406,27 @@ public class Feed {
         }
     }
 
-    public void Get_Mutual_Posts(User First_User, User Second_User){
-        FriendShip A_Friendship = FriendShip.getFriendship(First_User, Second_User);
-        if (A_Friendship != null)
-        {
-            for (Post post: A_Friendship.getMutual_Posts()){
-                //Post Data
+    public void Get_Mutual_Posts(User First_User, User Second_User) {
+
         Pair Searched_Users_IDs = new Pair(First_User.getUserID(), Second_User.getUserID());
-        for (FriendShip friendship: Main.friendship){
-            if (friendship.getUser_IDs() == Searched_Users_IDs && friendship.getFriendship_status().equals("Accepted"))
-            {
-                for (Post post: friendship.getMutual_Posts()){
+        for (FriendShip friendship : Main.friendship) {
+            if (friendship.getUser_IDs() == Searched_Users_IDs && friendship.getFriendship_status().equals("Accepted")) {
+                for (Post post : friendship.getMutual_Posts()) {
                     //Post Data
                 }
+
+                FriendShip A_Friendship = FriendShip.getFriendship(First_User, Second_User);
+                if (A_Friendship != null) {
+                    for (Post post : A_Friendship.getMutual_Posts()) {
+                        //Post Data
+
+                    }
+                } else
+                    System.out.println("There are no mutual posts between these two users because they are not friends! ");
             }
         }
-        else System.out.println("There are no mutual posts between these two users because they are not friends! ");
     }
+
     public ArrayList<User> Get_Mutual_Friends(User First_User, User Second_User){
         ArrayList<User> friendsList1 = First_User.getFriends();
         ArrayList<User> friendsList2 = Second_User.getFriends();
@@ -439,3 +534,4 @@ public class Feed {
         }
     }
 }
+

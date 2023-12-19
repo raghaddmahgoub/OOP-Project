@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 
 public class Post extends Text {
+
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private static int Id;
     private ArrayList<User> taggedUsers = new ArrayList<User>();
@@ -28,6 +29,10 @@ public class Post extends Text {
         super(content);
     }
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
+    @Override
+    public int getId() {
+        return Id;
+    }
     public String getPrivacy() {
         return privacy;
     }
@@ -53,8 +58,8 @@ public class Post extends Text {
         return taggedUsers;
     }
 
-    public void addComment(User commenter , String content){
-        Comment comment= new Comment(commenter.getUserID(),content);
+    public void addComment(String content){
+        Comment comment= new Comment( content);
         this.comments.add(comment);
         NumberOfComments++;
     }
@@ -68,7 +73,7 @@ public class Post extends Text {
 
     }
 
-    public ArrayList<Comment> getComment() {
+    public ArrayList<Comment> getComments() {
         return comments;
     }
 

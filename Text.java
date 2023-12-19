@@ -3,15 +3,9 @@ import java.time.LocalDateTime;
 
 public abstract class Text {
 
-
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     protected int Id;
-    protected int userId;
-
-    public String getContent() {
-        return content;
-    }
-
+    protected int authorid;
     protected String content;
     protected Timestamp timestamp;
     protected int cntReacts=0;
@@ -29,11 +23,7 @@ public abstract class Text {
         return Id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
     public Timestamp getTimestamp() {
@@ -47,6 +37,13 @@ public abstract class Text {
         System.out.println(content);
     }
 
+    public int getAuthorid() {
+        return authorid;
+    }
+
+    public void setAuthorid(int authorid) {
+        this.authorid = authorid;
+    }
 
 
     public abstract void addReact();
