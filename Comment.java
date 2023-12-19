@@ -8,18 +8,20 @@ public class Comment extends Text{
     private int counterLikes;
     //pair between comment and the user
     private static int commentId;
+    private int authorId;
 
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
-    public Comment( String content) {
+    public Comment( int authorId,String content) {
         super(commentId++);
         this.counterLikes = 0;
         this.userReplies = new ArrayList<>();
         this.content =content;
+        this.authorId = authorId;
     }
 
 ////////////////////////////////////////////METHODS//////////////////////////////////////////
     public void addComment(){
-        Comment newComment = new Comment(content);
+        Comment newComment = new Comment(authorId, content);
     }
     public void addReply(String content){
        Reply reply= new Reply(content);

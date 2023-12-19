@@ -40,10 +40,10 @@ public class UserDashBoard {
     public void viewProfile() {
         System.out.println("Profile:");
         System.out.println("UserName " + user.getUserName());
-//        System.out.println("Email: " + user.getEmail());
-//        System.out.println("Gender: " + user.getGender());
-//        System.out.println("Date Of Birth: " + user.getBirthdate());
-//        System.out.println("Phone Number: " + user.getPhoneNumber());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Gender: " + user.getGender());
+        //  System.out.println("Date Of Birth: " + user.getBirthdate());
+        System.out.println("Phone Number: " + user.getPhoneNumber());
         System.out.println("1- Return back to dashboard");
         System.out.println("2- Return back to feed");
         boolean InvalidChoice = true;
@@ -90,13 +90,13 @@ public class UserDashBoard {
     public void updateUserName() {
         boolean InvalidChoice = true;
         System.out.println("Current User Name: " + user.getUserName());
-        System.out.println("\nEnter your New Name: ");
+        System.out.println("Enter your New Name: ");
         user.setUser_Name(in.next());
-        while (user.getUserName().isEmpty()) {
-            System.out.println("Username Can't be Empty");
+        while (user.getUserName().length() < 8) {
+            System.out.println("Username Should be More Than 8 Characters, Try Again: ");
             System.out.println("Enter Username :");
-            user.setUser_Name(in.next());
         }
+        user.setUser_Name(in.next());
         System.out.println("Username is updated successfully :)");
         System.out.println("Your new username is " + user.getUserName());
         System.out.println("1- Return back to dashboard");
@@ -125,23 +125,17 @@ public class UserDashBoard {
         String NewPassword;
         System.out.println("Enter your current password: ");
         oldPassword = in.next();
-        while (oldPassword.isEmpty()) {
-            System.out.println("Password is Empty please Try again :( ");
-            System.out.println("Enter your current password: ");
-            oldPassword = in.next();
-        }
         while (!user.getPassword().equals(oldPassword)) {
-            System.out.println("Enter your current password: ");
+            System.out.println("Wrong Password, Please try again: ");
             oldPassword = in.next();
         }
         System.out.println("Enter your New password: ");
         NewPassword = in.next();
-        user.setPassword(NewPassword);
-        while (NewPassword.isEmpty()) {
-            System.out.println("Password is Empty please Try again :( ");
-            System.out.println("Enter your current password: ");
+        while (NewPassword.length() < 8){
+            System.out.println("Password Should be More Than 8 Characters, Try Again: ");
             NewPassword = in.next();
         }
+        user.setPassword(NewPassword);
     }
     void ViewPostsOfMe() {
         System.out.println ("Posts");

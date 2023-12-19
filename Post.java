@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 public class Post extends Text {
+
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private static int Id;
     private ArrayList<User> taggedUsers = new ArrayList<User>();
@@ -20,6 +21,10 @@ public class Post extends Text {
         super(content);
     }
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
+    @Override
+    public int getId() {
+        return Id;
+    }
     public String getPrivacy() {
         return privacy;
     }
@@ -46,11 +51,11 @@ public class Post extends Text {
     }
 
     public void addComment(User commenter , String content){
-        Comment comment= new Comment(content);
+        Comment comment= new Comment(commenter.getUserID(), content);
         this.comments.add(comment);
     }
 
-    public ArrayList<Comment> getComment() {
+    public ArrayList<Comment> getComments() {
         return comments;
     }
 }

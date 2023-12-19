@@ -2,6 +2,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Reply extends Text{
+    /////////////////////////////////////////ATTRIBUTES//////////////////////////////////
     private int replyID;
     //pair between reply and the user
     private int replyreaction;
@@ -10,12 +11,14 @@ public class Reply extends Text{
         super(content);
         replyID++;
     }
+
     public int getReplyID() {
         return replyID;
     }
     public void setReplyID(int replyID) {
         this.replyID = replyID;
     }
+
     @Override
     public void addReact() {
         replyreaction++;
