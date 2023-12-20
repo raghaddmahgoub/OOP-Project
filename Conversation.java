@@ -11,7 +11,7 @@ public class Conversation {
     public Timestamp timestamp;
     private ArrayList<Messages> Messages = new ArrayList<>();
     private ArrayList<String> Participants = new ArrayList<>();
-    ArrayList <Integer> NoUnreadMessages=new ArrayList<>();
+    ArrayList <Integer> noUnreadMessages=new ArrayList<>();
 
     private String Status;
 
@@ -29,6 +29,7 @@ public class Conversation {
     public void Add_Message(int senderID, int recipientID) {
         String content = in.next();
         Messages.add(new Messages(senderID, recipientID, content));
+        noUnreadMessages.remove(Integer.valueOf(messageId));
     }
     public void Sort_Messages() {
         Messages.sort(new sorting());
@@ -42,9 +43,41 @@ public class Conversation {
         }
         return "Private Chat";
     }
+    public void markAsRead() {
+        noUnreadMessages.clear();
+    }
+
+    public boolean isRead() {
+        return noUnreadMessages.isEmpty();
+    }
+
+    public boolean isParticipant(int userId) {
+        return participants.contains(String.valueOf(userId));
+    }
+
     private void ViewParticipants() {
         System.out.println(getParticipants());
     }
+    // method to search within the conv
+    public boolean containsKeyword(String keyword) {
+        for (Message message : messages) {
+            if (message.getContent().contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Message> searchMessages(String keyword) {
+        List<Message> matchingMessages = new ArrayList<>();
+        for (Message message : messages) {
+            if (message.getContent().contains(keyword)) {
+                matchingMessages.add(message);
+            }
+        }
+        return matchingMessages;
+    }
+   
     public LocalDateTime getTime(){
         LocalTime systemTime = LocalTime.now();
         LocalDate currentDate = LocalDate.now();
