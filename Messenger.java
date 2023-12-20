@@ -142,10 +142,10 @@ public class Messenger {
     public Conversation findConversation(int conversationId) {
         for (Conversation conversation : conversations) {
             if (conversation.getConversationId() == conversationId) {
-                return conversation; // Return the conversation if found
+                return conversation; 
             }
         }
-        return null; // Return null if no conversation is found for the given ID
+        return null; 
     }
 
 
@@ -158,7 +158,7 @@ public class Messenger {
                 return conversation;
             }
         }
-        return null; //
+        return null; 
     }
 
 }
