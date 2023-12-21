@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Messages {
-    private static int Message_ID;
+    private int Message_ID;
     private ArrayList<Reply> MessageReplies = new ArrayList<>();
     private int ReactionCounter;
     private int Sender_ID;       //pair??
@@ -30,21 +30,21 @@ public class Messages {
         Content = content;
     }
     //Methods
-    public void EditMessage(Messages mes) {
-        String NewContent = in.next();
-        mes.setContent(NewContent);
+    public void EditMessage(String content) {
+        setContent(content);
+        System.out.println("Edited Successfully");
     }
-    public void AddReply(int sender_ID) {
+    public void AddReply() {
         String Reply = in.next();
-        MessageReplies.add(new Reply(sender_ID,Reply));
+        MessageReplies.add(new Reply(Reply));
     }
 
-    public void Status(Messages mes,String value) {
-        mes.setStatus(value);
+    public void Status(String value) {
+        setStatus(value);
     }
-    public void addReact(Messages mes) {
-        int i=mes.getReactionCounter();
-        mes.setReactionCounter(++i);
+    public void addReact() {
+        int i=getReactionCounter();
+        setReactionCounter(++i);
     }
     public LocalDateTime getTime(){
         LocalTime systemTime = LocalTime.now();
@@ -53,10 +53,10 @@ public class Messages {
         return timestamp;
     }
     //getters & setters
-    public static int getMessage_ID() {
+    public  int getMessage_ID() {
         return Message_ID;
     }
-    public static void setMessage_ID(int message_ID) {
+    public  void setMessage_ID(int message_ID) {
         Message_ID = message_ID;
     }
     public ArrayList<Reply> getMessageReplies() {

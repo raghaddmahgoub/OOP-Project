@@ -6,13 +6,12 @@ import java.util.*;
 
 public class Conversation {
     Scanner in = new Scanner(System.in);
-               //Attributes
+    //Attributes
     private int conversation_id;
     public Timestamp timestamp;
     private ArrayList<Messages> Messages = new ArrayList<>();
     private ArrayList<String> Participants = new ArrayList<>();
     ArrayList <Integer> noUnreadMessages=new ArrayList<>();
-
     private String Status;
 
     //Constructor
@@ -22,20 +21,23 @@ public class Conversation {
         this.Messages = new ArrayList<>();
         this.Participants = participants;
         Status = GroupOrPrivateChat();
-        NoUnreadMessages=null;
+        noUnreadMessages=null;
     }
 
-                 //Methods
-    public void Add_Message(int senderID, int recipientID) {
-        String content = in.next();
+    //Methods
+    public void Add_Message(int senderID, int recipientID,String content) {
         Messages.add(new Messages(senderID, recipientID, content));
         noUnreadMessages.remove(Integer.valueOf(messageId));
     }
     public void Sort_Messages() {
-        Messages.sort(new sorting());
+        Messages.sort(new sorting().reversed());
     }
-    public void DeleteMessage(Messages mes) {
-        Messages.remove(mes);
+    public void DeleteMessage(int ID) {
+        for (Messages mes:getMessages()) {
+            if(mes.getMessage_ID()==ID){
+                Messages.remove(mes);
+            }
+        }
     }
     public String GroupOrPrivateChat() {
         if (this.Participants.size() > 2) {
@@ -52,7 +54,7 @@ public class Conversation {
     }
 
     public boolean isParticipant(int userId) {
-        return participants.contains(String.valueOf(userId));
+        return Participants.contains(String.valueOf(userId));
     }
 
     private void ViewParticipants() {
@@ -60,7 +62,7 @@ public class Conversation {
     }
     // method to search within the conv
     public boolean containsKeyword(String keyword) {
-        for (Message message : messages) {
+        for (Messages message : getMessages()) {
             if (message.getContent().contains(keyword)) {
                 return true;
             }
@@ -68,23 +70,23 @@ public class Conversation {
         return false;
     }
 
-    public List<Message> searchMessages(String keyword) {
-        List<Message> matchingMessages = new ArrayList<>();
-        for (Message message : messages) {
+    public List<Messages> searchMessages(String keyword) {
+        List<Messages> matchingMessages = new ArrayList<>();
+        for (Messages message : getMessages()) {
             if (message.getContent().contains(keyword)) {
                 matchingMessages.add(message);
             }
         }
         return matchingMessages;
     }
-   
+
     public LocalDateTime getTime(){
         LocalTime systemTime = LocalTime.now();
         LocalDate currentDate = LocalDate.now();
         LocalDateTime timestamp = LocalDateTime.of(currentDate, systemTime);
         return timestamp;
     }
-                   //getters & setters
+    //getters & setters
     public int getConversation_id() {
         return conversation_id;
     }
@@ -103,6 +105,15 @@ public class Conversation {
     public void setParticipants(ArrayList<String> participants) {
         Participants = participants;
     }
+
+    public ArrayList<Integer> getNoUnreadMessages() {
+        return noUnreadMessages;
+    }
+
+    public void setNoUnreadMessages(ArrayList<Integer> noUnreadMessages) {
+        this.noUnreadMessages = noUnreadMessages;
+    }
+
     public String getStatus() {
         return Status;
     }
