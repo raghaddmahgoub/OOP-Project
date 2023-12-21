@@ -27,13 +27,13 @@ public class Messenger {
     public void displayConversations() {
         System.out.println("Conversations:");
         for (Conversation conversation : conversations) {
-            System.out.println("Conversation ID: " + conversation.getConversationId());
+            System.out.println("Conversation ID: " + conversation.getConversation_id());
         }
     }
 
     // delete conversation
     public void deleteConversation(int conversationId) {
-        boolean removed = conversations.removeIf(conv -> conv.getConversationId() == conversationId);
+        boolean removed = conversations.removeIf(conv -> conv.getConversation_id() == conversationId);
         if (removed) {
             System.out.println("Conversation " + conversationId + " deleted successfully.");
         } else {
@@ -50,7 +50,7 @@ public class Messenger {
     public void addMessageToConversation(int conversationId, int senderId, int recipientId, String content) {
         Conversation conversation = findConversation(conversationId);
 
-            conversation.addMessage(senderId, recipientId, content);
+        conversation.Add_Message(senderId, recipientId, content);
 
     }
 
@@ -58,7 +58,7 @@ public class Messenger {
     public void deleteMessageFromConversation(int conversationId, int messageId) {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
-            conversation.deleteMessage(messageId);
+            conversation.DeleteMessage(messageId);
         } else {
             System.out.println("Conversation " + conversationId + " not found.");
         }
@@ -79,7 +79,7 @@ public class Messenger {
         int count = 0;
         for (Conversation conversation : conversations) {
             if (conversation.isParticipant(userId) && !conversation.isRead()) {
-                count += conversation.getUnreadMessagesCount(userId);
+                count += conversation.getNoUnreadMessages();
             }
         }
         return count;
@@ -97,7 +97,7 @@ public class Messenger {
     }
 
     // search messages in conversation by keyword
-    public List<Message> searchMessagesInConversation(int conversationId, String keyword) {
+    public List<Messages> searchMessagesInConversation(int conversationId, String keyword) {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
             return conversation.searchMessages(keyword);
@@ -108,7 +108,7 @@ public class Messenger {
     }
 
     // Get conversation history
-    public List<Message> getConversationHistory(int conversationId) {
+    public List<Messages> getConversationHistory(int conversationId) {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
             return conversation.getMessages();
@@ -122,7 +122,11 @@ public class Messenger {
     public void editMessageInConversation(int conversationId, int messageId, String newContent) {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
-            Message.EditMessage(messageId);
+            for (Messages mes:conversation.getMessages()) {
+                if(mes.getMessage_ID()==messageId){
+                    mes.EditMessage(newContent);
+                }
+            }
         } else {
             System.out.println("Conversation " + conversationId + " not found.");
         }
@@ -130,10 +134,10 @@ public class Messenger {
 
     // react to a message in conversation
     public void reactToMessageInConversation(int conversationId, int messageId, String reaction) {
-        Message mes = new Message();
+        Messages mes = new Messages();
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
-            mes.addReact(mes, reaction);
+            mes.addReact();
         } else{
             System.out.println("Conversation " + conversationId + " not found.");
         }
@@ -141,11 +145,11 @@ public class Messenger {
 
     public Conversation findConversation(int conversationId) {
         for (Conversation conversation : conversations) {
-            if (conversation.getConversationId() == conversationId) {
-                return conversation; 
+            if (conversation.getConversation_id() == conversationId) {
+                return conversation;
             }
         }
-        return null; 
+        return null;
     }
 
 
@@ -158,7 +162,7 @@ public class Messenger {
                 return conversation;
             }
         }
-        return null; 
+        return null;
     }
 
 }
