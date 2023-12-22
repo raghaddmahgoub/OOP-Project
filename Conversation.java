@@ -1,3 +1,4 @@
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -7,7 +8,7 @@ public class Conversation {
     Scanner in = new Scanner(System.in);
     //Attributes
     private int conversation_id;
-    public LocalDateTime timestamp;
+    public Timestamp timestamp;
     private ArrayList<Messages> Messages = new ArrayList<>();
     private ArrayList<String> Participants = new ArrayList<>();
     ArrayList <Integer> noUnreadMessages=new ArrayList<>();
@@ -16,7 +17,7 @@ public class Conversation {
     //Constructor
     public Conversation(ArrayList<String> participants) {
         conversation_id++;
-        timestamp = getTime();
+        timestamp = Timestamp.valueOf(getTime());
         this.Messages = new ArrayList<>();
         this.Participants = participants;
         Status = GroupOrPrivateChat();

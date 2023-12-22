@@ -3,15 +3,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Vector;
 
 public class Messenger {
     private List<Conversation> conversations;
-    private List<Integer> noUnreadConversations ;
+    private List<Integer> noUnreadConversations;
 
     public Messenger() {
         this.conversations = new ArrayList<>();
     }
+
 
     ////////methods
 
@@ -32,18 +35,31 @@ public class Messenger {
     }
 
     // delete conversation
+
+//// methods
+    /*
+    public int newConversation() {
+      int newConvId = conversations.size() + 1;
+        Conversation conversation = new Conversation(newConvId, System.currentTimeMillis());
+       conversations.add(conversation);
+        return newConvId;
+    }
+*/
+
+
     public void deleteConversation(int conversationId) {
         boolean removed = conversations.removeIf(conv -> conv.getConversation_id() == conversationId);
         if (removed) {
             System.out.println("Conversation " + conversationId + " deleted successfully.");
         } else {
+
             System.out.println("Conversation " + conversationId + " not found.");
         }
     }
 
     // sort conversations based on timestamp
     public void sortConversations() {
-        conversations.sort(Comparator.comparing(Conversation::getTimestamp).reversed());
+        // conversations.sort(Comparator.comparing(Conversation::getTimestamp).reversed());
     }
 
     // add message to conversation
@@ -79,7 +95,7 @@ public class Messenger {
         int count = 0;
         for (Conversation conversation : conversations) {
             if (conversation.isParticipant(userId) && !conversation.isRead()) {
-                count += conversation.getNoUnreadMessages();
+                count = count + conversation.getNoUnreadMessages().size();
             }
         }
         return count;
@@ -122,8 +138,8 @@ public class Messenger {
     public void editMessageInConversation(int conversationId, int messageId, String newContent) {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
-            for (Messages mes:conversation.getMessages()) {
-                if(mes.getMessage_ID()==messageId){
+            for (Messages mes : conversation.getMessages()) {
+                if (mes.getMessage_ID() == messageId) {
                     mes.EditMessage(newContent);
                 }
             }
@@ -138,7 +154,7 @@ public class Messenger {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
             mes.addReact();
-        } else{
+        } else {
             System.out.println("Conversation " + conversationId + " not found.");
         }
     }
@@ -163,6 +179,11 @@ public class Messenger {
             }
         }
         return null;
-    }
+/*
+                public void sortConversations () {
+                        //Sorting conversations based on timestamp from newest to oldest
+                    // conversations.sort(Comparator.comparingLong(Conversation::getTimestamp().reversed());
 
+                }*/
+    }
 }

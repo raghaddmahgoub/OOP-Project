@@ -1,11 +1,11 @@
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-
+import java.sql.Timestamp;
 public abstract class Text {
 
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     protected int Id;
-    protected int authorid;
+    protected User author;
     protected String content;
     protected Timestamp timestamp;
     protected int cntReacts=0;
@@ -23,7 +23,7 @@ public abstract class Text {
         return Id;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
     public Timestamp getTimestamp() {
@@ -37,12 +37,12 @@ public abstract class Text {
         System.out.println(content);
     }
 
-    public int getAuthorid() {
-        return authorid;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuthorid(int authorid) {
-        this.authorid = authorid;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
 

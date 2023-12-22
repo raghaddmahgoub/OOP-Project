@@ -12,16 +12,17 @@ public class Post extends Text {
     private ArrayList<User> taggedUsers = new ArrayList<User>();
     private FriendShip friendship;
     private final ArrayList<Comment> comments = new ArrayList<Comment>();
-    private String Author;
+    private User Author;
     private int NumberOfComments=0;
     public int Score=0;
     private String privacy;
+
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Post() {
         super(Id++);
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return Author;
     }
 
@@ -62,6 +63,7 @@ public class Post extends Text {
         Comment comment= new Comment( content);
         this.comments.add(comment);
         NumberOfComments++;
+
     }
     public  int getNumberOfComments() {
         return NumberOfComments;
@@ -71,13 +73,22 @@ public class Post extends Text {
         displayContent();
 
 
+
     }
 
     public ArrayList<Comment> getComments() {
         return comments;
     }
 
+
    //===omar=====================Don't touch====================================
+
+    public Comment getComment(int commentId) {
+        return getComments().get(commentId);
+    }
+
+    //===omar=====================Don't touch====================================
+
     public long GetPostTimeInHours (){
         Timestamp t=Timestamp.valueOf(LocalDateTime.now());
         long x=t.getTime()-timestamp.getTime();

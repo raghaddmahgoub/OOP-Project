@@ -388,7 +388,6 @@ public void display_replies (Post post ,int commentId){
         }
         return null;
     }
-
     public void Add_Role_Of_a_Friend(User friend) {
         FriendShip friendShip = FriendShip.getFriendship(user, friend);
         System.out.println("Choose a role to add to this friend (Regular(1)/Restricted(0)");
