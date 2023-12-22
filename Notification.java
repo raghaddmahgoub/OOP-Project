@@ -8,10 +8,6 @@ public class Notification {
     protected String Content;
     protected Timestamp TimeStamp;
     protected boolean Recipient;
-
-
-
-
     //    Status
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Notification() {

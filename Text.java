@@ -13,9 +13,7 @@ public abstract class Text {
     public Text(int id) {
         this.Id = id;
     }
-    public Text(String content){
-        this.content=content;
-    }
+
     public Text(){}
 
     ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
@@ -33,6 +31,7 @@ public abstract class Text {
     public void setContent(String content) {
         this.content = content;
     }
+    public String getContent(){return content;}
     public void displayContent() {
         System.out.println(content);
     }

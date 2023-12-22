@@ -9,6 +9,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
+//user1=3 user2=5
+//pair=35;
+// pair (35,accepted)
 
 class FriendShip {
 ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////////////
@@ -63,8 +66,6 @@ class FriendShip {
    }
     ////////////////////////////////////////////////////setters//////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////setters//////////////////////////////////////////////////
-
     public void setUser_IDs(int user1_id, int user2_id) {
         User_IDs = new Pair<>(user1_id,user1_id);
     }
@@ -90,10 +91,10 @@ class FriendShip {
         status_user1 = 1; status_user2 = 1;
         Friendship_Status = new Pair<>(status_user1, status_user1);
         Friendship_ID = new Pair<>(User_IDs, Friendship_Status);
-        System.out.println("You accepted friend request from " + User2.getUserName() +"Now you are Friends" );
-        User1.AddFriend(User2);
-        User2.AddFriend(User1);
-        FriendsSince = Timestamp.valueOf(LocalDateTime.now());
+        StringFriendship_status = "Accepted";
+        System.out.println("You accepted friend request from " + User2.getUserName() +" \nNow you are Friends" );
+        User1.addFriend(User2);
+        User2.addFriend(User1);
     }
     public long GetRelationTimeInDays (){
         Timestamp t=Timestamp.valueOf(LocalDateTime.now());
@@ -113,21 +114,7 @@ class FriendShip {
         Mutual_Posts.add(post);
     }
 
-    public ArrayList<Post> getMutual_Posts() {
-        return Mutual_Posts;
-    }
-    public static FriendShip getFriendship(User First_User,User Second_User ) {
-
-        Pair Searched_Users_IDs1 = new Pair(First_User.getUserID(), Second_User.getUserID());
-        Pair Searched_Users_IDs2 = new Pair(Second_User.getUserID(), First_User.getUserID());
-        for (FriendShip friendship : Main.friendship) {
-            if (friendship.User_IDs == Searched_Users_IDs1 || friendship.User_IDs == Searched_Users_IDs2 ) {
-            return friendship;
-            }
-        }
-    return null;
-   }
-   public long getRelationScore(){
+    public long getRelationScore(){
         long x=GetRelationTimeInDays();
         if(x>180){
             return 15;
@@ -140,5 +127,5 @@ class FriendShip {
         } else {
             return 3;
         }
-   }
+    }
 }

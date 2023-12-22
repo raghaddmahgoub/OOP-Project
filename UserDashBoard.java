@@ -139,7 +139,7 @@ public class UserDashBoard {
     }
     void ViewPostsOfMe() {
         System.out.println ("Posts");
-        for (Post Posts : user.getPosts())
+        for (Post Posts : user.getAllPosts())
         {
             System.out.println(Posts);
         }

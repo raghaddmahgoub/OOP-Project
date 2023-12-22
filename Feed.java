@@ -7,14 +7,11 @@ import java.util.*;
 
 public class Feed {
     static Scanner in = new Scanner(System.in);
-
+    public static ArrayList <Post> FeedPosts=new ArrayList<>();
     ArrayList <String> Notifications = new ArrayList<>();
     User  user;
-    public static ArrayList <Post> FeedPosts=new ArrayList<>();
 
     UserDashBoard dashboard;
-    private String content;
-
     public Feed(User user){
         this.user = user;
         viewUserFeed();
@@ -33,8 +30,10 @@ public class Feed {
             switch (choice){
                 case 1:
                     System.out.println("Posts");
+                    //showposts();
                     break;
                 case 2:
+                    System.out.println("Notification");
                     viewNotifications();
                     break;
                 case 3:
@@ -64,163 +63,53 @@ public class Feed {
 
             }
         }
+    //////////////////////////////////////////////////////////////**NOTIFICATION**///////////////////////////////////////////////////////////////
         void viewNotifications()
         {
             System.out.println ("Notifications");
-            for (String Notification : Notifications)
+            for (Object Notification : Notifications)
             {
                 System.out.println(Notification);
             }
         }
 
-    //    public void likeComments(Comment comment){
-//        comment.addReaction();
-//    }
-//    public void likeReply(Reply reply){
-//        reply.addReact();
-//    }
-    //////////////////////////////////////////////////////////////POST///////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////**POST**///////////////////////////////////////////////////////////////
         public void addPost(){
             System.out.println("enter the content of the post");
             Post post = new Post();
             String content= in.next();
+            post.setAuthor(user);
             post.setContent(content);
             System.out.println("do you want to tag a friend ? y or n");
             char choice = in.next().charAt(0);
             if (choice=='y'||choice=='Y' ){
-                addTaggedUser(post);
+                post.addTaggedUser(post);
             }
             System.out.println("want to set privacy ? y or n");
             char ch = in.next().charAt(0);
-            if (ch=='y'||ch=='Y' ){setPostPrivacy(post);}
+            if (ch=='y'||ch=='Y' ){post.setPostPrivacy(post);}
             System.out.println("post added");
             user.addApost(post);
             viewUserFeed();
         }
-        public void addTaggedUser(Post post) {
-        if (user.getFriends().size()>0) {
-            for (User friendlist : user.getFriends()) {
-                System.out.println(friendlist.getUserName());
-                System.out.println('\n');
-            }
-            System.out.println("enter your friend name");
-            String friendName = in.next();
-            for (User friend : user.getFriends()) {
-                if (friendName.equals(friend.getUserName())) {
-                    post.TagUser(friend);
-                    //mutual posts
-                    FriendShip f=FriendShip.getFriendship(friend,user);
-                    f.addMutualPost(post);
-                    System.out.println("tagged friends successfully\n");
-                } else {
-                    System.out.println("invalid name");
-                    addTaggedUser(post);
-                }
-            }
+//     public Post get_post_by_id(int postId){
+//         for (User friend: user.getFriends()) {
+//             for (Post friendpost: friend.getPosts()) {
+//                    if (friendpost.getId()== postId){
+//                        return friendpost;
+//                    }
+//             }
+//         }
+//         return null;
+//     }
 
-        }
-        else {
-            System.out.println("you do not have friends yet");
-        }
-        }
-        public void setPostPrivacy(Post post){
-            System.out.println("for public press 1 \n for private press 2 \n for default press 3");
-            int privacy = in.nextInt();
-            switch (privacy){
-                case 1: post.setPrivacy("public"); break;
-                case 2: post.setPrivacy("private"); break;
-                case 3: post.setPrivacy(user.getUserPrivacy()); break;
-                default:
-                    System.out.println("invalid input");
-                    setPostPrivacy(post);
-            }
-        }
-    public void Get_Posts_By_PrivacyLevel() {
-        for (FriendShip friendship:user.getRelations()) {
-            if(friendship.getFriendship_Role().equals("Regular")){
-                for (User friend: user.getFriends()) {
-                    System.out.println(friend.getPosts().get(0).getId());
-                    friend.getPosts().indexOf(0);
-                    System.out.println("\n");
-                    System.out.println(friend.getPosts().get(1).getId());
-                    friend.getPosts().indexOf(1);
-                }
-            }
-        }
-            System.out.println("do u want to access comments y or n ?");
-             char choice = in.next().charAt(0);
-                if (choice=='y'||choice=='Y' ){
-                    System.out.println("enter the post id you would like to view comments on");
-                    int postId = in.nextInt();
-                   display_comments(postId);
-                }
-        viewUserFeed();
-    }
-     public Post get_post_by_id(int postId){
-         for (User friend: user.getFriends()) {
-             for (Post friendpost: friend.getPosts()) {
-                    if (friendpost.getId()== postId){
-                        return friendpost;
-                    }
-             }
-         }
-         return null;
-     }
-
-    //comments methods
-   public void display_comments (int postId){
-       //getArray of comments
-       Post post= get_post_by_id(postId);
-       for (Comment comment: post.getComments()) {
-           comment.displayContent();
-       }
-       System.out.println("do u want to access replies y or n ?");
-       char choice = in.next().charAt(0);
-       if (choice=='y'||choice=='Y' ){
-           System.out.println("enter the comment id you would like to view replies on");
-           int commentId = in.nextInt();
-           display_replies(post,commentId);
-       }
-       System.out.println("do you want to add a comment ? y or n");
-       char c= in.next().charAt(0);
-       if(c== 'y'|| c=='Y')
-           addComment(user.getUserID());
-       Get_Posts_By_PrivacyLevel();
-    }
-    public Comment get_comment_by_id(Post post, int commentId){
-        for (Comment targetcomment: post.getComments()) {
-                if (targetcomment.getId()==commentId)
-                    return targetcomment;
-        }
-        return null;
-    }
-
-public void display_replies (Post post ,int commentId){
-
-    Comment comment =get_comment_by_id(post,commentId);
-    for (Reply reply :comment.getUserReplies()) {
-        reply.displayContent();
-    }
-    System.out.println("do you want to add a reply ? y or n");
-    char c= in.next().charAt(0);
-    if(c== 'y'|| c=='Y')
-        addReply(user.getUserID());
-    Get_Posts_By_PrivacyLevel();
-
-    Get_Posts_By_PrivacyLevel();
-}
-    public void addComment(int userid){
-        Comment newComment = new Comment( content);
-        User.comments.add(newComment);
-
-    }
-    public void addReply(int userid){
-        Reply newReply= new Reply(content);
-        User.replies.add(newReply);
-
-    }
-//need to add reacts to comments and replies, need to implement userId parameters in addcomment and addreply methods
-//RAGHAD
+//    public Comment get_comment_by_id(Post post, int commentId){
+//        for (Comment targetcomment: post.getComments()) {
+//                if (targetcomment.getId()==commentId)
+//                    return targetcomment;
+//        }
+//        return null;
+//    }
 
     ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
     /*public void sendMessage (String content){
@@ -283,8 +172,8 @@ public void display_replies (Post post ,int commentId){
             System.out.println("One/Two of the usernames you entered was/were not found. PLease try again :( ");
             See_Friendship();
         }
-        if (index_of_split == index_of_and){
-            Get_Mutual_Posts(First_User, Second_User);}
+        if (index_of_split == index_of_and)
+            Get_Mutual_Posts(First_User, Second_User);
         else Get_Mutual_Friends(First_User, Second_User);
     }
     public void ViewProfile(){
@@ -333,16 +222,13 @@ public void display_replies (Post post ,int commentId){
         int choice = in.nextInt();
         switch (choice){
             case 1:
-                user.RemoveFriend(Friend);
+                RemoveFriend(Friend);
                 break;
             case 2:
                 Get_Mutual_Friends(user, Friend);
                 break;
             case 3:
-              // Get_Mutual_Posts(user, Friend);
-                break;
-            case 4:
-                Add_Role_Of_a_Friend(Friend);
+               Get_Mutual_Posts(user, Friend);
                 break;
             case 4:
                 Add_Role_Of_a_Friend(Friend);
@@ -378,8 +264,12 @@ public void display_replies (Post post ,int commentId){
         //new friendship
     }
 
-
-
+    public void AddFriend(User New_Friend_User) {
+        user.Friends.add(New_Friend_User);
+    }
+    public void RemoveFriend(User Friend_User){
+        user.Friends.remove(Friend_User);
+    }
     public static User GetUserData(String username) {
         for (User Targeted : Main.vec) {
             if (Targeted.getUserName().equals(username)) {
@@ -448,12 +338,18 @@ public void display_replies (Post post ,int commentId){
                 return true;
         return false;
     }
-    public void Get_Posts_By_PrivacyLevel(){
-    }
+    //=============================================don't touch=======================================================================
     public void showposts (int counter){
         if (counter>FeedPosts.size()){
             counter=0;
         }
+        //1.ahmed
+        //how are you
+        //since 30 minutes 1 like 0 comments
+        // 2.ahmed
+        //how are you
+        //since 30 minutes 1 like 0 commenmts
+
         for (int i = 0; i < 3 && FeedPosts.size()>=(i+counter); i++) {
             Post post=FeedPosts.get(i+counter);
             System.out.println(i+1+"."+post.getAuthor());
@@ -465,7 +361,7 @@ public void display_replies (Post post ,int commentId){
                 System.out.print("since "+post.GetPostTimeInMin()+"min  ");
             }
             System.out.print(post.getReacts()+"likes    ");
-            System.out.print(post.getNumberOfComments()+"comments");
+            System.out.print(post.getAllComments().size()+"comments");
             System.out.println("==================================================");
 
         }
@@ -493,7 +389,7 @@ public void display_replies (Post post ,int commentId){
                 case 4:
                     counter+=3;
                     if (counter>FeedPosts.size())
-                        counter=0;
+                        counter=0;//no post to show
                     showposts(counter);
                     break;
                 case 5:
@@ -505,7 +401,7 @@ public void display_replies (Post post ,int commentId){
 
             }
 
-            counter+=3;
+           //counter+=3;
         }
         viewUserFeed();
     }
@@ -514,11 +410,12 @@ public void display_replies (Post post ,int commentId){
     public void evaluatePosts (){
         for (User userd: user.getFriends()) {
             FriendShip f=FriendShip.getFriendship(user,userd);
-           Pair s=f.getFriendship_Role();
+            Pair s=f.getFriendship_Role();
+            //need to edit
             if(s.equals("Restricted")){
                 continue;
             }else {
-                for (Post post : userd.getPosts()) {
+                for (Post post : userd.getAllPosts()) {
                     int score = 0;
                     score += Post.getTimeScore(post.GetPostTimeInHours());
                     score += post.getReacts()*1;
@@ -532,5 +429,6 @@ public void display_replies (Post post ,int commentId){
 
         }
     }
+    //==================================================================================
 }
 

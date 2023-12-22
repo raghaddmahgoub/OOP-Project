@@ -1,35 +1,27 @@
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Scanner;
 
 
 public class Post extends Text {
 
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private static int Id;
+    Scanner in =new Scanner(System.in);
     private ArrayList<User> taggedUsers = new ArrayList<User>();
     private FriendShip friendship;
     private final ArrayList<Comment> comments = new ArrayList<Comment>();
-    private User Author;
+
+    private String privacy;
     private int NumberOfComments=0;
     public int Score=0;
-    private String privacy;
-
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Post() {
         super(Id++);
     }
-
-    public User getAuthor() {
-        return Author;
-    }
-
-    public Post(String content) {
-        super(content);
-    }
-    ////////////////////////////////////////////**METHODS**//////////////////////////////////////////
+    ////////////////////////////////////////////**GETTERS**//////////////////////////////////////////
     @Override
     public int getId() {
         return Id;
@@ -38,57 +30,133 @@ public class Post extends Text {
         return privacy;
     }
 
-    public void setPrivacy(String privacy) {
-        this.privacy = privacy;
-    }
-
     @Override
     public int getReacts() {
         return cntReacts;
     }
-
-    public void addReact() {
-        cntReacts++;
-    }
-
-    public void TagUser(User taggedUser) {
-         this.taggedUsers.add(taggedUser);
-    }
-
     public ArrayList<User> getTaggedUsers() {
         return taggedUsers;
     }
-
-    public void addComment(String content){
-        Comment comment= new Comment( content);
-        this.comments.add(comment);
-        NumberOfComments++;
-
+    public ArrayList<Comment> getAllComments() {
+        return comments;
+    }
+    public Comment getComment(int commentId) {
+        return getAllComments().get(commentId);
     }
     public  int getNumberOfComments() {
         return NumberOfComments;
     }
+    ////////////////////////////////////////////**SETTERS**//////////////////////////////////////////
+    public void addReact() {
+        cntReacts++;
+    }
+    public void addTaggedUser(Post post) {
+        if (author.getFriends().size()>0) {
+            for (User friendlist : author.getFriends()) {
+                System.out.println(friendlist.getUserName());
+                System.out.println('\n');
+            }
+            System.out.println("enter your friend name");
+            String friendName = in.next();
+            for (User friend : author.getFriends()) {
+                if (friendName.equals(friend.getUserName())) {
+                    this.taggedUsers.add(friend);
+                    //mutual posts
+                    FriendShip f=FriendShip.getFriendship(friend,author);
+                    f.addMutualPost(post);
+                    System.out.println("tagged friends successfully\n");
+                } else {
+                    System.out.println("invalid name");
+                    addTaggedUser(post);
+                }
+            }
+
+        }
+        else {
+            System.out.println("you do not have friends yet");
+        }
+    }
+
+
+    public void setPostPrivacy(Post post){
+        System.out.println("for public press 1 \n for private press 2 \n for default press 3");
+        int privacy = in.nextInt();
+        switch (privacy){
+            case 1: this.privacy ="public"; break;
+            case 2: this.privacy ="private"; break;
+            case 3: this.privacy =author.getUserPrivacy(); break;
+            default:
+                System.out.println("invalid input");
+                setPostPrivacy(post);
+        }
+    }
+
+    public void addComment(){
+        System.out.println("enter what your want to write in a comment");
+        String cont=in.next();
+        Comment comment= new Comment(cont);
+        this.comments.add(comment);
+       // NumberOfComments++;
+        System.out.println("your comment added");
+    }
+    public void addReply(int commentId){
+
+    }
+    //////////////////////////////////////////**METHODS**////////////////////////////////////////////////
     public void Expandpost(){
-        System.out.println(Author);
+        System.out.println(getAuthor().getUserName());
+        System.out.println("since "+GetPostTimeInHours());
         displayContent();
-
-
-
+        if (taggedUsers.size()>0){
+            System.out.println("tagged friends are: ");
+            System.out.println(getTaggedUsers());
+        }
+        System.out.println("number of reacts: ");
+        System.out.println(getReacts());
+        System.out.println("number of comments: "+comments.size());
+        System.out.println("do u want to view comments ? y or n ");
+        if (in.next().charAt(0)=='y'||in.next().charAt(0)=='Y' ){
+            display_comments();
+        }
     }
-
-    public ArrayList<Comment> getComments() {
-        return comments;
+    public void display_comments (){
+        //getArray of comments
+            for (Comment comment: getAllComments()) {
+                System.out.println("comment id: "+comment.getId());
+                comment.displayContent();
+                System.out.println("reacts: "+comment.getReacts());
+        }
+        System.out.println("do u want to like a comment ? y or n ");
+        if (in.next().charAt(0)=='y'||in.next().charAt(0)=='Y' ){
+            System.out.println("enter the comment id you want to like");
+            int commentId = in.nextInt();
+           getComment(commentId).addReact();
+            System.out.println("like added");
+            getComment(commentId).displayContent();
+            System.out.println("number of likes: "+getComment(commentId).getReacts());
+        }
+        System.out.println("do u want to access replies ? y or n ");
+        if (in.next().charAt(0)=='y'||in.next().charAt(0)=='Y' ){
+            System.out.println("enter the comment id you would like to view replies on");
+            int commentId = in.nextInt();
+            display_replies(commentId);
+        }
+        System.out.println("do you want to add a comment ? y or n");
+        if(in.next().charAt(0)== 'y'|| in.next().charAt(0)=='Y')
+            addComment();
     }
+    public void display_replies (int commentId){
 
+//        Comment comment =get_comment_by_id(post,commentId);
+        for (Reply reply :getComment(commentId).getUserReplies()) {
+            reply.displayContent();
+        }
+        //do u want to add reply ?
+        //do u want to like a  reply ?
 
-   //===omar=====================Don't touch====================================
-
-    public Comment getComment(int commentId) {
-        return getComments().get(commentId);
     }
 
     //===omar=====================Don't touch====================================
-
     public long GetPostTimeInHours (){
         Timestamp t=Timestamp.valueOf(LocalDateTime.now());
         long x=t.getTime()-timestamp.getTime();

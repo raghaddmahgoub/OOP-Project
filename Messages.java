@@ -58,13 +58,17 @@ public class Messages {
     }
     public  void setMessage_ID(int message_ID) {
         Message_ID = message_ID;
-    }
+    } ////static id ?
     public ArrayList<Reply> getMessageReplies() {
         return MessageReplies;
     }
     public void setMessageReplies(ArrayList<Reply> messageReplies) {
         MessageReplies = messageReplies;
-    }
+    } ///why ?
+
+//    public void setMessageReplies(Reply messageReply) {
+//        MessageReplies.add(messageReply);
+//    }
     public int getReactionCounter() {
         return ReactionCounter;
     }

@@ -6,12 +6,13 @@ import java.util.*;
 
 public class Conversation {
     Scanner in = new Scanner(System.in);
-    //Attributes
+               //Attributes
     private int conversation_id;
     public Timestamp timestamp;
     private ArrayList<Messages> Messages = new ArrayList<>();
-    private ArrayList<String> Participants = new ArrayList<>();
-    ArrayList <Integer> noUnreadMessages=new ArrayList<>();
+    private ArrayList<String> Participants = new ArrayList<>(); //why not user?
+    ArrayList <Integer> NoUnreadMessages=new ArrayList<>();
+
     private String Status;
 
     //Constructor
@@ -21,23 +22,19 @@ public class Conversation {
         this.Messages = new ArrayList<>();
         this.Participants = participants;
         Status = GroupOrPrivateChat();
-        noUnreadMessages=null;
+        NoUnreadMessages=null;
     }
 
-    //Methods
-    public void Add_Message(int senderID, int recipientID,String content) {
+                 //Methods
+    public void Add_Message(int senderID, int recipientID) {
+        String content = in.next();
         Messages.add(new Messages(senderID, recipientID, content));
-        noUnreadMessages.remove(Integer.valueOf(messageId));
     }
     public void Sort_Messages() {
-        Messages.sort(new sorting().reversed());
+        Messages.sort(new sorting());
     }
-    public void DeleteMessage(int ID) {
-        for (Messages mes:getMessages()) {
-            if(mes.getMessage_ID()==ID){
-                Messages.remove(mes);
-            }
-        }
+    public void DeleteMessage(Messages mes) {
+        Messages.remove(mes);
     }
     public String GroupOrPrivateChat() {
         if (this.Participants.size() > 2) {
@@ -45,48 +42,16 @@ public class Conversation {
         }
         return "Private Chat";
     }
-    public void markAsRead() {
-        noUnreadMessages.clear();
-    }
-
-    public boolean isRead() {
-        return noUnreadMessages.isEmpty();
-    }
-
-    public boolean isParticipant(int userId) {
-        return Participants.contains(String.valueOf(userId));
-    }
-
     private void ViewParticipants() {
         System.out.println(getParticipants());
     }
-    // method to search within the conv
-    public boolean containsKeyword(String keyword) {
-        for (Messages message : getMessages()) {
-            if (message.getContent().contains(keyword)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<Messages> searchMessages(String keyword) {
-        List<Messages> matchingMessages = new ArrayList<>();
-        for (Messages message : getMessages()) {
-            if (message.getContent().contains(keyword)) {
-                matchingMessages.add(message);
-            }
-        }
-        return matchingMessages;
-    }
-
     public LocalDateTime getTime(){
         LocalTime systemTime = LocalTime.now();
         LocalDate currentDate = LocalDate.now();
         LocalDateTime timestamp = LocalDateTime.of(currentDate, systemTime);
         return timestamp;
     }
-    //getters & setters
+                   //getters & setters
     public int getConversation_id() {
         return conversation_id;
     }
@@ -105,15 +70,6 @@ public class Conversation {
     public void setParticipants(ArrayList<String> participants) {
         Participants = participants;
     }
-
-    public ArrayList<Integer> getNoUnreadMessages() {
-        return noUnreadMessages;
-    }
-
-    public void setNoUnreadMessages(ArrayList<Integer> noUnreadMessages) {
-        this.noUnreadMessages = noUnreadMessages;
-    }
-
     public String getStatus() {
         return Status;
     }

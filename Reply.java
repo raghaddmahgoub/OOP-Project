@@ -4,12 +4,12 @@ import java.util.List;
 public class Reply extends Text{
     /////////////////////////////////////////ATTRIBUTES//////////////////////////////////
 
-    //pair between reply and the user
+   private static int replyId;
     private int replyreaction;
 
-    public Reply( String content) {
-        super(content);
-        Id++;
+    public Reply(String content) {
+        super(replyId++);
+        this.content=content;
     }
 
     public int getReplyID() {

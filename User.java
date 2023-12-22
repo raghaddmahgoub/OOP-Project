@@ -29,12 +29,8 @@ public class User
 
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList<Object> notificationtype = new ArrayList<Object>();
+
     private ArrayList<Post> Posts = new ArrayList<Post>();
-
-    public static ArrayList<Comment> comments= new ArrayList<Comment>();
-
-    public static ArrayList<Reply> replies = new ArrayList<Reply>();
-
 
     private ArrayList<Post> Feed = new ArrayList<Post>();
 
@@ -62,17 +58,15 @@ public class User
     public void addObject(Object object) {
         this.notificationtype.add(object);
     }
-    public ArrayList<Post> getPosts() {
+    public ArrayList<Post> getAllPosts() {
         return Posts;
     }
-    public static ArrayList<Comment> getComments() {
-        return comments;
+    public Post getPost(int postId) {
+        return getAllPosts().get(postId);
     }
-    public static ArrayList<Reply> getReplies() {
-        return replies;
+    public void addApost(Post post) {
+        Posts.add(post) ;
     }
-
-    
     public ArrayList<Post> getFeedPosts() {
         return Feed;
     }
@@ -87,9 +81,6 @@ public class User
     }
     public void setUserID(int userID) {
         this.User_ID = userID;
-    }
-    public void addApost(Post post) {
-        Posts.add(post) ;
     }
 
     public String getUserName() {
