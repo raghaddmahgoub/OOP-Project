@@ -6,14 +6,15 @@ import java.util.Scanner;
 import java.util.Vector;
 import java.time.LocalDateTime;
 
-public class User
-{
+public class User {
     //////////////////////////////////////////////////////////////////attributes/////////////////////////////////////
     public enum GenderOptions {
         MALE, FEMALE, NONE
     }
-    private static int Number_Of_Users=0;
+
+    private static int Number_Of_Users = 0;
     private int User_ID;
+    private static int newID = 1;
     private String User_Name;
     private String Name;
     private String Email;
@@ -22,9 +23,9 @@ public class User
     private String Birthdate;
     private Integer PhoneNumber;
     private String userPrivacy;
-    ArrayList <User> Friends = new ArrayList <User>();
-    private ArrayList <String> Conversations = new ArrayList <String>();
-    private ArrayList <User> friendRequests = new ArrayList <User>();
+    ArrayList<User> Friends = new ArrayList<User>();
+    private ArrayList<String> Conversations = new ArrayList<String>();
+    private ArrayList<User> friendRequests = new ArrayList<User>();
 
 
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
@@ -38,23 +39,25 @@ public class User
 
     private ArrayList<Post> Feed = new ArrayList<Post>();
 
-////////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
+//////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
 
-    public User(String User_Name, String Password){
+        public User(String User_Name, String Password){
         this.User_Name = User_Name;
         this.Password = Password;
-
+        this.User_ID = newID;
+            newID++;
     }
     public void AddFriend(User New_Friend_User) {
         Friends.add(New_Friend_User);
     }
-    public User(int User_ID, String User_Name, String Password, String Email){
-        this.User_ID = User_ID;
+    public User(String User_Name, String Password, String Email){
         this.User_Name = User_Name;
         this.Password = Password;
         this.Email = Email;
+        this.User_ID = newID;
+        newID++;
     }
-    ////////////////////////////////////////////////////////////methods//////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////methods//////////////////////////////////////////////////////////////
     public ArrayList<Object> getNotifitype() {
         return notificationtype;
     }
@@ -72,7 +75,7 @@ public class User
         return replies;
     }
 
-    
+
     public ArrayList<Post> getFeedPosts() {
         return Feed;
     }
@@ -84,9 +87,6 @@ public class User
     }
     public void RemoveFriend(User Friend_User){
         Friends.remove(Friend_User);
-    }
-    public void setUserID(int userID) {
-        this.User_ID = userID;
     }
     public void addApost(Post post) {
         Posts.add(post) ;
