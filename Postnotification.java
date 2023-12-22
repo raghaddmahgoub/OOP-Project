@@ -12,6 +12,8 @@ public class Postnotification extends Notification{
         this.friend=friend;
         TimeStamp= Timestamp.valueOf(LocalDateTime.now());
     }
+   // public Postnotification(int postId){}
+
     public void tagging(){
         System.out.println(friend.getUserName()+" tagged u in a post");
         System.out.println("open nitification ? y or n");

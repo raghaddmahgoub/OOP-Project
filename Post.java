@@ -61,6 +61,7 @@ public class Post extends Text {
             for (User friend : author.getFriends()) {
                 if (friendName.equals(friend.getUserName())) {
                     this.taggedUsers.add(friend);
+                    friend.addNotifiObject(new Postnotification(post,author));
                     //mutual posts
                     FriendShip f=FriendShip.getFriendship(friend,author);
                     f.addMutualPost(post);
@@ -96,10 +97,16 @@ public class Post extends Text {
         String cont=in.next();
         Comment comment= new Comment(cont);
         this.comments.add(comment);
-       // NumberOfComments++;
+        Post post =author.getPost(getId());
+        User commenter= comment.getAuthor();
+        author.addNotifiObject(new Postnotification(post,commenter));
         System.out.println("your comment added");
     }
     public void addReply(int commentId){
+
+//        Post post =author.getPost(getId());
+//        User liker= getComment(replyId).getAuthor();
+//        author.addNotifiObject(new Postnotification(post,liker));
 
     }
     //////////////////////////////////////////**METHODS**////////////////////////////////////////////////
@@ -131,6 +138,11 @@ public class Post extends Text {
             System.out.println("enter the comment id you want to like");
             int commentId = in.nextInt();
            getComment(commentId).addReact();
+           //////////////////////////
+            Post post =author.getPost(getId());
+            User liker= getComment(commentId).getAuthor();
+            author.addNotifiObject(new Postnotification(post,liker));
+            ////////////////////////////
             System.out.println("like added");
             getComment(commentId).displayContent();
             System.out.println("number of likes: "+getComment(commentId).getReacts());
@@ -153,7 +165,11 @@ public class Post extends Text {
         }
         //do u want to add reply ?
         //do u want to like a  reply ?
-
+//=============================dont touch===========================
+//        Post post =author.getPost(getId());
+//        User liker= getComment(replyId).getAuthor();
+//        author.addNotifiObject(new Postnotification(post,liker));
+//==========================================================================
     }
 
     //===omar=====================Don't touch====================================

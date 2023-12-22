@@ -8,7 +8,6 @@ import java.util.*;
 public class Feed {
     static Scanner in = new Scanner(System.in);
     public static ArrayList <Post> FeedPosts=new ArrayList<>();
-    ArrayList <String> Notifications = new ArrayList<>();
     User  user;
 
     UserDashBoard dashboard;
@@ -34,7 +33,7 @@ public class Feed {
                     break;
                 case 2:
                     System.out.println("Notification");
-                    viewNotifications();
+                   // viewNotifications();
                     break;
                 case 3:
                     System.out.println("Friends");
@@ -64,14 +63,87 @@ public class Feed {
             }
         }
     //////////////////////////////////////////////////////////////**NOTIFICATION**///////////////////////////////////////////////////////////////
-        void viewNotifications()
+        void viewNotifications(int cnt)
         {
             System.out.println ("Notifications");
-            for (Object Notification : Notifications)
-            {
-                System.out.println(Notification);
+            if (cnt> user.getNotifications().size()){
+                cnt=0;
+            }
+            for (int i = 0; i < 3 && user.getNotifications().size()>=(i+cnt); i++) {
+                Object notifi = user.getNotifications().get(cnt+i);
+                if (notifi instanceof Postnotification){
+                    System.out.println(i+1);
+                //    if(((Postnotification) notifi).getContent().equals())
+
+                }
+                else if(notifi instanceof FriendRequest){
+                    System.out.println(i+1);
+                }
+
             }
         }
+        /*
+        *  public void showposts (int counter){
+        if (counter>FeedPosts.size()){
+            counter=0;
+        }
+        for (int i = 0; i < 3 && FeedPosts.size()>=(i+counter); i++) {
+            Post post=FeedPosts.get(i+counter);
+            System.out.println(i+1+"."+post.getAuthor());
+            System.out.println(post.getContent().substring(0,50));
+            long p=post.GetPostTimeInMin();
+            if (p>60){
+                System.out.print("since "+post.GetPostTimeInHours()+"h     ");
+            }else{
+                System.out.print("since "+post.GetPostTimeInMin()+"min  ");
+            }
+            System.out.print(post.getReacts()+"likes    ");
+            System.out.print(post.getAllComments().size()+"comments");
+            System.out.println("==================================================");
+
+        }
+
+    }
+    public void ViewFeed(){
+        evaluatePosts();
+        int counter=0;
+        Boolean checker=new Boolean(true);
+        showposts(counter);
+        while (checker){
+            System.out.println("If you want to expand post Enter the number of the post");
+            System.out.println("4.Next posts");
+            System.out.println("5.Return to main");
+            System.out.print("Enter your choice : ");
+            int choice=in.nextInt();
+
+            switch (choice){
+                case 1:FeedPosts.get(counter).Expandpost();
+                    break;
+                case 2:FeedPosts.get(counter+1).Expandpost();
+                    break;
+                case 3:FeedPosts.get(counter+2).Expandpost();
+                    break;
+                case 4:
+                    counter+=3;
+                    if (counter>FeedPosts.size())
+                        counter=0;//no post to show
+                    showposts(counter);
+                    break;
+                case 5:
+                    checker=false;
+                    break;
+                default:
+                    System.out.println("invalid choice");
+                    ViewFeed();
+
+            }
+
+           //counter+=3;
+        }
+        viewUserFeed();
+    }
+
+        */
 
     //////////////////////////////////////////////////////////////**POST**///////////////////////////////////////////////////////////////
         public void addPost(){
