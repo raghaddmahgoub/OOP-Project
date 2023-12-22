@@ -3,30 +3,30 @@ import java.util.List;
 
 public class Reply extends Text{
     /////////////////////////////////////////ATTRIBUTES//////////////////////////////////
-    private int replyID;
+
     //pair between reply and the user
     private int replyreaction;
 
     public Reply( String content) {
         super(content);
-        replyID++;
+        Id++;
     }
 
     public int getReplyID() {
-        return replyID;
+        return Id;
     }
     public void setReplyID(int replyID) {
-        this.replyID = replyID;
+        this.Id = replyID;
     }
 
     @Override
     public void addReact() {
-        replyreaction++;
+        cntReacts++;
     }
 
     @Override
     public int getReacts() {
-        return replyreaction;
+        return cntReacts;
     }
 
 }

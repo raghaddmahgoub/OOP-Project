@@ -1,6 +1,7 @@
-
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class Post extends Text {
@@ -12,6 +13,8 @@ public class Post extends Text {
     private final ArrayList<Comment> comments = new ArrayList<Comment>();
 
     private String privacy;
+    private int NumberOfComments=0;
+    public int Score=0;
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Post() {
         super(Id++);
@@ -53,9 +56,61 @@ public class Post extends Text {
     public void addComment(String content){
         Comment comment= new Comment( content);
         this.comments.add(comment);
+        NumberOfComments++;
     }
 
     public ArrayList<Comment> getComments() {
         return comments;
     }
+    public Comment getComment(int commentId) {
+        return getComments().get(commentId);
+    }
+    public  int getNumberOfComments() {
+        return NumberOfComments;
+    }
+    public void Expandpost(){
+        System.out.println(getAuthor().getUserName());
+        displayContent();
+    }
+    //===omar=====================Don't touch====================================
+    public long GetPostTimeInHours (){
+        Timestamp t=Timestamp.valueOf(LocalDateTime.now());
+        long x=t.getTime()-timestamp.getTime();
+        x=x/3600000;
+        return x;
+    }
+    public long GetPostTimeInMin (){
+        Timestamp t=Timestamp.valueOf(LocalDateTime.now());
+        long x=t.getTime()-timestamp.getTime();
+        x=x/60000;
+        return x;
+    }
+    public static int getTimeScore (long x) {
+        if (x >= 72) {
+            return -50;
+        } else if (x >= 48) {
+            return 2;
+        } else if (x >= 24) {
+            return 3;
+        } else if (x >= 12) {
+            return 4;
+        } else if (x >= 6) {
+            return 5;
+        } else if (x >= 3) {
+            return 6;
+        } else if (x >= 1) {
+            return 7;
+        } else {
+            return 8;
+        }
+    }
+    public static Comparator<Post> ScoreComparator =new Comparator<Post>() {
+        @Override
+        public int compare(Post o1, Post o2) {
+            int Score1 =o1.Score;
+            int Score2 =o2.Score;
+            return Score2-Score1;
+        }
+    };
+    //====================================================================
 }

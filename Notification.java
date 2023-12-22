@@ -1,11 +1,15 @@
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Notification {
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
-    private static int notificationID;
-    private String Content;
-    private LocalDateTime TimeStamp;
-    private boolean Recipient;
+    protected static int notificationID;
+    protected String Content;
+    protected Timestamp TimeStamp;
+    protected boolean Recipient;
+
+
 
 
     //    Status
@@ -18,10 +22,9 @@ public class Notification {
         return notificationID;
     }
 
-    public LocalDateTime getTimeStamp() {
+    public Timestamp getTimeStamp() {
         return TimeStamp;
     }
-
     public String getContent() {
         return Content;
     }
