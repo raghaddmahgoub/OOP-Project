@@ -26,15 +26,16 @@ public class Conversation {
 
     //Methods
     public void Add_Message(int senderID, int recipientID,String content) {
-        Messages.add(new Messages(senderID, recipientID, content));
-        noUnreadMessages.remove(Integer.valueOf(messageId));
+        Messages mes=new Messages(senderID,recipientID,content);
+        Messages.add(mes);
+        noUnreadMessages.remove(Integer.valueOf(mes.getId()));
     }
     public void Sort_Messages() {
         Messages.sort(new sorting().reversed());
     }
     public void DeleteMessage(int ID) {
         for (Messages mes:getMessages()) {
-            if(mes.getMessage_ID()==ID){
+            if(mes.getId()==ID){
                 Messages.remove(mes);
             }
         }

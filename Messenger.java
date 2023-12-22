@@ -139,7 +139,7 @@ public class Messenger {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
             for (Messages mes : conversation.getMessages()) {
-                if (mes.getMessage_ID() == messageId) {
+                if (mes.getId() == messageId) {
                     mes.EditMessage(newContent);
                 }
             }

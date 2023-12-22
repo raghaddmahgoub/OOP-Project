@@ -5,29 +5,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Messages {
-    private int Message_ID;
+public class Messages extends Text{
     private ArrayList<Reply> MessageReplies = new ArrayList<>();
-    private int ReactionCounter;
     private int Sender_ID;       //pair??
     private int Recipient_ID;
     private String Status;
     public LocalDateTime Timestamp;
-    private String Content;
     Scanner in = new Scanner(System.in);
 
     public Messages() {
     }
 
     public Messages( int sender_ID, int recipient_ID, String content) {
-        Message_ID++;
+        Id++;
         MessageReplies=new ArrayList<>();
-        ReactionCounter =0;
+        cntReacts=0;
         Status = "Unread";
         Timestamp = getTime();
         Sender_ID = sender_ID;
         Recipient_ID = recipient_ID;
-        Content = content;
+        content = content;
     }
     //Methods
     public void EditMessage(String content) {
@@ -43,9 +40,15 @@ public class Messages {
         setStatus(value);
     }
     public void addReact() {
-        int i=getReactionCounter();
-        setReactionCounter(++i);
+        int i=getCntReacts();
+        setCntReacts(++i);
     }
+
+    @Override
+    public int getReacts() {
+        return cntReacts;
+    }
+
     public LocalDateTime getTime(){
         LocalTime systemTime = LocalTime.now();
         LocalDate currentDate = LocalDate.now();
@@ -53,23 +56,11 @@ public class Messages {
         return timestamp;
     }
     //getters & setters
-    public  int getMessage_ID() {
-        return Message_ID;
-    }
-    public  void setMessage_ID(int message_ID) {
-        Message_ID = message_ID;
-    }
     public ArrayList<Reply> getMessageReplies() {
         return MessageReplies;
     }
-    public void setMessageReplies(ArrayList<Reply> messageReplies) {
-        MessageReplies = messageReplies;
-    }
-    public int getReactionCounter() {
-        return ReactionCounter;
-    }
-    public void setReactionCounter(int reactionCounter) {
-        ReactionCounter = reactionCounter;
+    public void setMessageReplies(Reply messageReply) {
+        MessageReplies.add(messageReply);
     }
     public int getSender_ID() {
         return Sender_ID;
@@ -88,11 +79,5 @@ public class Messages {
     }
     public void setStatus(String status) {
         Status = status;
-    }
-    public String getContent() {
-        return Content;
-    }
-    public void setContent(String content) {
-        Content = content;
     }
 }

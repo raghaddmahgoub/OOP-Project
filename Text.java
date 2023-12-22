@@ -49,4 +49,20 @@ public abstract class Text {
     public abstract void addReact();
 
     public abstract int getReacts();
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public int getCntReacts() {
+        return cntReacts;
+    }
+
+    public void setCntReacts(int cntReacts) {
+        this.cntReacts = cntReacts;
+    }
 }
