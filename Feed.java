@@ -10,7 +10,7 @@ public class Feed {
 
     ArrayList <String> Notifications = new ArrayList<>();
     User  user;
-
+    public static ArrayList <Post> FeedPosts=new ArrayList<>();
 
     UserDashBoard dashboard;
     private String content;
@@ -33,7 +33,6 @@ public class Feed {
             switch (choice){
                 case 1:
                     System.out.println("Posts");
-                    Get_Posts_By_PrivacyLevel();
                     break;
                 case 2:
                     viewNotifications();
@@ -284,8 +283,8 @@ public void display_replies (Post post ,int commentId){
             System.out.println("One/Two of the usernames you entered was/were not found. PLease try again :( ");
             See_Friendship();
         }
-        if (index_of_split == index_of_and)
-            Get_Mutual_Posts(First_User, Second_User);
+        if (index_of_split == index_of_and){
+            Get_Mutual_Posts(First_User, Second_User);}
         else Get_Mutual_Friends(First_User, Second_User);
     }
     public void ViewProfile(){
@@ -334,13 +333,16 @@ public void display_replies (Post post ,int commentId){
         int choice = in.nextInt();
         switch (choice){
             case 1:
-                RemoveFriend(Friend);
+                user.RemoveFriend(Friend);
                 break;
             case 2:
                 Get_Mutual_Friends(user, Friend);
                 break;
             case 3:
-               Get_Mutual_Posts(user, Friend);
+              // Get_Mutual_Posts(user, Friend);
+                break;
+            case 4:
+                Add_Role_Of_a_Friend(Friend);
                 break;
             case 4:
                 Add_Role_Of_a_Friend(Friend);
@@ -376,12 +378,8 @@ public void display_replies (Post post ,int commentId){
         //new friendship
     }
 
-    public void AddFriend(User New_Friend_User) {
-        user.Friends.add(New_Friend_User);
-    }
-    public void RemoveFriend(User Friend_User){
-        user.Friends.remove(Friend_User);
-    }
+
+
     public static User GetUserData(String username) {
         for (User Targeted : Main.vec) {
             if (Targeted.getUserName().equals(username)) {
@@ -449,6 +447,90 @@ public void display_replies (Post post ,int commentId){
             if (friend == Friend)
                 return true;
         return false;
+    }
+    public void Get_Posts_By_PrivacyLevel(){
+    }
+    public void showposts (int counter){
+        if (counter>FeedPosts.size()){
+            counter=0;
+        }
+        for (int i = 0; i < 3 && FeedPosts.size()>=(i+counter); i++) {
+            Post post=FeedPosts.get(i+counter);
+            System.out.println(i+1+"."+post.getAuthor());
+            System.out.println(post.getContent().substring(0,50));
+            long p=post.GetPostTimeInMin();
+            if (p>60){
+                System.out.print("since "+post.GetPostTimeInHours()+"h     ");
+            }else{
+                System.out.print("since "+post.GetPostTimeInMin()+"min  ");
+            }
+            System.out.print(post.getReacts()+"likes    ");
+            System.out.print(post.getNumberOfComments()+"comments");
+            System.out.println("==================================================");
+
+        }
+
+    }
+    public void ViewFeed(){
+        evaluatePosts();
+        int counter=0;
+        Boolean checker=new Boolean(true);
+        showposts(counter);
+        while (checker){
+            System.out.println("If you want to expand post Enter the number of the post");
+            System.out.println("4.Next posts");
+            System.out.println("5.Return to main");
+            System.out.print("Enter your choice : ");
+            int choice=in.nextInt();
+
+            switch (choice){
+                case 1:FeedPosts.get(counter).Expandpost();
+                    break;
+                case 2:FeedPosts.get(counter+1).Expandpost();
+                    break;
+                case 3:FeedPosts.get(counter+2).Expandpost();
+                    break;
+                case 4:
+                    counter+=3;
+                    if (counter>FeedPosts.size())
+                        counter=0;
+                    showposts(counter);
+                    break;
+                case 5:
+                    checker=false;
+                    break;
+                default:
+                    System.out.println("invalid choice");
+                    ViewFeed();
+
+            }
+
+            counter+=3;
+        }
+        viewUserFeed();
+    }
+
+
+    public void evaluatePosts (){
+        for (User userd: user.getFriends()) {
+            FriendShip f=FriendShip.getFriendship(user,userd);
+           Pair s=f.getFriendship_Role();
+            if(s.equals("Restricted")){
+                continue;
+            }else {
+                for (Post post : userd.getPosts()) {
+                    int score = 0;
+                    score += Post.getTimeScore(post.GetPostTimeInHours());
+                    score += post.getReacts()*1;
+                    score += post.getNumberOfComments()*2;
+                    score += f.getRelationScore();
+                    if (score >= 10){
+                        FeedPosts.add(post);
+                    }
+                }
+            }
+
+        }
     }
 }
 
