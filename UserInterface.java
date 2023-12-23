@@ -15,11 +15,11 @@ public class UserInterface {
 
     private static User user;
     public static void ProgramStart(){
-        int choice=0;
         System.out.println("\t Welcome To our Facebook");
         System.out.println("1.Login");
         System.out.println("2.Signup");
         System.out.print("Enter a choice :");
+        int choice=0;
         Boolean validate=new Boolean(false);
         while(!validate) {
             try {

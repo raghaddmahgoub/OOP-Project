@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.sql.Timestamp;
@@ -5,30 +6,62 @@ import java.time.LocalDateTime;
 
 public class Messenger {
     Scanner in=new Scanner(System.in);
+    private static int MessengerID;
     private List<Conversation> conversations;
     private List<Integer> noUnreadConversations;
     User user;
     public Messenger(User user) {
+        MessengerID++;
         this.user=user;
         this.conversations = new ArrayList<>();
     }
 
     public void MessengerFeed() {
+
+        /////// Conversations ops.
+        user.getMessenger().sortConversations();
+        user.getMessenger().displayConversations();
         System.out.println("Welcome to Messenger");
         System.out.println("1-Create new conversation");
         System.out.println("2- Find conversation");
         System.out.println("3- Search in conversations by keyword");
         System.out.println("4- Delete Conversation");
+        System.out.println("5- Exit Messenger");
         System.out.println("Choice:");
-        int choice=in.nextInt();
+        int choice =0;
+        Boolean validate=new Boolean(false);
+        while(!validate) {
+            try {
+                choice=in.nextInt();
+                validate=true;
+            } catch (InputMismatchException e) {
+                System.out.println("invaild choice try again");
+                System.out.print("Enter a choice :");
+                in.nextLine();
+            }
+        }
         switch (choice){
             case 1:
                 System.out.println("Enter number of participants:");
-                int no=in.nextInt();
+                Long no=new Long(0);
+                while (true) {
+                    System.out.println("Please enter number of participants (digits only): ");
+                    String input = in.next();
+
+                    if (!input.matches("[0-9]+")) {
+                        System.out.println("Number of participants should contain digits only. Please try again.");
+
+                    } else if (!(no<99999999)) {
+                        System.out.println("Number of participants is not valid please Try again :( ");
+
+                    } else {
+                        no = Long.parseLong(input);
+                        break; // Exit the loop if the input contains only digits
+                    }}
                 String username;
                 ArrayList<User>participants=new ArrayList<>();
                 participants.add(user);
-                for(int i=1;i<no-1;i++)
+                for(int i=1;i<no;i++)
                 {
                     System.out.println("Enter Participant "+i);
                     username=in.next();
@@ -43,33 +76,56 @@ public class Messenger {
                 Options(conversation);
                 break;
             case 2:
+                displayConversations();
                 System.out.println("Enter ID:");
                 int ID=in.nextInt();
-                Conversation conv=user.getMessenger().findConversation(ID);
-                conv.displayMessages(conv);
-                Options(conv);break;
+                Conversation conv=findConversation(ID);
+                if(conv !=null) {
+                    conv.displayMessages(conv);
+                    //conv.markAsRead();
+                }
+                else {
+                    System.out.println("You don't have any conversations yet");
+                    MessengerFeed();
+                }
+                Options(conv); break;
             case 3:
+                System.out.println("Enter keyword:");
+                String keyword = in.next();
+                List<Conversation> matchingConversations =searchConversations(keyword);
+                System.out.println("Matching conversations:");
+                for (Conversation con : matchingConversations ) {
+                    System.out.println("Conversation ID: " + con.getConversation_id());
+                    System.out.println("Conversation participants: " + con.getParticipants());
+                }
                 break;
             case 4:
+                displayConversations();
                 System.out.println("Enter conversation ID:");
                 int convID=in.nextInt();
                 user.getMessenger().deleteConversation(convID);
                 break;
+            case 5:
+                break;
             default:
                 System.out.println("Invalid Choice");
-                MessengerFeed();
         }
-
+        if(choice==5)
+            backToFeed();
+        MessengerFeed();
     }
+
+    //// message options
     public void Options(Conversation conversation){
         System.out.println("1- Add a message");
         System.out.println("2- Delete a message");
         System.out.println("3- Edit a message");
         System.out.println("4- Search in conversation");
+        System.out.println("5- Exit Conversation");
         int Choice;
         System.out.println("Enter Value:");
+        int choice =0;
         Boolean validate=new Boolean(false);
-        int choice=0;
         while(!validate) {
             try {
                 choice=in.nextInt();
@@ -87,14 +143,15 @@ public class Messenger {
                 conversation.Add_Message(user.getUserID(),content);
                 break;
             case 2:
-                conversation.DeleteMessage(conversation.getConversation_id());break;
+                conversation.DeleteMessage(conversation);break;
             case 3:
+                conversation.displayMessages(conversation);
                 System.out.println("Enter MessageID:");
                 int id=in.nextInt();
                 System.out.println("Enter new content:");
                 String NewContent=in.next();
                 for (Messages mes:conversation.getMessages()) {
-                    if(mes.getId()==(id))
+                    if(mes.getMesID()==(id))
                     {
                         mes.EditMessage(NewContent);
                     }
@@ -103,14 +160,23 @@ public class Messenger {
             case 4:
                 System.out.println("Enter Keyword:");
                 String keyword=in.next();
-                user.getMessenger().searchMessagesInConversation(conversation.getConversation_id(),keyword);
+                ArrayList<Messages>matching=searchMessagesInConversation(conversation,keyword);
+                for (Messages mes: matching) {
+                    System.out.println(mes.getMesID());
+                    System.out.println(mes.content);
+                }
                 break;
+            case 5:
+                MessengerFeed();break;
             default:
                 System.out.println("Invalid Choice");
-                Options(conversation);
         }
+        Options(conversation);
     }
-    ////////methods
+    public void backToFeed() {
+        Feed feed = new Feed(user);
+    }
+    ////////messenger methods///////
 
     //  new conversation
     public int newConversation(ArrayList<User> participants) {
@@ -119,31 +185,24 @@ public class Messenger {
         conversations.add(conversation);
         return newConvId;
     }
-    public int NewConversation(Conversation conv) {
+    public void NewConversation(Conversation conv) {
         int newConvId = conversations.size() + 1;
         conversations.add(conv);
-        return newConvId;
     }
     // display all conversations
     public void displayConversations() {
         System.out.println("Conversations:");
         for (Conversation conversation : conversations) {
             System.out.println("Conversation ID: " + conversation.getConversation_id());
+            System.out.println("Conversation Participants:");
+            for (User participants:conversation.getParticipants()) {
+                System.out.println(participants.getUserName());
+            }
+            System.out.println("------------------------");
         }
-    }
 
+    }
     // delete conversation
-
-//// methods
-    /*
-    public int newConversation() {
-      int newConvId = conversations.size() + 1;
-        Conversation conversation = new Conversation(newConvId, System.currentTimeMillis());
-       conversations.add(conversation);
-        return newConvId;
-    }
-*/
-
 
     public void deleteConversation(int conversationId) {
         boolean removed = conversations.removeIf(conv -> conv.getConversation_id() == conversationId);
@@ -160,33 +219,6 @@ public class Messenger {
         conversations.sort(Comparator.comparing(Conversation::getTime).reversed());
     }
 
-    // add message to conversation
-  /* public void addMessageToConversation(int conversationId, int senderId, int recipientId, String content) {
-        Conversation conversation = findConversation(conversationId);
-
-        conversation.Add_Message(senderId, recipientId, content);
-
-    }
-
-    // delete message from conversation
-    public void deleteMessageFromConversation(int conversationId, int messageId) {
-        Conversation conversation = findConversation(conversationId);
-        if (conversation != null) {
-            conversation.DeleteMessage(messageId);
-        } else {
-            System.out.println("Conversation " + conversationId + " not found.");
-        }
-    }*/
-
-    // mark conversation as read
-    public void markConversationAsRead(int conversationId) {
-        Conversation conversation = findConversation(conversationId);
-        if (conversation != null) {
-            conversation.markAsRead();
-        } else {
-            System.out.println("Conversation " + conversationId + " not found.");
-        }
-    }
 
     // get unread messages count for a user
     public int getUnreadMessagesCount(int userId) {
@@ -211,12 +243,11 @@ public class Messenger {
     }
 
     // search messages in conversation by keyword
-    public List<Messages> searchMessagesInConversation(int conversationId, String keyword) {
-        Conversation conversation = findConversation(conversationId);
-        if (conversation != null) {
-            return conversation.searchMessages(keyword);
+    public ArrayList<Messages> searchMessagesInConversation(Conversation con , String keyword) {
+        if (con != null) {
+            return con.searchMessages(con,keyword);
         } else {
-            System.out.println("Conversation " + conversationId + " not found.");
+            System.out.println("Conversation " + con.getConversation_id() + " not found.");
             return new ArrayList<>();
         }
     }
@@ -277,11 +308,57 @@ public class Messenger {
             }
         }
         return null;
+
+    }
+
+    public List<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(Conversation conversations) {
+        this.conversations.add(conversations);
+    }
+
+        /*
+    public int newConversation() {
+      int newConvId = conversations.size() + 1;
+        Conversation conversation = new Conversation(newConvId, System.currentTimeMillis());
+       conversations.add(conversation);
+        return newConvId;
+    }
+*/ // add message to conversation
+  /* public void addMessageToConversation(int conversationId, int senderId, int recipientId, String content) {
+        Conversation conversation = findConversation(conversationId);
+
+        conversation.Add_Message(senderId, recipientId, content);
+
+    }
+
+    // delete message from conversation
+    public void deleteMessageFromConversation(int conversationId, int messageId) {
+        Conversation conversation = findConversation(conversationId);
+        if (conversation != null) {
+            conversation.DeleteMessage(messageId);
+        } else {
+            System.out.println("Conversation " + conversationId + " not found.");
+        }
+    }
+
+    mark conversation as read
+   public void markConversationAsRead(int conversationId) {
+        Conversation conversation = findConversation(conversationId);
+        if (conversation != null) {
+            conversation.markAsRead();
+        } else {
+            System.out.println("Conversation " + conversationId + " not found.");
+        }
+    }*/
+
 /*
                 public void sortConversations () {
                         //Sorting conversations based on timestamp from newest to oldest
                     // conversations.sort(Comparator.comparingLong(Conversation::getTimestamp().reversed());
 
                 }*/
-    }
+
 }

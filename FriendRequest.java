@@ -1,5 +1,6 @@
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class FriendRequest extends Notification {
@@ -20,8 +21,20 @@ public class FriendRequest extends Notification {
 
         System.out.println("1.accept \n 2.reject\n");
         Scanner in = new Scanner(System.in);
-        int x = in.nextInt();
-        switch (x) {
+        int choice = 0;
+        Boolean validate=new Boolean(false);
+
+        while(!validate) {
+            try {
+                choice=in.nextInt();
+                validate=true;
+            } catch (InputMismatchException e) {
+                System.out.println("invaild choice try again");
+                System.out.print("Enter a choice :");
+                in.nextLine();
+            }
+        }
+        switch (choice) {
             case 1:
                 relation.acceptFriendRequest();
                 break;

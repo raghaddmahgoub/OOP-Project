@@ -23,7 +23,7 @@ public class User
     ArrayList <User> Friends = new ArrayList <User>();
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList <FriendRequest> friendRequests = new ArrayList <FriendRequest>();
-    private ArrayList<Postnotification> postnotifications = new ArrayList<Postnotification>();
+    private final ArrayList<Postnotification> postnotifications = new ArrayList<Postnotification>();
 
     private ArrayList<Post> Posts = new ArrayList<Post>();
     private Messenger messenger;
@@ -55,7 +55,7 @@ public class User
     public ArrayList<FriendRequest> getFriendRequests() {
         return friendRequests;
     }
-    public void setFriendRequests(FriendRequest friendRequest){
+    public void setFriendRequest(FriendRequest friendRequest){
         friendRequests.add(friendRequest);
     }
     public ArrayList<Post> getAllPosts() {

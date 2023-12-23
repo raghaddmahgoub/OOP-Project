@@ -3,24 +3,28 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
-
+import java.util.Iterator;
 public class Conversation {
     Scanner in = new Scanner(System.in);
     //Attributes
-    private int conversation_id;
+    private static int conversation_id=0;
+    private int convID;
     public Timestamp timestamp;
+
     private ArrayList<Messages> Messages = new ArrayList<>();
     private ArrayList<User> Participants = new ArrayList<>();
     ArrayList <Integer> noUnreadMessages=new ArrayList<>();
     private String Status;
+    public int last = Messages.lastIndexOf(Messages)+1;
 
     //Constructor
-
-    public Conversation() {
+    public Conversation(){
+        conversation_id++;
     }
 
-    public Conversation(ArrayList<User> participants) {
+    public Conversation(ArrayList<User>participants) {
         conversation_id++;
+        convID=conversation_id;
         timestamp = Timestamp.valueOf(getTime());
         this.Messages = new ArrayList<>();
         this.Participants = participants;
@@ -30,29 +34,37 @@ public class Conversation {
 
     //Methods
     public void Add_Message(int senderID,String content) {
-        Messages mes=new Messages(senderID,content);
-        Messages.add(mes);
-        noUnreadMessages.remove(Integer.valueOf(mes.getId()));
+        Messages.add(new Messages(senderID,content));
+        // noUnreadMessages.remove(Integer.valueOf(mes.getId()));
     }
     public void Sort_Messages() {
         Messages.sort(new sorting().reversed());
     }
-    public void DeleteMessage(int ID) {
-        for (Messages mes:getMessages()) {
-            if(mes.getId()==ID){
-                Messages.remove(mes);
+    public void DeleteMessage(Conversation con) {
+        displayMessages(con);
+        System.out.println("Enter Message ID:");
+        int ID=in.nextInt();
+        for (Messages mes:con.getMessages()) {
+            if(mes.getMesID()==ID){
+                {
+                    con.getMessages().remove(mes);
+                    //mes.setContent(null);
+                    System.out.println("Message Deleted Successfully");
+                    break;
+                }
             }
         }
     }
+
     public String GroupOrPrivateChat() {
         if (this.Participants.size() > 2) {
             return "Group Chat";
         }
         return "Private Chat";
     }
-    public void markAsRead() {
+   /* public void markAsRead() {
         noUnreadMessages.clear();
-    }
+    }*/
 
     public boolean isRead() {
         return noUnreadMessages.isEmpty();
@@ -76,14 +88,14 @@ public class Conversation {
     }
     public void displayMessages(Conversation conv){
         for (Messages mes: conv.getMessages()) {
-            System.out.print(mes.getId());
+            System.out.println(mes.getMesID());
             System.out.println(mes.content);
         }
     }
 
-    public List<Messages> searchMessages(String keyword) {
-        List<Messages> matchingMessages = new ArrayList<>();
-        for (Messages message : getMessages()) {
+    public ArrayList<Messages> searchMessages(Conversation conv,String keyword) {
+        ArrayList<Messages> matchingMessages = new ArrayList<>();
+        for (Messages message : conv.getMessages()) {
             if (message.getContent().contains(keyword)) {
                 matchingMessages.add(message);
             }
@@ -99,10 +111,7 @@ public class Conversation {
     }
     //getters & setters
     public int getConversation_id() {
-        return conversation_id;
-    }
-    public void setConversation_id(int conversation_id) {
-        this.conversation_id = conversation_id;
+        return convID;
     }
     public ArrayList<Messages> getMessages() {
         return Messages;
@@ -131,7 +140,9 @@ public class Conversation {
     public void setStatus(String status) {
         Status = status;
     }
+
 }
+
 class sorting implements Comparator<Messages> {
     public int compare(Messages mes1, Messages mes2) {
         return mes1.Timestamp.compareTo(mes2.Timestamp);

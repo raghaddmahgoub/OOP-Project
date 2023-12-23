@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Messages extends Text{
+    private static int MesID=0;
+    private  int M_ID;
     private ArrayList<Reply> MessageReplies = new ArrayList<>();
     private int Sender_ID;
     private String Status;
@@ -13,16 +15,19 @@ public class Messages extends Text{
     Scanner in = new Scanner(System.in);
 
     public Messages() {
+        MesID++;
     }
 
     public Messages( int sender_ID, String content) {
-        Id++;
+        MesID++;
+        M_ID=MesID;
+        // this.Id=con.last;
         MessageReplies=new ArrayList<>();
         cntReacts=0;
         Status = "Unread";
         Timestamp = getTime();
         Sender_ID = sender_ID;
-        content = content;
+        this.content = content;
     }
     //Methods
     public void EditMessage(String content) {
@@ -34,9 +39,6 @@ public class Messages extends Text{
         MessageReplies.add(new Reply(Reply));
     }
 
-    public void Status(String value) {
-        setStatus(value);
-    }
     public void addReact() {
         cntReacts++;
     }
@@ -61,13 +63,14 @@ public class Messages extends Text{
     public int getSender_ID() {
         return Sender_ID;
     }
-    public void setSender_ID(int sender_ID) {
-        Sender_ID = sender_ID;
-    }
     public String getStatus() {
         return Status;
     }
     public void setStatus(String status) {
         Status = status;
+    }
+
+    public int getMesID() {
+        return M_ID;
     }
 }
