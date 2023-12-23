@@ -31,8 +31,6 @@ public class FriendRequest extends Notification {
             default:
                 System.out.println("invalid choice");
                 expand_friendrequest();
-
-
         }
     }
 }

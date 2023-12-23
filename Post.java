@@ -2,6 +2,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -9,6 +10,7 @@ public class Post extends Text {
 
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
     private static int postId=0;
+
     Scanner in =new Scanner(System.in);
     private ArrayList<User> taggedUsers = new ArrayList<User>();
     private FriendShip friendship;
@@ -19,7 +21,9 @@ public class Post extends Text {
     public int Score=0;
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Post() {
+        Timestamp t=Timestamp.valueOf(LocalDateTime.now());
         postId++;
+        setTimestamp(t);
     }
     ////////////////////////////////////////////**GETTERS**//////////////////////////////////////////
     @Override
@@ -62,14 +66,14 @@ public class Post extends Text {
             for (User friend : author.getFriends()) {
                 if (friendName.equals(friend.getUserName())) {
                     this.taggedUsers.add(friend);
-                    friend.addNotifiObject(new Postnotification(post,author));
+                    friend.addPostNotifiObject(new Postnotification(post,author));
                     //mutual posts
                     FriendShip f=FriendShip.getFriendship(friend,author);
                     f.addMutualPost(post);
                     System.out.println("tagged friends successfully\n");
                     Postnotification postnotification=new Postnotification(post,author);
                     postnotification.setContent("tagged");
-                    friend.addNotifiObject(postnotification);
+                    friend.addPostNotifiObject(postnotification);
                 } else {
                     System.out.println("invalid name");
                     addTaggedUser(post);
@@ -83,8 +87,19 @@ public class Post extends Text {
     }
     public void setPostPrivacy(Post post){
         System.out.println("for public press 1 \n for private press 2 \n for default press 3");
-        int privacy = in.nextInt();
-        switch (privacy){
+        Boolean validate=new Boolean(false);
+        int choice=0;
+        while(!validate) {
+            try {
+                choice=in.nextInt();
+                validate=true;
+            } catch (InputMismatchException e) {
+                System.out.println("invaild choice try again");
+                System.out.print("Enter a choice :");
+                in.nextLine();
+            }
+        }
+        switch (choice){
             case 1: this.privacy ="public"; break;
             case 2: this.privacy ="private"; break;
             case 3: this.privacy =author.getUserPrivacy(); break;
@@ -103,7 +118,7 @@ public class Post extends Text {
         User commenter= comment.getAuthor();
         Postnotification postnotification=new Postnotification(post,commenter);
         postnotification.setContent("commented");
-        author.addNotifiObject(postnotification);
+        author.addPostNotifiObject(postnotification);
         System.out.println("your comment added");
     }
     public void addReply(int commentId){
@@ -117,7 +132,7 @@ public class Post extends Text {
         User replier= newReply.getAuthor();
         Postnotification postnotification=new Postnotification(post,replier);
         postnotification.setContent("replid");
-        author.addNotifiObject(postnotification);
+        author.addPostNotifiObject(postnotification);
     }
     //////////////////////////////////////////**METHODS**////////////////////////////////////////////////
     public void Expandpost(User friend){
@@ -134,11 +149,10 @@ public class Post extends Text {
         System.out.println("do u want to like the post ? y or n ");
         if (in.next().charAt(0)=='y'||in.next().charAt(0)=='Y' ){
            // addReact();
-
             System.out.println("your like is added");
             System.out.println("total reacts on this post: "+getReacts());
             Postnotification postnotification= new Postnotification(author.getPost(postId) ,friend);
-            author.addNotifiObject(postnotification);
+            author.addPostNotifiObject(postnotification);
         }
         System.out.println("do u want to view comments ? y or n ");
         if (in.next().charAt(0)=='y'||in.next().charAt(0)=='Y' ){
@@ -162,7 +176,7 @@ public class Post extends Text {
             User liker= getComment(commentId).getAuthor();
             Postnotification postnotification =new Postnotification(post,liker);
             postnotification.setContent("liked comment");
-            author.addNotifiObject(postnotification);
+            author.addPostNotifiObject(postnotification);
             ////////////////////////////
             System.out.println("like added");
             getComment(commentId).displayContent();
@@ -199,22 +213,12 @@ public class Post extends Text {
             User liker= reply.getAuthor();
             Postnotification postnotification =new Postnotification(post,liker);
             postnotification.setContent("liked");
-            author.addNotifiObject(postnotification);
+            author.addPostNotifiObject(postnotification);
         }
         System.out.println("do you want to add a reply ? y or n");
         if(in.next().charAt(0)== 'y'|| in.next().charAt(0)=='Y')
             addReply(commentId);
     }
-//    public void editComment(String newContent){
-//        setContent(newContent);
-//        System.out.println("Comment edited");
-//    }
-//
-//    public void deleteComment(int commentId){
-//        getAllComments().remove(getComment(commentId));
-//        System.out.println("Comment deleted");
-//    }
-
     //===omar=====================Don't touch====================================
     public long GetPostTimeInHours (){
         Timestamp t=Timestamp.valueOf(LocalDateTime.now());

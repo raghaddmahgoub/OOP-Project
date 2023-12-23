@@ -68,8 +68,19 @@ public class Messenger {
         System.out.println("4- Search in conversation");
         int Choice;
         System.out.println("Enter Value:");
-        Choice=in.nextInt();
-        switch (Choice){
+        Boolean validate=new Boolean(false);
+        int choice=0;
+        while(!validate) {
+            try {
+                choice=in.nextInt();
+                validate=true;
+            } catch (InputMismatchException e) {
+                System.out.println("invaild choice try again");
+                System.out.print("Enter a choice :");
+                in.nextLine();
+            }
+        }
+        switch (choice){
             case 1:
                 System.out.println("Enter Content:");
                 String content=in.next();

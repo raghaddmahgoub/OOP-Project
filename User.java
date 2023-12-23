@@ -11,7 +11,7 @@ public class User
         MALE, FEMALE, NONE
     }
     private static int Number_Of_Users=0;
-    private int User_ID;
+    private static int User_ID;
     private String User_Name;
     private String Name;
     private String Email;
@@ -21,15 +21,11 @@ public class User
     private Long PhoneNumber;
     private String userPrivacy;
     ArrayList <User> Friends = new ArrayList <User>();
-    private ArrayList <String> Conversations = new ArrayList <String>();
-    private ArrayList <User> friendRequests = new ArrayList <User>();
-
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
-    private ArrayList<Object> notification = new ArrayList<Object>();
+    private ArrayList <FriendRequest> friendRequests = new ArrayList <FriendRequest>();
+    private ArrayList<Postnotification> postnotifications = new ArrayList<Postnotification>();
 
     private ArrayList<Post> Posts = new ArrayList<Post>();
-
-    private ArrayList<Post> Feed = new ArrayList<Post>();
     private Messenger messenger;
 
 ////////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
@@ -42,19 +38,25 @@ public class User
     public void AddFriend(User New_Friend_User) {
         Friends.add(New_Friend_User);
     }
-    public User(int User_ID, String User_Name, String Password, String Email){
-        this.User_ID = User_ID;
+    public User(String User_Name, String Password, String Email){
+        User_ID++;
         this.User_Name = User_Name;
         this.Password = Password;
         this.Email = Email;
     }
     ////////////////////////////////////////////////////////////methods//////////////////////////////////////////////////////////////
-    public ArrayList<Object> getNotifications() {
-        return notification;
+    public ArrayList<Postnotification> getPostNotifications() {
+        return postnotifications;
     }
 
-    public void addNotifiObject(Object object) {
-        this.notification.add(object);
+    public void addPostNotifiObject(Postnotification postnotification) {
+        this.postnotifications.add(postnotification);
+    }
+    public ArrayList<FriendRequest> getFriendRequests() {
+        return friendRequests;
+    }
+    public void setFriendRequests(FriendRequest friendRequest){
+        friendRequests.add(friendRequest);
     }
     public ArrayList<Post> getAllPosts() {
         return Posts;
@@ -65,10 +67,7 @@ public class User
     public void addApost(Post post) {
         Posts.add(post) ;
     }
-    public ArrayList<Post> getFeedPosts() {
-        return Feed;
-    }
-    public ArrayList<User> getFriends() {
+    public ArrayList<User>getFriends() {
         return Friends;
     }
     public int getUserID() {
@@ -77,10 +76,6 @@ public class User
     public void RemoveFriend(User Friend_User){
         Friends.remove(Friend_User);
     }
-    public void setUserID(int userID) {
-        this.User_ID = userID;
-    }
-
     public String getUserName() {
         return this.User_Name;
     }
@@ -108,14 +103,12 @@ public class User
     public void setPassword(String password) {
         Password = password;
     }
-
     public GenderOptions getGender() {
         return Gender;
     }
     public void setGender(GenderOptions gender) {
         Gender = gender;
     }
-
     public Date getBirthdate(){
         return Birthdate;
     }
@@ -125,8 +118,6 @@ public class User
         return formattedDate;
     }
     public void setBirthdate(Date birthdate) {
-
-
         Birthdate = birthdate;
     }
 
@@ -137,11 +128,6 @@ public class User
     public void setPhoneNumber(Long phoneNumber) {
         PhoneNumber = phoneNumber;
     }
-
-    public List<User> getFriendRequests() {
-        return friendRequests;
-    }
-
     public String getUserPrivacy() {
         return userPrivacy;
     }

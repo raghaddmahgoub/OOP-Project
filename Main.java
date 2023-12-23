@@ -25,6 +25,19 @@ public class Main {
     public static void main(String[] args) {
         vec.add(new User("renad", "123"));
         vec.add(new User("haneen", "4562"));
+        vec.add(new User("rrr", "kjfnkjewnkle"));
+        vec.add(new User("ssss", "jkfnlksnksdlc"));
+        vec.add(new User("dddd", "ladjdljsldclds"));
+        vec.add(new User("www", "odihdknsdkj"));
+        vec.get(0).addFriend(vec.get(1));
+        vec.get(0).addFriend(vec.get(2));
+        vec.get(0).addFriend(vec.get(3));
+        vec.get(0).addFriend(vec.get(4));
+        vec.get(0).addFriend(vec.get(5));
+        vec.get(1).addFriend(vec.get(2));
+        vec.get(1).addFriend(vec.get(3));
+        vec.get(1).addFriend(vec.get(41));
+
         UserInterface.ProgramStart();
     }
 }

@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -14,13 +15,23 @@ public class UserInterface {
 
     private static User user;
     public static void ProgramStart(){
-        int choice;
+        int choice=0;
         System.out.println("\t Welcome To our Facebook");
         System.out.println("1.Login");
         System.out.println("2.Signup");
         System.out.print("Enter a choice :");
-        choice=in.nextInt();
-        switch (choice){
+        Boolean validate=new Boolean(false);
+        while(!validate) {
+            try {
+                choice=in.nextInt();
+                validate=true;
+            } catch (InputMismatchException e) {
+                System.out.println("invaild choice try again");
+                System.out.print("Enter a choice :");
+                in.nextLine();
+            }
+        }
+        switch (choice) {
             case 1:
                 user = LogIn();
                 break;
@@ -29,8 +40,10 @@ public class UserInterface {
                 break;
             default:
                 System.out.println("Invalid Choice please try again :( ");
-                ProgramStart();
+
         }
+
+
     }
     public static User LogIn() {
         User user;
@@ -156,8 +169,8 @@ public class UserInterface {
         String userInput = in.next();
         while (!isValidDate){
             try {
-                    dateOfBirth = dateFormat.parse(userInput);
-                    isValidDate = true;
+                dateOfBirth = dateFormat.parse(userInput);
+                isValidDate = true;
             } catch (ParseException e) {
                 System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
                 userInput = in.next();

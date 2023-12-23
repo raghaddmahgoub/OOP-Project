@@ -66,9 +66,6 @@ class FriendShip {
    }
     ////////////////////////////////////////////////////setters//////////////////////////////////////////////////
 
-    public void setUser_IDs(int user1_id, int user2_id) {
-        User_IDs = new Pair<>(user1_id,user1_id);
-    }
     public void setFriendship_Status (int status_user1, int status_user2){
         Friendship_Status = new Pair<>(status_user1, status_user1);
     }
@@ -86,6 +83,12 @@ class FriendShip {
         Friendship_Role = new Pair<>(User_IDs, Friends_Roles);
     }
 
+    public long GetRelationTimeInDays (){
+        Timestamp t=Timestamp.valueOf(LocalDateTime.now());
+        long x=t.getTime()-FriendsSince.getTime();
+        x=x/86400000;
+        return x;
+    }
     public void acceptFriendRequest() {
         //change pair
         status_user1 = 1; status_user2 = 1;
@@ -95,12 +98,6 @@ class FriendShip {
         System.out.println("You accepted friend request from " + User2.getUserName() +" \nNow you are Friends" );
         User1.addFriend(User2);
         User2.addFriend(User1);
-    }
-    public long GetRelationTimeInDays (){
-        Timestamp t=Timestamp.valueOf(LocalDateTime.now());
-        long x=t.getTime()-FriendsSince.getTime();
-        x=x/86400000;
-        return x;
     }
 
     public void declineFriendRequest() {
