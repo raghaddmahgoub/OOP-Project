@@ -238,10 +238,8 @@ public class Post extends Text {
                     int commentId=0;
                     while (true) {
                         String input = in.next();
-
                         if (!input.matches("[0-9]+")) {
                             System.out.println("comment id should contain digits only. Please try again.");
-
                         }
                         else {
                             commentId = Integer.parseInt(input);
