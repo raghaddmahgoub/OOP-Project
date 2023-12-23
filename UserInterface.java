@@ -2,6 +2,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -31,20 +34,33 @@ public class UserInterface {
     }
     public static User LogIn() {
         User user;
-
+        System.out.println("Login page");
+        System.out.println("-if you want to return to main menu -");
         System.out.println("Enter Username :");
         username = in.next();
+        if (username.equals("0")) {
+            ProgramStart();
+        }
         while (username.isEmpty()){
             System.out.println("Username is Empty please Try again :( ");
             System.out.println("Enter Username :");
             username = in.next();
+            if (username.equals("0")) {
+                ProgramStart();
+            }
         }
         System.out.println("Enter Password :");
         password = in.next();
+        if (password.equals("0")) {
+            ProgramStart();
+        }
         while (password.isEmpty()){
             System.out.println("Password is Empty please Try again :( ");
             System.out.println("Enter Password :");
             password = in.next();
+            if (password.equals("0")) {
+                ProgramStart();
+            }
         }
         if(!LoginStatus(username,password)){
             System.out.println("Username or Password is not correct please Try again :( ");
@@ -101,34 +117,57 @@ public class UserInterface {
             }
         }
         System.out.println("Enter gender :");
-        String gender=new String();
-        String Gender=new String();
-        gender = in.next();
-        Gender = gender.toLowerCase();
-        while ((!Gender.equals("female")) && (!Gender.equals("male"))){
+        String gender=in.next();
+        while ((!(gender.toLowerCase()).equals("female")) && (!(gender.toLowerCase()).equals("male"))){
             System.out.println("gender is not valid please Try again :( ");
             System.out.println("Enter gender :");
             gender = in.next();
         }
-        System.out.println("Enter PhoneNumber :");
-        int phonenumber=new Integer(0);
-        phonenumber = in.nextInt();
-        while (phonenumber<99999999){
-            System.out.println("Phone Number is not valid please Try again :( ");
-            System.out.println("Enter PhoneNumber :");
-            phonenumber = in.nextInt();
+        Long phonenumber=new Long(0);
+        while (true) {
+            System.out.println("Please enter your phone number (digits only): ");
+            String input = in.next();
+
+            if (!input.matches("[0-9]+")) {
+                System.out.println("Phone number should contain digits only. Please try again.");
+
+            } else if (!(phonenumber<99999999)) {
+                System.out.println("Phone Number is not valid please Try again :( ");
+
+            } else {
+                phonenumber = Long.parseLong(input);
+                break; // Exit the loop if the input contains only digits
+            }
         }
+
         System.out.println("Enter E_mail :");
         String email = in.next();
-        while (email.isEmpty() || email.contains(" ")){
+        while (email.isEmpty() || email.contains(" ") || !email.contains("@") || email.length()<10){
             System.out.println("E_mail is Empty please Try again :( ");
             System.out.println("Enter E_mail :");
             email = in.next();
+        }
+
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        Date dateOfBirth = null;
+        Boolean isValidDate = new Boolean(false);
+        System.out.print("Please enter your date of birth (YYYY-MM-DD): ");
+        String userInput = in.next();
+        while (!isValidDate){
+            try {
+                    dateOfBirth = dateFormat.parse(userInput);
+                    isValidDate = true;
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
+                userInput = in.next();
+            }
         }
         //===========================
         user.setName(name);
         user.setPhoneNumber(phonenumber);
         user.setEmail(email);
+        user.setBirthdate(dateOfBirth);
         if(gender.equals("female")){
             user.setGender(User.GenderOptions.FEMALE);
         }else{

@@ -12,34 +12,36 @@ public class Postnotification extends Notification{
         this.friend=friend;
         TimeStamp= Timestamp.valueOf(LocalDateTime.now());
     }
-   // public Postnotification(int postId){}
 
     public void tagging(){
+        getTimeStamp();
         System.out.println(friend.getUserName()+" tagged u in a post");
         System.out.println("open nitification ? y or n");
        if (in.next().equals('y')||in.next().equals('Y'))
-           friend.getPost(post.getId()).Expandpost();
+           friend.getPost(post.getId()).Expandpost(friend);
     }
     public void commenting(){
+        getTimeStamp();
         System.out.println(friend.getUserName()+" commented  on your post");
         System.out.println("open nitification ? y or n");
         if (in.next().equals('y')||in.next().equals('Y')) {
-            post.Expandpost();
+            post.Expandpost(friend);
         }
     }
-    public void replying(int commentId){
+    public void replying(){
+        getTimeStamp();
         System.out.println(friend.getUserName()+" replied  on your comment");
         System.out.println("open nitification ? y or n");
-        post.getComment(commentId).getUserReplies();
         if (in.next().equals('y')||in.next().equals('Y')) {
-            post.Expandpost();
+            post.Expandpost(friend);
         }
     }
     public void liking(){
-        System.out.println(friend.getUserName()+" liked your post");
+        getTimeStamp();
+        System.out.println(friend.getUserName()+" liked on sth u did");
         System.out.println("open nitification ? y or n");
         if (in.next().equals('y')||in.next().equals('Y')) {
-            post.Expandpost();
+            post.Expandpost(friend);
         }
     }
 }

@@ -24,16 +24,17 @@ public class Feed {
             System.out.println("5- Add Post");//haneen
             System.out.println("6- view Posts Me");
             System.out.println("7- Search");
-            System.out.println("8- Sign Out");
+            System.out.println("8-go to messenger");
+            System.out.println("9- Sign Out");
             int choice = in.nextInt();
             switch (choice){
                 case 1:
                     System.out.println("Posts");
-                    //showposts();
+                    ViewFeed();
                     break;
                 case 2:
                     System.out.println("Notification");
-                   // viewNotifications();
+                    showNotifications();
                     break;
                 case 3:
                     System.out.println("Friends");
@@ -45,17 +46,19 @@ public class Feed {
                     addPost();
                     break;
                 case 6:
-                    //ViewPosts();
+                    view_my_posts(user);
                     break;
                 case 7 :
                     SearchForUser();
                     break;
                 case 8 :
-                    UserInterface.ProgramStart();
+                    user.setMessenger(user);
+                    user.getMessenger().MessengerFeed();
                     break;
                 case 9 :
                     UserInterface.ProgramStart();
                     break;
+
                 default:
                     System.out.println("invalid choice");
                     viewUserFeed();
@@ -63,88 +66,63 @@ public class Feed {
             }
         }
     //////////////////////////////////////////////////////////////**NOTIFICATION**///////////////////////////////////////////////////////////////
-        void viewNotifications(int cnt)
+        void showNotifications()
         {
             System.out.println ("Notifications");
-            if (cnt> user.getNotifications().size()){
-                cnt=0;
-            }
-            for (int i = 0; i < 3 && user.getNotifications().size()>=(i+cnt); i++) {
-                Object notifi = user.getNotifications().get(cnt+i);
+            if (0> user.getNotifications().size()){
+
+             for (Object notifi:user.getNotifications()) {
                 if (notifi instanceof Postnotification){
-                    System.out.println(i+1);
-                //    if(((Postnotification) notifi).getContent().equals())
+
+                   Postnotification postnotifi = (Postnotification)notifi;
+
+                    if(postnotifi.getContent().equals("commented")){
+                        postnotifi.commenting();
+                    }
+                    else if (postnotifi.getContent().equals("replied")){
+                        postnotifi.replying();
+                    }
+                    else if (postnotifi.getContent().equals("like reply")){
+                        postnotifi.liking();
+                    }
+                    else if (postnotifi.getContent().equals("tagged")){
+                        postnotifi.tagging();
+                    }
 
                 }
                 else if(notifi instanceof FriendRequest){
-                    System.out.println(i+1);
+                    System.out.println();
                 }
-
+                 System.out.println("see more ?y or n");
+                if(in.next().charAt(0)=='n'||in.next().charAt(0)=='N'){
+                    break;
+                }
             }
-        }
-        /*
-        *  public void showposts (int counter){
-        if (counter>FeedPosts.size()){
-            counter=0;
-        }
-        for (int i = 0; i < 3 && FeedPosts.size()>=(i+counter); i++) {
-            Post post=FeedPosts.get(i+counter);
-            System.out.println(i+1+"."+post.getAuthor());
-            System.out.println(post.getContent().substring(0,50));
-            long p=post.GetPostTimeInMin();
-            if (p>60){
-                System.out.print("since "+post.GetPostTimeInHours()+"h     ");
-            }else{
-                System.out.print("since "+post.GetPostTimeInMin()+"min  ");
             }
-            System.out.print(post.getReacts()+"likes    ");
-            System.out.print(post.getAllComments().size()+"comments");
-            System.out.println("==================================================");
-
+            else {
+                System.out.println("you dont have notifications");
+            }
+                viewUserFeed();
         }
 
-    }
-    public void ViewFeed(){
-        evaluatePosts();
-        int counter=0;
-        Boolean checker=new Boolean(true);
-        showposts(counter);
-        while (checker){
-            System.out.println("If you want to expand post Enter the number of the post");
-            System.out.println("4.Next posts");
-            System.out.println("5.Return to main");
-            System.out.print("Enter your choice : ");
-            int choice=in.nextInt();
-
-            switch (choice){
-                case 1:FeedPosts.get(counter).Expandpost();
-                    break;
-                case 2:FeedPosts.get(counter+1).Expandpost();
-                    break;
-                case 3:FeedPosts.get(counter+2).Expandpost();
-                    break;
-                case 4:
-                    counter+=3;
-                    if (counter>FeedPosts.size())
-                        counter=0;//no post to show
-                    showposts(counter);
-                    break;
-                case 5:
-                    checker=false;
-                    break;
-                default:
-                    System.out.println("invalid choice");
-                    ViewFeed();
-
+        public static void view_my_posts(User user){
+            for (Post post: user.getAllPosts()) {
+                int i=1;
+                System.out.println(i +". "+post.getAuthor());
+                System.out.println(post.getContent());
+                long p=post.GetPostTimeInMin();
+                if (p>60){
+                    System.out.print("since "+post.GetPostTimeInHours()+"h     ");
+                }else{
+                    System.out.print("since "+post.GetPostTimeInMin()+"min  ");
+                }
+                System.out.print(post.getReacts()+"likes    ");
+                System.out.print(post.getAllComments().size()+"comments");
+                System.out.println("==================================================");
+            i++;
             }
 
-           //counter+=3;
         }
-        viewUserFeed();
-    }
-
-        */
-
     //////////////////////////////////////////////////////////////**POST**///////////////////////////////////////////////////////////////
         public void addPost(){
             System.out.println("enter the content of the post");
@@ -255,7 +233,6 @@ public class Feed {
         System.out.println("The User\'s Gender is: " + user.getGender());
         System.out.println("The User\'s Birth Date is: " + user.getBirthdate());
         System.out.println("The User\'s Phone Number is: " + user.getPhoneNumber());
-
         //Display posts & friends
     }
     public void Searched_User_Menu (User Searched_User){
@@ -452,11 +429,11 @@ public class Feed {
             int choice=in.nextInt();
 
             switch (choice){
-                case 1:FeedPosts.get(counter).Expandpost();
+                case 1:FeedPosts.get(counter).Expandpost(user);
                     break;
-                case 2:FeedPosts.get(counter+1).Expandpost();
+                case 2:FeedPosts.get(counter+1).Expandpost(user);
                     break;
-                case 3:FeedPosts.get(counter+2).Expandpost();
+                case 3:FeedPosts.get(counter+2).Expandpost(user);
                     break;
                 case 4:
                     counter+=3;

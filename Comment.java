@@ -1,48 +1,45 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Comment extends Text{
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
-    private int counterLikes;
-    private static int commentId;
-
+    private static int commentId=0;
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
     public Comment( String content) {
-        super(commentId++);
-        this.counterLikes = 0;
+        commentId++;
+        this.cntReacts = 0;
         this.userReplies = new ArrayList<>();
         this.content =content;
 
     }
 
-////////////////////////////////////////////METHODS//////////////////////////////////////////
-    public void addComment(){
-        Comment newComment = new Comment( content);
+////////////////////////////////////////////METHODS///////////////////////////////////////////
+    public void addReply(Reply newReply){
+        userReplies.add(newReply);
     }
-    public void addReply(String content){
-       Reply newReply= new Reply(content);
-       userReplies.add(newReply);
-    }
-    public void addReaction(){
-        counterLikes++;
+    public int getId(){
+        return commentId;
     }
     public List<Reply> getUserReplies(){
         return userReplies;
     }
-
-    public void editContent(String newContent){
-            setContent(newContent);
-            System.out.println("Comment edited");
+    public Reply getReply(int replyId){
+        return getUserReplies().get(replyId);
     }
 
 
-    public void deleteContent(){
-            setContent(null);
-            System.out.println("Comment deleted");
+    public void editReply(int replyId,String newContent){
+        getReply(replyId).setContent(newContent);
+        System.out.println("Reply edited");
     }
 
+    public void deleteReply(int replyId){
+       getUserReplies().remove(getReply(replyId));
+        System.out.println("Reply deleted");
+    }
     @Override
     public void addReact() {
         cntReacts++;

@@ -3,21 +3,14 @@ import java.util.List;
 
 public class Reply extends Text{
     /////////////////////////////////////////ATTRIBUTES//////////////////////////////////
-
-   private static int replyId;
-    private int replyreaction;
-
+   private static int replyId=0;
     public Reply(String content) {
-        super(replyId++);
+        replyId++;
         this.content=content;
     }
 
-    public int getReplyID() {
-        return Id;
-    }
-    public void setReplyID(int replyID) {
-        this.Id = replyID;
-    }
+    public int getId() {
+        return replyId;}
 
     @Override
     public void addReact() {

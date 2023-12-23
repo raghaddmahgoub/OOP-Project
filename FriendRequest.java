@@ -15,7 +15,9 @@ public class FriendRequest extends Notification {
     }
 
     public void expand_friendrequest() {
+        getTimeStamp();
         System.out.println(sender.getUserName() + "sends you friend request");
+
         System.out.println("1.accept \n 2.reject\n");
         Scanner in = new Scanner(System.in);
         int x = in.nextInt();

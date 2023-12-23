@@ -28,6 +28,9 @@ public class UserDashBoard {
                     updateProfile();
                     break;
                 case 3:
+                    Feed.view_my_posts(user);
+                    break;
+                case 4:
                     backToFeed();
                     break;
                 default:
@@ -42,6 +45,7 @@ public class UserDashBoard {
         System.out.println("UserName " + user.getUserName());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Gender: " + user.getGender());
+        System.out.println("Date of birth: " + user.getBirthdateString());
         //  System.out.println("Date Of Birth: " + user.getBirthdate());
         System.out.println("Phone Number: " + user.getPhoneNumber());
         System.out.println("1- Return back to dashboard");
@@ -95,8 +99,8 @@ public class UserDashBoard {
         while (user.getUserName().length() < 8) {
             System.out.println("Username Should be More Than 8 Characters, Try Again: ");
             System.out.println("Enter Username :");
-        }
         user.setUser_Name(in.next());
+        }
         System.out.println("Username is updated successfully :)");
         System.out.println("Your new username is " + user.getUserName());
         System.out.println("1- Return back to dashboard");
@@ -136,6 +140,8 @@ public class UserDashBoard {
             NewPassword = in.next();
         }
         user.setPassword(NewPassword);
+        System.out.println("password updated successfully");
+        viewDashboard();
     }
     void ViewPostsOfMe() {
         System.out.println ("Posts");

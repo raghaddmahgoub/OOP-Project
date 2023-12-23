@@ -1,9 +1,7 @@
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import javax.sound.midi.Soundbank;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Vector;
 import java.time.LocalDateTime;
 
 public class User
@@ -19,13 +17,12 @@ public class User
     private String Email;
     private String Password;
     private GenderOptions Gender = GenderOptions.NONE;
-    private String Birthdate;
-    private Integer PhoneNumber;
+    private Date Birthdate;
+    private Long PhoneNumber;
     private String userPrivacy;
     ArrayList <User> Friends = new ArrayList <User>();
     private ArrayList <String> Conversations = new ArrayList <String>();
     private ArrayList <User> friendRequests = new ArrayList <User>();
-
 
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList<Object> notification = new ArrayList<Object>();
@@ -33,6 +30,7 @@ public class User
     private ArrayList<Post> Posts = new ArrayList<Post>();
 
     private ArrayList<Post> Feed = new ArrayList<Post>();
+    private Messenger messenger;
 
 ////////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
 
@@ -118,18 +116,25 @@ public class User
         Gender = gender;
     }
 
-    public String getBirthdate() {
+    public Date getBirthdate(){
         return Birthdate;
     }
-    public void setBirthdate(String birthdate) {
+    public String getBirthdateString() {
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(getBirthdate());
+        return formattedDate;
+    }
+    public void setBirthdate(Date birthdate) {
+
+
         Birthdate = birthdate;
     }
 
-    public int getPhoneNumber() {
+    public Long getPhoneNumber() {
         return PhoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         PhoneNumber = phoneNumber;
     }
 
@@ -151,5 +156,13 @@ public class User
     public void addFriend (User friend){
         Friends.add(friend);
     }
+    public Messenger getMessenger() {
+        return messenger;
+    }
+
+    public void setMessenger(User user) {
+        this.messenger = new Messenger(user);
+    }
+
 }
 

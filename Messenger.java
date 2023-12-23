@@ -1,31 +1,118 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Vector;
 
 public class Messenger {
+    Scanner in=new Scanner(System.in);
     private List<Conversation> conversations;
     private List<Integer> noUnreadConversations;
-
-    public Messenger() {
+    User user;
+    public Messenger(User user) {
+        this.user=user;
         this.conversations = new ArrayList<>();
     }
 
+    public void MessengerFeed() {
+        System.out.println("Welcome to Messenger");
+        System.out.println("1-Create new conversation");
+        System.out.println("2- Find conversation");
+        System.out.println("3- Search in conversations by keyword");
+        System.out.println("4- Delete Conversation");
+        System.out.println("Choice:");
+        int choice=in.nextInt();
+        switch (choice){
+            case 1:
+                System.out.println("Enter number of participants:");
+                int no=in.nextInt();
+                String username;
+                ArrayList<User>participants=new ArrayList<>();
+                participants.add(user);
+                for(int i=1;i<no-1;i++)
+                {
+                    System.out.println("Enter Participant "+i);
+                    username=in.next();
+                    for (User friend:user.getFriends()) {
+                        if(friend.getUserName().equals(username))
+                            participants.add(friend);
+                    }
+                }
+                Conversation conversation=new Conversation(participants);
+                user.getMessenger().NewConversation(conversation);
+                conversation.displayMessages(conversation);
+                Options(conversation);
+                break;
+            case 2:
+                System.out.println("Enter ID:");
+                int ID=in.nextInt();
+                Conversation conv=user.getMessenger().findConversation(ID);
+                conv.displayMessages(conv);
+                Options(conv);break;
+            case 3:
+                break;
+            case 4:
+                System.out.println("Enter conversation ID:");
+                int convID=in.nextInt();
+                user.getMessenger().deleteConversation(convID);
+                break;
+            default:
+                System.out.println("Invalid Choice");
+                MessengerFeed();
+        }
 
+    }
+    public void Options(Conversation conversation){
+        System.out.println("1- Add a message");
+        System.out.println("2- Delete a message");
+        System.out.println("3- Edit a message");
+        System.out.println("4- Search in conversation");
+        int Choice;
+        System.out.println("Enter Value:");
+        Choice=in.nextInt();
+        switch (Choice){
+            case 1:
+                System.out.println("Enter Content:");
+                String content=in.next();
+                conversation.Add_Message(user.getUserID(),content);
+                break;
+            case 2:
+                conversation.DeleteMessage(conversation.getConversation_id());break;
+            case 3:
+                System.out.println("Enter MessageID:");
+                int id=in.nextInt();
+                System.out.println("Enter new content:");
+                String NewContent=in.next();
+                for (Messages mes:conversation.getMessages()) {
+                    if(mes.getId()==(id))
+                    {
+                        mes.EditMessage(NewContent);
+                    }
+                }
+                break;
+            case 4:
+                System.out.println("Enter Keyword:");
+                String keyword=in.next();
+                user.getMessenger().searchMessagesInConversation(conversation.getConversation_id(),keyword);
+                break;
+            default:
+                System.out.println("Invalid Choice");
+                Options(conversation);
+        }
+    }
     ////////methods
 
     //  new conversation
-    public int newConversation(ArrayList<String> participants) {
+    public int newConversation(ArrayList<User> participants) {
         int newConvId = conversations.size() + 1;
         Conversation conversation = new Conversation(participants);
         conversations.add(conversation);
         return newConvId;
     }
-
+    public int NewConversation(Conversation conv) {
+        int newConvId = conversations.size() + 1;
+        conversations.add(conv);
+        return newConvId;
+    }
     // display all conversations
     public void displayConversations() {
         System.out.println("Conversations:");
@@ -59,11 +146,11 @@ public class Messenger {
 
     // sort conversations based on timestamp
     public void sortConversations() {
-        // conversations.sort(Comparator.comparing(Conversation::getTimestamp).reversed());
+        conversations.sort(Comparator.comparing(Conversation::getTime).reversed());
     }
 
     // add message to conversation
-    public void addMessageToConversation(int conversationId, int senderId, int recipientId, String content) {
+  /* public void addMessageToConversation(int conversationId, int senderId, int recipientId, String content) {
         Conversation conversation = findConversation(conversationId);
 
         conversation.Add_Message(senderId, recipientId, content);
@@ -78,7 +165,7 @@ public class Messenger {
         } else {
             System.out.println("Conversation " + conversationId + " not found.");
         }
-    }
+    }*/
 
     // mark conversation as read
     public void markConversationAsRead(int conversationId) {
@@ -139,7 +226,7 @@ public class Messenger {
         Conversation conversation = findConversation(conversationId);
         if (conversation != null) {
             for (Messages mes : conversation.getMessages()) {
-                if (mes.getMessage_ID() == messageId) {
+                if (mes.getId() == messageId) {
                     mes.EditMessage(newContent);
                 }
             }
@@ -173,7 +260,7 @@ public class Messenger {
     private Conversation findConvByUserName(String userName) {
         for (Conversation conversation : conversations) {
 
-            List<String> participants = conversation.getParticipants();
+            List<User> participants = conversation.getParticipants();
             if (participants.contains(userName)) {
                 return conversation;
             }
