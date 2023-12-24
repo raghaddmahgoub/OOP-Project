@@ -263,13 +263,13 @@ public class Feed {
             Get_Mutual_Posts(First_User, Second_User);
         else Get_Mutual_Friends(First_User, Second_User);
     }
-    public void ViewProfile(){
+    public void ViewProfile(User friend){
         //Display all user data:
-        System.out.println("The User\'s Name is: " + user.getName());
-        System.out.println("The User\'s Email is: " + user.getEmail());
-        System.out.println("The User\'s Gender is: " + user.getGender());
-        System.out.println("The User\'s Birth Date is: " + user.getBirthdate());
-        System.out.println("The User\'s Phone Number is: " + user.getPhoneNumber());
+        System.out.println("The User\'s Name is: " + friend.getName());
+        System.out.println("The User\'s Email is: " + friend.getEmail());
+        System.out.println("The User\'s Gender is: " + friend.getGender());
+        System.out.println("The User\'s Birth Date is: " + friend.getBirthdate());
+        System.out.println("The User\'s Phone Number is: " + friend.getPhoneNumber());
         //Display posts & friends
     }
     public void Searched_User_Menu (User Searched_User){
@@ -291,7 +291,7 @@ public class Feed {
         }
         switch (choice){
             case 1:
-                ViewProfile();
+                ViewProfile(Searched_User);
                 break;
             case 2:
                 boolean A_Friend = Check_Friendship(Searched_User);

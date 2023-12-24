@@ -115,26 +115,27 @@ public class Post extends Text {
     }
 
     public void addComment(User commenter){
-        System.out.println("enter what your want to write in a comment");//////////////////////////exce
+        System.out.println("enter what your want to write in a comment");
         String cont=in.next();
         Comment comment= new Comment(cont);
         this.comments.add(comment);
-        comment.setAuthor(commenter);/////////////////////////////null commenter
+        comment.setAuthor(commenter);
         Postnotification postnotification=new Postnotification(author.getPost(postId),commenter);
         postnotification.setContent("commented");
         commenter.addPostNotifiObject(postnotification);
         System.out.println("your comment added");
         System.out.println("======================================================================================");
+        display_comments(commenter);
 
     }
-    public void addReply(int commentId){
+    public void addReply(int commentId,User replier){
         System.out.println("enter the reply content");
         String content = in.next();
         Reply newReply= new Reply(content);
         getComment(commentId).addReply(newReply);
         System.out.println("your reply added");
         System.out.println("======================================================================================");
-        User replier= newReply.getAuthor();
+        newReply.setAuthor(replier);;
         Postnotification postnotification=new Postnotification(author.getPost(postId),replier);
         postnotification.setContent("replied");
         replier.addPostNotifiObject(postnotification);
@@ -260,6 +261,7 @@ public class Post extends Text {
                     getComment(commentId).displayContent();
                     System.out.println("number of likes: " + getComment(commentId).getReacts());
                     System.out.println("=========================================================================================");
+                    display_comments(friend);
                     break;
                 case 3:
                     System.out.println("enter the comment id you would like to view replies on");
@@ -281,7 +283,7 @@ public class Post extends Text {
                             break; // Exit the loop if the input is valid
                         }
                     }
-                    display_replies(enteredCommentId);
+                    display_replies(enteredCommentId,friend);
                     break;
                 case 4:
                     System.out.println("enter the comment id you would like to view replies on");
@@ -303,7 +305,7 @@ public class Post extends Text {
                             break; // Exit the loop if the input is valid
                         }
                     }
-                    addReply(commId);
+                    addReply(commId,friend);
                     break;
                 default:
                     System.out.println("invalid input");
@@ -314,7 +316,7 @@ public class Post extends Text {
             System.out.println("there is no comments on this post yet");
         }
 
-    public void display_replies (int commentId){
+    public void display_replies (int commentId,User friend){
         if (getComment(commentId).getUserReplies().size()>0){
             for (Reply reply : getComment(commentId).getUserReplies()) {
                 System.out.println(reply.getId());
@@ -367,12 +369,12 @@ public class Post extends Text {
                 author.addPostNotifiObject(postnotification);
                 break;
             case 2:
-                addReply(commentId);
+                addReply(commentId,friend);
                 break;
 //            case 3:
 //                break;
             default:
-                display_replies(commentId);
+                display_replies(commentId,friend);
         }
         }
          else{
