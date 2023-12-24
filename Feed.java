@@ -514,11 +514,8 @@ public class Feed {
 
 
     public boolean Check_Friendship(User Friend) {
-        FriendShip A_Friendship = FriendShip.getFriendship(user, Friend);
-        if (A_Friendship != null) {
-            if (A_Friendship.getFriendship_status().equals("Accepted"))
+        if(user.Friends.contains(Friend))
                 return true;
-        }
         return false;
     }
     //=============================================don't touch=======================================================================
