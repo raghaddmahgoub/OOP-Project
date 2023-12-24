@@ -48,7 +48,7 @@ public class UserInterface {
     public static User LogIn() {
         User user;
         System.out.println("Login page");
-        System.out.println("-if you want to return to main menu -");
+        System.out.println("-if you want to return to main menu enter 0 -");
         System.out.println("Enter Username :");
         username = in.next();
         if (username.equals("0")) {
@@ -183,9 +183,14 @@ public class UserInterface {
         user.setBirthdate(dateOfBirth);
         if(gender.equals("female")){
             user.setGender(User.GenderOptions.FEMALE);
-        }else{
+        }
+        else if (gender.equals("male")){
             user.setGender(User.GenderOptions.MALE);
         }
+        else{
+            user.setGender(User.GenderOptions.NONE);
+        }
+        System.out.println(user.getGender());
         Main.vec.add(user);
         System.out.println("Wish you enjoy our facebook :)");
         //=============================

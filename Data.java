@@ -123,20 +123,22 @@ public class Data {
        //===================================messenger=====================
         JSONArray conversationsArray = new JSONArray();
         for (User user:Main.vec) {
-            for (Conversation conversation : user.getMessenger().getConversations()) {
-                JSONObject conversationJson = new JSONObject();
-                conversationJson.put("User ID",user.getUserID());
-                conversationJson.put("Messanger ID",user.getMessenger().getMessengerid());
-                conversationJson.put("conversationID", conversation.getConversation_id());
-                conversationJson.put("conversation time", conversation.getTime());
-                conversationJson.put("conversation status", conversation.getStatus());
-                JSONArray partecipants = new JSONArray();
-                for (User partcipant:conversation.getParticipants()) {
-                    JSONObject paticipant_id = new JSONObject();
-                    paticipant_id.put("Username",partcipant.getUserName());
+            if(user.getMessenger()!=null) {
+                for (Conversation conversation : user.getMessenger().getConversations()) {
+                    JSONObject conversationJson = new JSONObject();
+                    conversationJson.put("User ID", user.getUserID());
+                    conversationJson.put("Messanger ID", user.getMessenger().getMessengerid());
+                    conversationJson.put("conversationID", conversation.getConversation_id());
+                    conversationJson.put("conversation time", conversation.getTime());
+                    conversationJson.put("conversation status", conversation.getStatus());
+                    JSONArray partecipants = new JSONArray();
+                    for (User partcipant : conversation.getParticipants()) {
+                        JSONObject paticipant_id = new JSONObject();
+                        paticipant_id.put("Username", partcipant.getUserName());
+                    }
+                    conversationJson.put("partcipent", partecipants);
+                    conversationsArray.put(conversationJson);
                 }
-                conversationJson.put("partcipent",partecipants);
-                conversationsArray.put(conversationJson);
             }
         }
         try (FileWriter file = new FileWriter("messanger.json",false)) {
@@ -149,19 +151,21 @@ public class Data {
         //============================
         JSONArray MessageArray = new JSONArray();
         for (User user:Main.vec) {
-            for (Conversation conversation : user.getMessenger().getConversations()) {
-                for (Messages Message : conversation.getMessages()) {
-                    JSONObject messagejson = new JSONObject();
-                    messagejson.put("user id", user.getUserID());
-                    int messengerid=user.getMessenger().getMessengerid();
-                    messagejson.put("messenger id", messengerid);
-                    messagejson.put("Conversation id",user.getMessenger().getConversations().indexOf(conversation));
-                    messagejson.put("message id", Message.getId());
-                    messagejson.put("message content", Message.getContent());
-                    messagejson.put("message sender_id", Message.getSender_ID());
-                    messagejson.put("message status", Message.getStatus());
-                    messagejson.put("message timestamp", Message.getTimestamp());
-                    messagejson.put("message reacts", Message.getReacts());
+            if(user.getMessenger()!=null) {
+                for (Conversation conversation : user.getMessenger().getConversations()) {
+                    for (Messages Message : conversation.getMessages()) {
+                        JSONObject messagejson = new JSONObject();
+                        messagejson.put("user id", user.getUserID());
+                        int messengerid=user.getMessenger().getMessengerid();
+                        messagejson.put("messenger id", messengerid);
+                        messagejson.put("Conversation id",user.getMessenger().getConversations().indexOf(conversation));
+                        messagejson.put("message id", Message.getId());
+                        messagejson.put("message content", Message.getContent());
+                        messagejson.put("message sender_id", Message.getSender_ID());
+                        messagejson.put("message status", Message.getStatus());
+                        messagejson.put("message timestamp", Message.getTimestamp());
+                        messagejson.put("message reacts", Message.getReacts());
+                    }
                 }
             }
         }
@@ -174,6 +178,8 @@ public class Data {
         //=================================
         JSONArray replayArray = new JSONArray();
         for (User user:Main.vec) {
+            if(user.getMessenger()!=null) {
+
             for (Conversation conversation : user.getMessenger().getConversations()) {
                 for (Messages Message : conversation.getMessages()) {
                      for (Reply messagereply : Message.getMessageReplies()) {
@@ -193,7 +199,7 @@ public class Data {
                      }
                 }
             }
-        }
+        }}
         try (FileWriter file = new FileWriter("messageReplay.json",false)) {
             file.write(replaysArray.toString(4)); // Use toString(int) for indentation
             System.out.println("JSON file created successfully.");
@@ -203,14 +209,17 @@ public class Data {
          //================================================
 
         JSONArray FriendshipArray = new JSONArray();
-        for (FriendShip friend : Main.Friendships) {
-            JSONObject Friendjson = new JSONObject();
-            Friendjson.put("User1", friend.getUser1().getUserName());
-            Friendjson.put("User2", friend.getUser2().getUserName());
-            Friendjson.put("role1", friend.getFriend1_Role());
-            Friendjson.put("role2", friend.getFriend2_Role());
-            Friendjson.put("status", friend.getFriendship_status());
-            Friendjson.put("Timestamp", friend.getFriendsSince());
+        if (Main.Friendships!=null){
+
+            for (FriendShip friend : Main.Friendships) {
+                JSONObject Friendjson = new JSONObject();
+                Friendjson.put("User1", friend.getUser1().getUserName());
+                Friendjson.put("User2", friend.getUser2().getUserName());
+                Friendjson.put("role1", friend.getFriend1_Role());
+                Friendjson.put("role2", friend.getFriend2_Role());
+                Friendjson.put("status", friend.getFriendship_status());
+                Friendjson.put("Timestamp", friend.getFriendsSince());
+            }
         }
         try (FileWriter file = new FileWriter("friendship.json",false)) {
             file.write(FriendshipArray.toString(4));// Use toString(int) for indentation
@@ -271,10 +280,7 @@ public class Data {
                 post.setAuthor(user);
                 post.setPostId( jsonObject.getInt("Post ID"));
                 post.setContent(jsonObject.getString("content"));
-                String time = jsonObject.getString("time stamp");
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                Date parsedDate = dateFormat.parse(time);
-                post.setTimestamp(new Timestamp(parsedDate.getTime()));
+
                 post.setCntReacts( jsonObject.getInt("Number of reacts"));
                 post.setNumberOfComments( jsonObject.getInt("Number of comments"));
                 for (Object obj:jsonObject.getJSONArray("tagged users")) {

@@ -1,0 +1,42 @@
+[
+    {
+        "User ID": 0,
+        "password": "kdesacfew",
+        "gender": "MALE",
+        "name": "haneen",
+        "phone number": 637482423,
+        "email": "haneen@gmail.com",
+        "birth date": "2000-02-02",
+        "username": "hanrrnakram"
+    },
+    {
+        "User ID": 0,
+        "password": "12345678",
+        "gender": "MALE",
+        "name": "jhuj",
+        "phone number": 123456789,
+        "email": "gjjikh@hgyhij",
+        "birth date": "2000-08-06",
+        "username": "12345678"
+    },
+    {
+        "User ID": 0,
+        "password": "omar123elsayed",
+        "gender": "MALE",
+        "name": "omar",
+        "phone number": 1343412432,
+        "email": "omarelsayed@gmi",
+        "birth date": "2002-12-02",
+        "username": "omarelsayed"
+    },
+    {
+        "User ID": 0,
+        "password": "123456789",
+        "gender": "FEMALE",
+        "name": "renad",
+        "phone number": 1210590271,
+        "email": "renad@gmail.com",
+        "birth date": "2003-12-25",
+        "username": "Renaaaad"
+    }
+]

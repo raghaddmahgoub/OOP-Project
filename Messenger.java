@@ -21,8 +21,8 @@ public class Messenger {
     private List<Integer> noUnreadConversations;
     User user;
     public Messenger(User user) {
-        MessengerID++;
         Messengerid=MessengerID;
+        MessengerID++;
         this.user=user;
         this.conversations = new ArrayList<>();
     }

@@ -76,7 +76,7 @@ public class Feed {
                 user.getMessenger().MessengerFeed();
                 break;
             case 10 :
-                //Data.writeData();
+                Data.writeData();
                 UserInterface.ProgramStart();
                 break;
 
@@ -219,8 +219,9 @@ public class Feed {
             System.out.println("The username you entered was not found. PLease try again :( ");
             System.out.println("Do You want to search again? (Y/N)");
             char choice =  in.next().charAt(0);
-            while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+            while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n'){
                 System.out.println("Invalid Choice please try again :( ");
+            choice =  in.next().charAt(0);}
             if (choice == 'Y' || choice == 'y')
                 SearchForUser();
             else viewUserFeed();
