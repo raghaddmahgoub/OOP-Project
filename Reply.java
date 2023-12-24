@@ -4,7 +4,12 @@ import java.util.List;
 public class Reply extends Text{
     /////////////////////////////////////////ATTRIBUTES//////////////////////////////////
    private static int Id=0;
-   private int replyId;
+
+    public void setReplyId(int replyId) {
+        this.replyId = replyId;
+    }
+
+    private int replyId;
     public Reply(String content) {
         replyId=Id;
         Id++;

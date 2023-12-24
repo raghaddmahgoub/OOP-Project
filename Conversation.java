@@ -9,6 +9,15 @@ public class Conversation {
     //Attributes
     private static int conversation_id=0;
     private int convID;
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setMessages(ArrayList<Messages> messages) {
+        Messages = messages;
+    }
+
     public Timestamp timestamp;
 
     private ArrayList<Messages> Messages = new ArrayList<>();

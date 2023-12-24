@@ -7,6 +7,11 @@ public class Comment extends Text{
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
     private static int Id=0;
+
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
+    }
+
     private int commentId;
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
     public Comment( String content) {

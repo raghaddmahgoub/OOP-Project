@@ -18,6 +18,19 @@ public class Post extends Text {
     private final ArrayList<Comment> comments = new ArrayList<Comment>();
 
     private String privacy;
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
+    public void setTaggedUsers(ArrayList<User> taggedUsers) {
+        this.taggedUsers = taggedUsers;
+    }
+
+    public void setNumberOfComments(int numberOfComments) {
+        NumberOfComments = numberOfComments;
+    }
+
     private int NumberOfComments=0;
     public int Score=0;
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
@@ -56,7 +69,13 @@ public class Post extends Text {
     public void addReact() {
         cntReacts++;
     }
+    public void addtaggedUsers(User user){
+        taggedUsers.add(user);
+    }
 
+    public void add_comment(Comment com){
+        comments.add(com);
+    }
     public void addTaggedUser(Post post) {
         if (author.getFriends().size()>0) {
             for (User friendlist : author.getFriends()) {

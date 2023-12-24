@@ -8,6 +8,11 @@ public abstract class Text {
     protected User author;
     protected String content;
     protected Timestamp timestamp;
+
+    public void setCntReacts(int cntReacts) {
+        this.cntReacts = cntReacts;
+    }
+
     protected int cntReacts=0;
     //////////////////////////////////////////**CONSTRUCTORS**///////////////////////////////////////////
     public Text(int id) {

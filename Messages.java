@@ -29,6 +29,9 @@ public class Messages extends Text{
         Sender_ID = sender_ID;
         this.content = content;
     }
+    public void addreplay(Reply reply){
+        MessageReplies.add(reply);
+    }
     //Methods
     public void EditMessage(String content) {
         setContent(content);

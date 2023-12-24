@@ -26,6 +26,9 @@ public class Messenger {
         this.user=user;
         this.conversations = new ArrayList<>();
     }
+    public void addconversations(Conversation con){
+        conversations.add(con);
+    }
 
     public void MessengerFeed() {
 
