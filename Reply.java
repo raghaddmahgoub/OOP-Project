@@ -3,9 +3,11 @@ import java.util.List;
 
 public class Reply extends Text{
     /////////////////////////////////////////ATTRIBUTES//////////////////////////////////
-   private static int replyId=0;
+   private static int Id=0;
+   private int replyId;
     public Reply(String content) {
-        replyId++;
+        replyId=Id;
+        Id++;
         this.content=content;
     }
 

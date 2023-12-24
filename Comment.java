@@ -6,11 +6,13 @@ import java.util.Scanner;
 public class Comment extends Text{
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////
     private List<Reply> userReplies;
-    private static int commentId=0;
+    private static int Id=0;
+    private int commentId;
     //////////////////////////////////////////CONSTRUCTORS///////////////////////////////////////////
     public Comment( String content) {
-        commentId++;
         this.cntReacts = 0;
+        commentId=Id;
+        Id++;
         this.userReplies = new ArrayList<>();
         this.content =content;
 

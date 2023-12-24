@@ -315,11 +315,13 @@ public class Post extends Text {
         }
 
     public void display_replies (int commentId){
-        for (Reply reply :getComment(commentId).getUserReplies()) {
-            System.out.println(reply.getId());
-            reply.displayContent();
-            System.out.println(reply.getReacts());
-        }
+        if (getComment(commentId).getUserReplies().size()>0){
+            for (Reply reply : getComment(commentId).getUserReplies()) {
+                System.out.println(reply.getId());
+                reply.displayContent();
+                System.out.println(reply.getReacts());
+            }
+
         System.out.println("1. like a reply\n 2. add reply");
         Boolean validate=new Boolean(false);
         int choice = 0;
@@ -333,18 +335,17 @@ public class Post extends Text {
                 in.nextLine();
             }
         }
-        switch (choice){
+        switch (choice) {
             case 1:
                 System.out.println("enter the reply id you want to like: ");
-                int replyId=0;
+                int replyId = 0;
                 while (true) {
                     String input = in.next();
 
                     if (!input.matches("[0-9]+")) {
                         System.out.println("comment id should contain digits only. Please try again.");
 
-                    }
-                    else {
+                    } else {
                         replyId = Integer.parseInt(input);
                         break; // Exit the loop if the input contains only digits
                     }
@@ -354,14 +355,14 @@ public class Post extends Text {
                         break; // Exit the loop if the input is valid
                     }
                 }
-                Reply reply= getComment(commentId).getReply(replyId);
+                Reply reply = getComment(commentId).getReply(replyId);
                 reply.addReact();
                 System.out.println("like added");
                 System.out.println(reply.getContent());
                 System.out.println(reply.getReacts());
                 /////////send notifi
-                User liker= reply.getAuthor();
-                Postnotification postnotification =new Postnotification(author.getPost(postId),liker);
+                User liker = reply.getAuthor();
+                Postnotification postnotification = new Postnotification(author.getPost(postId), liker);
                 postnotification.setContent("liked");
                 author.addPostNotifiObject(postnotification);
                 break;
@@ -373,6 +374,10 @@ public class Post extends Text {
             default:
                 display_replies(commentId);
         }
+        }
+         else{
+                System.out.println("this comment has no replies yet");
+            }
     }
     //===omar=====================Don't touch====================================
     public long GetPostTimeInHours (){
