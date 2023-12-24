@@ -15,146 +15,151 @@ public class Feed {
         this.user = user;
         viewUserFeed();
     }
-   // ArrayList <Post> getALLposts = user.getPosts();
-      public void viewUserFeed(){
-            System.out.println("1- View Posts");//haneen
-            System.out.println("2- View Your Notifications");//haneen
-            System.out.println("3- View Your Friends Menu");
-            System.out.println("4- View Your Dashboard");//renad
-            System.out.println("5- Add Post");//haneen
-            System.out.println("6- view Posts of Me");
-            System.out.println("7- Search for user");
-            System.out.println("8-go to messenger");
-            System.out.println("9- Sign Out");
-          Boolean validate=new Boolean(false);
-            int choice = 0;
-          while(!validate) {
-              try {
-                  choice=in.nextInt();
-                  validate=true;
-              } catch (InputMismatchException e) {
-                  System.out.println("invaild choice try again");
-                  System.out.print("Enter a choice :");
-                  in.nextLine();
-              }
-          }
-            switch (choice){
-                case 1:
-                    System.out.println("POST");
-                    ViewFeed();
-                    break;
-                case 2:
-                    showNotifications();
-                    break;
-                case 3:
-                    System.out.println("FRIENDS");
-                    friendsofme();
-                    break;
-                case 4:
-                    dashboard = new UserDashBoard(user);
-                    break;
-                case 5:
-                    addPost();
-                    break;
-                case 6:
-                    view_my_posts(user);
-                    viewUserFeed();
-                    break;
-                case 7 :
-                    SearchForUser();
-                    break;
-                case 8 :
-                    user.setMessenger(user);
-                    user.getMessenger().MessengerFeed();
-                    break;
-                case 9 :
-                    Data.writeData();
-                    UserInterface.ProgramStart();
-                    break;
-
-                default:
-                    System.out.println("invalid choice");
-                    viewUserFeed();
-
+    // ArrayList <Post> getALLposts = user.getPosts();
+    public void viewUserFeed(){
+        System.out.println("1- View Posts");//haneen
+        System.out.println("2- View Your Notifications");//haneen
+        System.out.println("3- View Your Friends Menu");
+        System.out.println("4- View Your Dashboard");//renad
+        System.out.println("5- Add Post");//haneen
+        System.out.println("6- View Posts of Me");
+        System.out.println("7- Search for user");
+        System.out.println("8- See Friendship between two users");
+        System.out.println("9- Go to messenger");
+        System.out.println("10- Sign Out");
+        Boolean validate=new Boolean(false);
+        int choice = 0;
+        while(!validate) {
+            try {
+                choice=in.nextInt();
+                validate=true;
+            } catch (InputMismatchException e) {
+                System.out.println("invaild choice try again");
+                System.out.print("Enter a choice :");
+                in.nextLine();
             }
         }
-    //////////////////////////////////////////////////////////////**NOTIFICATION**///////////////////////////////////////////////////////////////
-        void showNotifications()
-        {
-            System.out.println ("NOTIFICATION");
-            System.out.println("1. activity notifications\n2. friendrequests notifications ");
-            Boolean validate=new Boolean(false);
-            int choice = 0;
-            while(!validate) {
-                try {
-                    choice=in.nextInt();
-                    validate=true;
-                } catch (InputMismatchException e) {
-                    System.out.println("invaild choice try again");
-                    System.out.print("Enter a choice :");
-                    in.nextLine();
-                }
-            }
-            switch (choice){
-                case 1:
-                    if (0<user.getPostNotifications().size()) {
-                        for (Postnotification notifi : user.getPostNotifications()) {
-                           int i=1;
-                            System.out.println(notifi.getContent());
-                            switch (notifi.getContent()) {
-                                case "commented":
-                                    notifi.commenting();
-                                    break;
-                                case "replied":
-                                    notifi.replying();
-                                    break;
-                                case "like reply":
-                                    notifi.liking();
-                                    break;
-                                case "tagged":
-                                    notifi.tagging();
-                                    break;
-                                default:
-                                    throw new IllegalStateException("Unexpected value: " + notifi.getContent());
-                            }
-                            System.out.println("see more ?y or n");
-                            if((in.next().charAt(0)=='y'||in.next().charAt(0)=='Y') && i <= user.getPostNotifications().size()){
-                              i++;
-                            }
-                            if(in.next().charAt(0)=='n'||in.next().charAt(0)=='N'){
-                                break;
-                            }
-                        }
-                    }
-                    else {
-                        System.out.println("you dont have activity notifiations yet");
-                    }
-                        break;
-                case 2:
-                    int i=1;
-                    if (0< user.getFriendRequests().size()){
-                         for (FriendRequest notifi:user.getFriendRequests()) {
-                                   notifi.getTimeStamp();
-                                   notifi.expand_friendrequest();
-                             System.out.println("see more ?y or n");
-                             if((in.next().charAt(0)=='y'||in.next().charAt(0)=='Y') && i <= user.getPostNotifications().size()){
-                                 i++;
-                             }
-                            if(in.next().charAt(0)=='n'||in.next().charAt(0)=='N'){
-                                break;
-                            }
-                        }
-                    }
-                    else {
-                        System.out.println("you dont have friends notifiations yet");
-                    }
-                        break;
-                default:
-                    System.out.println("invalid option");
-                    showNotifications();
-            }
+        switch (choice){
+            case 1:
+                System.out.println("POST");
+                ViewFeed();
+                break;
+            case 2:
+                showNotifications();
+                break;
+            case 3:
+                System.out.println("FRIENDS");
+                friendsofme();
+                break;
+            case 4:
+                dashboard = new UserDashBoard(user);
+                break;
+            case 5:
+                addPost();
+                break;
+            case 6:
+                view_my_posts(user);
                 viewUserFeed();
+                break;
+            case 7 :
+                SearchForUser();
+                break;
+            case 8:
+                See_Friendship();
+                viewUserFeed();
+                break;
+            case 9 :
+                user.setMessenger(user);
+                user.getMessenger().MessengerFeed();
+                break;
+            case 10 :
+                //Data.writeData();
+                UserInterface.ProgramStart();
+                break;
+
+            default:
+                System.out.println("invalid choice");
+                viewUserFeed();
+
+        }
+    }
+    //////////////////////////////////////////////////////////////**NOTIFICATION**///////////////////////////////////////////////////////////////
+    void showNotifications()
+    {
+        System.out.println ("NOTIFICATION");
+        System.out.println("1. Activity Notifications\n2. FriendRequests notifications ");
+        Boolean validate=new Boolean(false);
+        int choice = 0;
+        while(!validate) {
+            try {
+                choice=in.nextInt();
+                validate=true;
+            } catch (InputMismatchException e) {
+                System.out.println("invaild choice try again");
+                System.out.print("Enter a choice :");
+                in.nextLine();
             }
+        }
+        switch (choice){
+            case 1:
+                if (0<user.getPostNotifications().size()) {
+                    for (Postnotification notifi : user.getPostNotifications()) {
+                        int i=1;
+                        System.out.println(notifi.getContent());
+                        switch (notifi.getContent()) {
+                            case "commented":
+                                notifi.commenting();
+                                break;
+                            case "replied":
+                                notifi.replying();
+                                break;
+                            case "like reply":
+                                notifi.liking();
+                                break;
+                            case "tagged":
+                                notifi.tagging();
+                                break;
+                            default:
+                                throw new IllegalStateException("Unexpected value: " + notifi.getContent());
+                        }
+                        System.out.println("see more ? y or n");
+                        if((in.next().charAt(0)=='y'||in.next().charAt(0)=='Y') && i <= user.getPostNotifications().size()){
+                            i++;
+                        }
+                        if(in.next().charAt(0)=='n'||in.next().charAt(0)=='N'){
+                            break;
+                        }
+                    }
+                }
+                else {
+                    System.out.println("you don't have activity notifications yet");
+                }
+                break;
+            case 2:
+                int i=1;
+                if (0< user.getFriendRequests().size()){
+                    for (FriendRequest notifi:user.getFriendRequests()) {
+                        notifi.getTimeStamp();
+                        notifi.expand_friendrequest();
+                        System.out.println("see more ? y or n");
+                        if((in.next().charAt(0)=='y'||in.next().charAt(0)=='Y') && i <= user.getPostNotifications().size()){
+                            i++;
+                        }
+                        if(in.next().charAt(0)=='n'||in.next().charAt(0)=='N'){
+                            break;
+                        }
+                    }
+                }
+                else {
+                    System.out.println("you don't have friends notifications yet");
+                }
+                break;
+            default:
+                System.out.println("invalid option");
+                showNotifications();
+        }
+        viewUserFeed();
+    }
     //////////////////////////////////////////////////////////////**POST**///////////////////////////////////////////////////////////////
     public static void view_my_posts(User user) {
         for (Post post : user.getAllPosts()) {
@@ -163,45 +168,45 @@ public class Feed {
             System.out.println(post.getContent());
             long p = post.GetPostTimeInMin();
             if (p > 60) {
-                System.out.print("since " + post.GetPostTimeInHours() + "h     ");
+                System.out.println("since " + post.GetPostTimeInHours() + "h     ");
             } else {
-                System.out.print("since " + post.GetPostTimeInMin() + "min  ");
+                System.out.println("since " + post.GetPostTimeInMin() + "min  ");
             }
-            System.out.print(post.getReacts() + "likes    ");
-            System.out.print(post.getAllComments().size() + "comments\n");
+            System.out.println(post.getReacts() + "likes    ");
+            System.out.println(post.getAllComments().size() + "comments\n");
             System.out.println("=====================================================");
             index++;
         }
     }
-        public void addPost(){
-            System.out.println("enter the content of the post");
-            Post post = new Post();
-           String string = "";
-            System.out.println("Enter strings (Enter '/' to stop):");
-            while (true) {
-                // Read a line of input
-                String input = in.nextLine();
-                // Check if the input is '/'
-                if ("/".equals(input)) {
-                    post.setContent(string);
-                    break;
-                }
-                // Add the input to the list
-                string=string.concat(input);
+    public void addPost(){
+        System.out.println("Enter the content of the post");
+        Post post = new Post();
+        String string = "";
+        System.out.println("Enter strings (Enter '/' to stop):");
+        while (true) {
+            // Read a line of input
+            String input = in.nextLine();
+            // Check if the input is '/'
+            if ("/".equals(input)) {
+                post.setContent(string);
+                break;
             }
-            post.setAuthor(user);
-            System.out.println("do you want to tag a friend ? y or n");
-            char choice = in.next().charAt(0);
-            if (choice=='y'||choice=='Y' ){
-                post.addTaggedUser(post);
-            }
-            System.out.println("want to set privacy ? y or n");
-            char ch = in.next().charAt(0);
-            if (ch=='y'||ch=='Y' ){post.setPostPrivacy(post);}
-            System.out.println("post added");
-            user.addApost(post);
-            viewUserFeed();
+            // Add the input to the list
+            string=string.concat(input);
         }
+        post.setAuthor(user);
+        System.out.println("Do you want to tag a friend ? y or n");
+        char choice = in.next().charAt(0);
+        if (choice=='y'||choice=='Y' ){
+            post.addTaggedUser(post);
+        }
+        System.out.println("Do you want to set privacy ? y or n");
+        char ch = in.next().charAt(0);
+        if (ch=='y'||ch=='Y' ){post.setPostPrivacy(post);}
+        System.out.println("Post added successfully");
+        user.addApost(post);
+        viewUserFeed();
+    }
     ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
     public void SearchForUser() {
         System.out.println("Enter username: ");
@@ -234,10 +239,6 @@ public class Feed {
                 System.out.println("Error closing reader: " + e.getMessage());
             }
         }
-        if ((relation.indexOf("&") == -1 && relation.indexOf("+") == -1) || relation.indexOf("&") == 0 || relation.indexOf("+") == 0) {
-            System.out.println("Please Enter a valid relation!");
-            See_Friendship();
-        }
         int index_of_and = relation.indexOf("&"), index_of_plus = relation.indexOf("+");
         int index_of_split = 0;
         if (index_of_and != -1) index_of_split = index_of_and;
@@ -254,6 +255,8 @@ public class Feed {
                 continue;
             second_user += relation.charAt(i);
         }
+/*        User First_User = null;
+        User Second_User = null;*/
         User First_User = GetUserData(first_user);
         User Second_User = GetUserData(second_user);
         if (First_User == null || Second_User == null){
@@ -271,7 +274,6 @@ public class Feed {
         System.out.println("The User\'s Gender is: " + friend.getGender());
         System.out.println("The User\'s Birth Date is: " + friend.getBirthdate());
         System.out.println("The User\'s Phone Number is: " + friend.getPhoneNumber());
-        //Display posts & friends
     }
     public void Searched_User_Menu (User Searched_User){
         System.out.println("1. View Profile");
@@ -312,7 +314,7 @@ public class Feed {
         viewUserFeed();
     }
     public void friendsofme(){
-        System.out.println("1.enter any of a friend account\n2.back to feed");
+        System.out.println("1.Enter any of a friend account\n2.Back to feed");
         Boolean validate=new Boolean(false);
 
         int choice = 0;
@@ -516,7 +518,7 @@ public class Feed {
 
     public boolean Check_Friendship(User Friend) {
         if(user.Friends.contains(Friend))
-                return true;
+            return true;
         return false;
     }
     //=============================================don't touch=======================================================================
@@ -588,7 +590,6 @@ public class Feed {
     public void evaluatePosts () {
         for (User userd : user.getFriends()) {
             FriendShip f = FriendShip.getFriendship(user, userd);
-            //need to edit
             if (!f.see_role(userd)) {
                 continue;
             } else {

@@ -22,15 +22,12 @@ class FriendShip {
     private String Friendship_status;
     private int Friend1_Role, Friend2_Role;
 
-    public Pair getFriends_Roles() {
-        return Friends_Roles;
-    }
 
     public Timestamp getFriendsSince() {
         return FriendsSince;
     }
 
-    private Pair Friends_Roles = new Pair(Friend1_Role, Friend2_Role);
+    //private Pair Friends_Roles = new Pair(Friend1_Role, Friend2_Role);
     ArrayList<Post> Mutual_Posts = new ArrayList<>();
     Timestamp FriendsSince;
 
@@ -39,6 +36,20 @@ class FriendShip {
         this.User1 = User1;
         this.User2 = User2;
         Friendship_status = "Pending";
+    }
+
+    public FriendShip(User User1, User User2, int Friend1_Role, int Friend2_Role, String Friendship_status,  Timestamp FriendsSince) {
+        this.User1 = User1;
+        this.User2 = User2;
+        this.Friend1_Role = Friend1_Role;
+        this.Friend2_Role = Friend2_Role;
+        this.Friendship_status = Friendship_status;
+        this.FriendsSince = FriendsSince;
+        if (Friendship_status.equals("Accepted"))
+        {
+            this.User1.addFriend(this.User2);
+            this.User2.addFriend(this.User1);
+        }
     }
     ////////////////////////////////////////////////////METHODS//////////////////////////////////////////////////////
 
@@ -106,16 +117,18 @@ class FriendShip {
             return true;
         return false;
     }
-    public void acceptFriendRequest() {
+    public void acceptFriendRequest(User Sender) {
         Friendship_status = "Accepted";
-        System.out.println("You accepted friend request from " + User2.getUserName() +" \nNow you are Friends" );
+        System.out.println("You accepted friend request from " + Sender.getUserName() +" \nNow you are Friends" );
         User1.addFriend(User2);
         User2.addFriend(User1);
+        FriendShip f = new FriendShip(User1, User2);
+        Main.Friendships.add(f);
     }
 
-    public void declineFriendRequest() {
+    public void declineFriendRequest(User Sender) {
         Friendship_status = "Declined";
-        System.out.println("You declined friend request from " + User2.getUserName());
+        System.out.println("You declined friend request from " + Sender.getUserName());
     }
     public void addMutualPost(Post post){
         Mutual_Posts.add(post);

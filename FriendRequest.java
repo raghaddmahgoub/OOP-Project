@@ -17,9 +17,10 @@ public class FriendRequest extends Notification {
 
     public void expand_friendrequest() {
         getTimeStamp();
-        System.out.println(sender.getUserName() + "sends you friend request");
+        System.out.println(sender.getUserName() + " sent you a friend request");
 
-        System.out.println("1.accept \n 2.reject\n");
+        System.out.println("1.Accept");
+        System.out.println("2.Reject");
         Scanner in = new Scanner(System.in);
         int choice = 0;
         Boolean validate=new Boolean(false);
@@ -36,10 +37,10 @@ public class FriendRequest extends Notification {
         }
         switch (choice) {
             case 1:
-                relation.acceptFriendRequest();
+                relation.acceptFriendRequest(sender);
                 break;
             case 2:
-                relation.declineFriendRequest();
+                relation.declineFriendRequest(sender);
                 break;
             default:
                 System.out.println("invalid choice");
