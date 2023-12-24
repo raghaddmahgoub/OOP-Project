@@ -6,12 +6,23 @@ import java.time.LocalDateTime;
 
 public class Messenger {
     Scanner in=new Scanner(System.in);
-    private static int MessengerID;
+    private static int MessengerID=0;
+
+    public int getMessengerid() {
+        return Messengerid;
+    }
+
+    public List<Integer> getNoUnreadConversations() {
+        return noUnreadConversations;
+    }
+
+    private int Messengerid;
     private List<Conversation> conversations;
     private List<Integer> noUnreadConversations;
     User user;
     public Messenger(User user) {
         MessengerID++;
+        Messengerid=MessengerID;
         this.user=user;
         this.conversations = new ArrayList<>();
     }

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class Notification {
     ////////////////////////////////////////////**ATTRIBUTES**//////////////////////////////////////
-    protected static int notificationID;
+    protected static int notificationID=0;
     protected String Content;
+
     protected Timestamp TimeStamp;
     protected boolean Recipient;
     //    Status

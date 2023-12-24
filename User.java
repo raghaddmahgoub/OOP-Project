@@ -11,7 +11,7 @@ public class User
         MALE, FEMALE, NONE
     }
     private static int Number_Of_Users=0;
-    private static int User_ID;
+    private int User_ID;
     private String User_Name;
     private String Name;
     private String Email;
@@ -39,7 +39,8 @@ public class User
         Friends.add(New_Friend_User);
     }
     public User(String User_Name, String Password, String Email){
-        User_ID++;
+        User_ID=Number_Of_Users;
+        Number_Of_Users++;
         this.User_Name = User_Name;
         this.Password = Password;
         this.Email = Email;

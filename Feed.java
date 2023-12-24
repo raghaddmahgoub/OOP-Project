@@ -68,6 +68,7 @@ public class Feed {
                     user.getMessenger().MessengerFeed();
                     break;
                 case 9 :
+                    Data.writeData();
                     UserInterface.ProgramStart();
                     break;
 
