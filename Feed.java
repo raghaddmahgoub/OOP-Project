@@ -27,13 +27,16 @@ public class Feed {
         System.out.println("8- See Friendship between two users");
         System.out.println("9- Go to messenger");
         System.out.println("10- Sign Out");
+        Scanner in = new Scanner(System.in);
         Boolean validate=new Boolean(false);
         int choice = 0;
         while(!validate) {
             try {
-                choice=in.nextInt();
+                if(in.hasNextInt())
+                    choice=in.nextInt();
+                else choice = 10;
                 validate=true;
-            } catch (InputMismatchException e) {
+            } catch (Exception e) {
                 System.out.println("invaild choice try again");
                 System.out.print("Enter a choice :");
                 in.nextLine();
@@ -73,7 +76,7 @@ public class Feed {
                 user.getMessenger().MessengerFeed();
                 break;
             case 10 :
-                Data.writeData();
+                //Data.writeData();
                 UserInterface.ProgramStart();
                 break;
 
@@ -226,19 +229,7 @@ public class Feed {
     }
 
     public void See_Friendship(){
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String relation = new String();
-        try {
-            relation = reader.readLine(); // Read a line of text from the console
-        } catch (IOException e) {
-            System.out.println("Error reading input: " + e.getMessage());
-        } finally {
-            try {
-                reader.close(); // Always close the BufferedReader when done
-            } catch (IOException e) {
-                System.out.println("Error closing reader: " + e.getMessage());
-            }
-        }
+        String relation = in.nextLine();
         int index_of_and = relation.indexOf("&"), index_of_plus = relation.indexOf("+");
         int index_of_split = 0;
         if (index_of_and != -1) index_of_split = index_of_and;
@@ -255,8 +246,6 @@ public class Feed {
                 continue;
             second_user += relation.charAt(i);
         }
-/*        User First_User = null;
-        User Second_User = null;*/
         User First_User = GetUserData(first_user);
         User Second_User = GetUserData(second_user);
         if (First_User == null || Second_User == null){
