@@ -8,11 +8,28 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 class FriendShip {
+    public User getUser1() {
+        return User1;
+    }
+
+    public User getUser2() {
+        return User2;
+    }
+
     ////////////////////////////////////////////ATTRIBUTES//////////////////////////////////////////////
     private User User1, User2;
     //    private Pair User_IDs = new Pair(User1.getUserID(),User2.getUserID());
     private String Friendship_status;
     private int Friend1_Role, Friend2_Role;
+
+    public Pair getFriends_Roles() {
+        return Friends_Roles;
+    }
+
+    public Timestamp getFriendsSince() {
+        return FriendsSince;
+    }
+
     private Pair Friends_Roles = new Pair(Friend1_Role, Friend2_Role);
     ArrayList<Post> Mutual_Posts = new ArrayList<>();
     Timestamp FriendsSince;
