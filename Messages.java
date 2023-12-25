@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Messages extends Text{
+
     private static int MesID=0;
     private  int M_ID;
     private ArrayList<Reply> MessageReplies = new ArrayList<>();
     private int Sender_ID;
+
     private String Status;
     public LocalDateTime Timestamp;
     Scanner in = new Scanner(System.in);
@@ -27,10 +29,12 @@ public class Messages extends Text{
         Status = "Unread";
         Timestamp = getTime();
         Sender_ID = sender_ID;
+
         this.content = content;
     }
     public void addreplay(Reply reply){
         MessageReplies.add(reply);
+
     }
     //Methods
     public void EditMessage(String content) {
@@ -77,3 +81,4 @@ public class Messages extends Text{
         return M_ID;
     }
 }
+

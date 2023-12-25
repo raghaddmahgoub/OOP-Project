@@ -4,14 +4,15 @@ import java.util.*;
 import javax.sound.midi.Soundbank;
 import java.time.LocalDateTime;
 
-public class User
-{
+public class User {
     //////////////////////////////////////////////////////////////////attributes/////////////////////////////////////
     public enum GenderOptions {
         MALE, FEMALE, NONE
     }
-    private static int Number_Of_Users=0;
+
+    private static int Number_Of_Users = 0;
     private int User_ID;
+    private static int newID = 1;
     private String User_Name;
     private String Name;
     private String Email;
@@ -38,12 +39,13 @@ public class User
     private ArrayList<Post> Posts = new ArrayList<Post>();
     private Messenger messenger;
 
-////////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
+//////////////////////////////////////////////////////////constructors////////////////////////////////////////////////
 
-    public User(String User_Name, String Password){
+        public User(String User_Name, String Password){
         this.User_Name = User_Name;
         this.Password = Password;
-
+        this.User_ID = newID;
+            newID++;
     }
     public void AddFriend(User New_Friend_User) {
         Friends.add(New_Friend_User);
@@ -54,6 +56,8 @@ public class User
         this.User_Name = User_Name;
         this.Password = Password;
         this.Email = Email;
+        this.User_ID = newID;
+        newID++;
     }
     ////////////////////////////////////////////////////////////methods//////////////////////////////////////////////////////////////
     public ArrayList<Postnotification> getPostNotifications() {

@@ -36,7 +36,6 @@ public abstract class Text {
     public void setContent(String content) {
         this.content = content;
     }
-    public String getContent(){return content;}
     public void displayContent() {
         System.out.println(content);
     }
@@ -53,4 +52,13 @@ public abstract class Text {
     public abstract void addReact();
 
     public abstract int getReacts();
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
 }
