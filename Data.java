@@ -280,13 +280,15 @@ public class Data {
                 post.setAuthor(user);
                 post.setPostId( jsonObject.getInt("Post ID"));
                 post.setContent(jsonObject.getString("content"));
-
                 post.setCntReacts( jsonObject.getInt("Number of reacts"));
                 post.setNumberOfComments( jsonObject.getInt("Number of comments"));
-                for (Object obj:jsonObject.getJSONArray("tagged users")) {
+                JSONArray r=jsonObject.getJSONArray("tagged users");
+/*                if(!r.isEmpty()){
+                    for (Object obj:r) {
                     String str = (String) obj;
                     post.addtaggedUsers(Feed.GetUserData(str));
-                }
+                    }
+                }*/
                 user.addApost(post);
             }
         } catch (Exception e) {

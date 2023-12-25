@@ -18,14 +18,14 @@ public class Postnotification extends Notification{
         System.out.println(friend.getUserName()+" tagged u in a post");
         System.out.println("open notification ? y or n");
        if (in.next().equals('y')||in.next().equals('Y'))
-           friend.getPost(post.getId()).Expandpost(friend);
+           friend.getPost(post.getId()).Expandpost(friend,post);
     }
     public void commenting(){
         System.out.println(getTimeStamp());
         System.out.println(friend.getUserName()+" commented  on your post");
         System.out.println("open notification ? y or n");
         if (in.next().equals('y')||in.next().equals('Y')) {
-            post.Expandpost(friend);
+            post.Expandpost(friend,post);
         }
     }
     public void replying(){
@@ -33,7 +33,7 @@ public class Postnotification extends Notification{
         System.out.println(friend.getUserName()+" replied  on your comment");
         System.out.println("open notification ? y or n");
         if (in.next().equals('y')||in.next().equals('Y')) {
-            post.Expandpost(friend);
+            post.Expandpost(friend,post);
         }
     }
     public void liking(){
@@ -41,7 +41,7 @@ public class Postnotification extends Notification{
         System.out.println(friend.getUserName()+" liked on sth u did");
         System.out.println("open notification ? y or n");
         if (in.next().equals('y')||in.next().equals('Y')) {
-            post.Expandpost(friend);
+            post.Expandpost(friend,post);
         }
     }
 }

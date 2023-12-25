@@ -20,6 +20,16 @@ public class User
     private Date Birthdate;
     private Long PhoneNumber;
     private String userPrivacy;
+    ArrayList<Conversation> Conversations = new ArrayList<>();
+
+    public ArrayList<Conversation> getConversations() {
+        return Conversations;
+    }
+
+    public void setConversations(Conversation con) {
+        Conversations.add(con);
+    }
+
     ArrayList <User> Friends = new ArrayList <User>();
     ArrayList<FriendShip> relations = new ArrayList<FriendShip>();
     private ArrayList <FriendRequest> friendRequests = new ArrayList <FriendRequest>();
@@ -146,7 +156,6 @@ public class User
     public Messenger getMessenger() {
         return messenger;
     }
-
     public void setMessenger(User user) {
         this.messenger = new Messenger(user);
     }

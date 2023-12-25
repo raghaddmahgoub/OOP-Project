@@ -76,7 +76,7 @@ public class Feed {
                 user.getMessenger().MessengerFeed();
                 break;
             case 10 :
-                Data.writeData();
+                //Data.writeData();
                 UserInterface.ProgramStart();
                 break;
 
@@ -208,6 +208,7 @@ public class Feed {
         if (ch=='y'||ch=='Y' ){post.setPostPrivacy(post);}
         System.out.println("Post added successfully");
         user.addApost(post);
+
         viewUserFeed();
     }
     ////////////////////////////////////////////////////////////FRIENDSHIP///////////////////////////////////////////////////////////////////
@@ -252,10 +253,11 @@ public class Feed {
         if (First_User == null || Second_User == null){
             System.out.println("One/Two of the usernames you entered was/were not found. PLease try again :( ");
             See_Friendship();
-        }
+        }else{
         if (index_of_split == index_of_and)
             Get_Mutual_Posts(First_User, Second_User);
         else Get_Mutual_Friends(First_User, Second_User);
+        }
     }
     public void ViewProfile(User friend){
         //Display all user data:
@@ -469,7 +471,7 @@ public class Feed {
         boolean IsTherePosts= new Boolean(false);
         if (A_Friendship != null) {
             for (Post post : A_Friendship.getMutual_Posts()) {
-                post.Expandpost(First_User);
+                post.Expandpost(First_User,post);
                 IsTherePosts = true;
             }
             if (!IsTherePosts)
@@ -532,7 +534,7 @@ public class Feed {
         }
     }
     public void ViewFeed () {
-        //evaluatePosts();
+        evaluatePosts();
         int counter = 0;
         Boolean checker = new Boolean(true);
         if (FeedPosts.isEmpty()){
@@ -549,13 +551,13 @@ public class Feed {
 
             switch (choice) {
                 case 1:
-                    FeedPosts.get(counter).Expandpost(user);
+                    FeedPosts.get(counter).Expandpost(user,FeedPosts.get(counter));
                     break;
                 case 2:
-                    FeedPosts.get(counter + 1).Expandpost(user);
+                    FeedPosts.get(counter + 1).Expandpost(user,FeedPosts.get(counter));
                     break;
                 case 3:
-                    FeedPosts.get(counter + 2).Expandpost(user);
+                    FeedPosts.get(counter + 2).Expandpost(user,FeedPosts.get(counter));
                     break;
                 case 4:
                     counter += 3;

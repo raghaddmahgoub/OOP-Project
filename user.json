@@ -7,7 +7,7 @@
         "phone number": 637482423,
         "email": "haneen@gmail.com",
         "birth date": "2000-02-02",
-        "username": "hanrrnakram"
+        "username": "haneenakram"
     },
     {
         "User ID": 0,
@@ -17,7 +17,7 @@
         "phone number": 123456789,
         "email": "gjjikh@hgyhij",
         "birth date": "2000-08-06",
-        "username": "12345678"
+        "username": "menna"
     },
     {
         "User ID": 0,
@@ -32,11 +32,21 @@
     {
         "User ID": 0,
         "password": "123456789",
-        "gender": "FEMALE",
+        "gender": "MALE",
         "name": "renad",
         "phone number": 1210590271,
         "email": "renad@gmail.com",
         "birth date": "2003-12-25",
         "username": "Renaaaad"
+    },
+    {
+        "User ID": 0,
+        "password": "12345678",
+        "gender": "MALE",
+        "name": "hasnaa",
+        "phone number": 2193322,
+        "email": "njdndsjds@fekfecd.com",
+        "birth date": "2000-02-02",
+        "username": "hasnaaehab"
     }
 ]

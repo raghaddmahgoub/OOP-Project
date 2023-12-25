@@ -48,7 +48,6 @@ public class Post extends Text {
     public String getPrivacy() {
         return privacy;
     }
-
     @Override
     public int getReacts() {
         return cntReacts;
@@ -69,6 +68,7 @@ public class Post extends Text {
     public void addReact() {
         cntReacts++;
     }
+
     public void addtaggedUsers(User user){
         taggedUsers.add(user);
     }
@@ -126,45 +126,45 @@ public class Post extends Text {
         switch (choice){
             case 1: this.privacy ="public"; break;
             case 2: this.privacy ="private"; break;
-            case 3: this.privacy =author.getUserPrivacy(); break;
+            case 3: this.privacy =post.author.getUserPrivacy(); break;
             default:
                 System.out.println("invalid input");
                 setPostPrivacy(post);
         }
     }
 
-    public void addComment(User commenter){
+    public void addComment(User commenter,Post post){
         System.out.println("enter what your want to write in a comment");
         String cont=in.next();
         Comment comment= new Comment(cont);
-        this.comments.add(comment);
+        post.comments.add(comment);
         comment.setAuthor(commenter);
-        Postnotification postnotification=new Postnotification(author.getPost(postId),commenter);
+        Postnotification postnotification=new Postnotification(post,commenter);
         postnotification.setContent("commented");
         commenter.addPostNotifiObject(postnotification);
         System.out.println("your comment added");
         System.out.println("======================================================================================");
-        display_comments(commenter);
+        post.display_comments(commenter,post);
 
     }
-    public void addReply(int commentId,User replier){
+    public void addReply(int commentId,User replier,Post post){
         System.out.println("enter the reply content");
         String content = in.next();
         Reply newReply= new Reply(content);
-        getComment(commentId).addReply(newReply);
+        post.getComment(commentId).addReply(newReply);
         System.out.println("your reply added");
         System.out.println("======================================================================================");
         newReply.setAuthor(replier);;
-        Postnotification postnotification=new Postnotification(author.getPost(postId),replier);
+        Postnotification postnotification=new Postnotification(post,replier);
         postnotification.setContent("replied");
         replier.addPostNotifiObject(postnotification);
     }
     //////////////////////////////////////////**METHODS**////////////////////////////////////////////////
-    public void Expandpost(User friend){
+    public void Expandpost(User friend,Post post){
         System.out.println(getAuthor().getUserName());
         System.out.println("since "+GetPostTimeInHours());
-        displayContent();
-        if (taggedUsers.size()>0){
+        post.displayContent();
+        if (post.taggedUsers.size()>0){
             System.out.println("tagged friends are: ");
             for (User user:getTaggedUsers()) {
                 System.out.println(user.getUserName());
@@ -172,8 +172,8 @@ public class Post extends Text {
         }
         System.out.println("number of reacts: ");
         System.out.println(getReacts());
-        System.out.println("number of comments: "+comments.size());
-        System.out.println("1. like the post\n2. view comments\n3. add comment");
+        System.out.println("number of comments: "+post.comments.size());
+        System.out.println("1. like the post\n2. view comments\n3. add comment\n4. return to feed");
         Boolean validate=new Boolean(false);
         int choice = 0;
         while(!validate) {
@@ -190,53 +190,35 @@ public class Post extends Text {
             case 1:
                 addReact();
                 System.out.println("your like is added");
-                System.out.println("total reacts on this post: "+getReacts());
-                System.out.println("===================================================================================");
-                Postnotification postnotification= new Postnotification(author.getPost(postId) ,friend);
+                System.out.println("total reacts on this post: "+post.getReacts());
+                Postnotification postnotification= new Postnotification(post.author.getPost(postId),friend);
                 postnotification.setContent("liked");
                 friend.addPostNotifiObject(postnotification);
+                post.Expandpost( friend, post);
+                System.out.println("======================================================================================");
                 break;
             case 2:
-                display_comments(friend);
+                post.display_comments(friend,post);
+                post.Expandpost( friend, post);
                 break;
             case 3:
-                addComment(friend);
+                post.addComment(friend,post);
+                Expandpost( friend, post);
                 break;
+            case 4: break;
             default:
                 System.out.println("invalid input");
-                Expandpost(friend);
-        }
-        System.out.println("1. view comments\n2. add comment\n3. return to feed");
-         validate=false;
-         choice = 0;
-        while(!validate) {
-            try {
-                choice=in.nextInt();
-                validate=true;
-            } catch (InputMismatchException e) {
-                System.out.println("invaild choice try again");
-                System.out.print("Enter a choice :");
-                in.nextLine();
-            }
-        }
-        switch (choice) {
-            case 1: display_comments(friend);break;
-            case 2:addComment(friend);break;
-            case 3:break;
-            default:
-                System.out.println("invalid input");
-                Expandpost(friend);
+                post.Expandpost(friend,post);
         }
     }
-    public void display_comments (User friend){
-        //getArray of comments
-        if(getAllComments().size()>0) {
-            for (Comment comment : getAllComments()) {
+    public void display_comments (User friend,Post post){
+        if(post.getAllComments().size()>0) {
+            for (Comment comment : post.getAllComments()) {
                 System.out.println("comment id: " + comment.getId());
                 comment.displayContent();
                 System.out.println("reacts: " + comment.getReacts());
             }
-            System.out.println("1.add comment\n2. like a comment\n3. view replies on a comment\n4.add a reply on a comment");
+            System.out.println("1.add comment\n2. like a comment\n3. view replies on a comment\n4.add a reply on a comment\n5.exit");
             Boolean validate=new Boolean(false);
             int choice = 0;
             while(!validate) {
@@ -251,7 +233,8 @@ public class Post extends Text {
             }
             switch (choice){
                 case 1:
-                    addComment(friend);
+                    post.addComment(friend,post);
+                    display_comments ( friend, post);
                     break;
                 case 2:
                     System.out.println("enter the comment id you want to like");
@@ -271,16 +254,16 @@ public class Post extends Text {
                             break; // Exit the loop if the input is valid
                         }
                     }
-                    getComment(commentId).addReact();
-                    User liker = getComment(commentId).getAuthor();
-                    Postnotification postnotification = new Postnotification(author.getPost(postId), liker);
+                    post.getComment(commentId).addReact();
+                    User liker = post.getComment(commentId).getAuthor();
+                    Postnotification postnotification = new Postnotification(post, liker);
                     postnotification.setContent("liked");
                     author.addPostNotifiObject(postnotification);
                     System.out.println("like added");
                     getComment(commentId).displayContent();
-                    System.out.println("number of likes: " + getComment(commentId).getReacts());
-                    System.out.println("=========================================================================================");
-                    display_comments(friend);
+                    System.out.println("number of likes: " + post.getComment(commentId).getReacts());
+                    System.out.println("======================================================================================");
+                    post.display_comments(friend,post);
                     break;
                 case 3:
                     System.out.println("enter the comment id you would like to view replies on");
@@ -302,10 +285,12 @@ public class Post extends Text {
                             break; // Exit the loop if the input is valid
                         }
                     }
-                    display_replies(enteredCommentId,friend);
+                    post.display_replies(enteredCommentId,friend,post);
+                    System.out.println("======================================================================================");
+                    post.display_comments ( friend, post);
                     break;
                 case 4:
-                    System.out.println("enter the comment id you would like to view replies on");
+                    System.out.println("enter the comment id you would like to add replies to");
                     int commId = 0;
                     while (true) {
                         String input = in.next();
@@ -324,26 +309,28 @@ public class Post extends Text {
                             break; // Exit the loop if the input is valid
                         }
                     }
-                    addReply(commId,friend);
+                    post.addReply(commId,friend,post);
+                    post.display_comments ( friend, post);
                     break;
+                case 5:break;
                 default:
                     System.out.println("invalid input");
-                    display_comments(friend);
+                    post.display_comments(friend,post);
             }
         }
         else
             System.out.println("there is no comments on this post yet");
         }
 
-    public void display_replies (int commentId,User friend){
+    public void display_replies (int commentId,User friend,Post post){
         if (getComment(commentId).getUserReplies().size()>0){
-            for (Reply reply : getComment(commentId).getUserReplies()) {
-                System.out.println(reply.getId());
+            for (Reply reply : post.getComment(commentId).getUserReplies()) {
+                System.out.println("reply id: "+reply.getId());
                 reply.displayContent();
-                System.out.println(reply.getReacts());
+                System.out.println("number of reacts: "+reply.getReacts());
             }
 
-        System.out.println("1. like a reply\n 2. add reply");
+        System.out.println("1. like a reply\n2. add reply\n3. exit");
         Boolean validate=new Boolean(false);
         int choice = 0;
         while(!validate) {
@@ -364,36 +351,37 @@ public class Post extends Text {
                     String input = in.next();
 
                     if (!input.matches("[0-9]+")) {
-                        System.out.println("comment id should contain digits only. Please try again.");
+                        System.out.println("reply id should contain digits only. Please try again.");
 
                     } else {
                         replyId = Integer.parseInt(input);
                         break; // Exit the loop if the input contains only digits
                     }
                     if (!getComment(commentId).getUserReplies().contains(replyId)) {
-                        System.out.println("Invalid comment ID. Please enter a valid comment ID.");
+                        System.out.println("Invalid reply ID. Please enter a valid comment ID.");
                     } else {
                         break; // Exit the loop if the input is valid
                     }
                 }
-                Reply reply = getComment(commentId).getReply(replyId);
+                Reply reply = post.getComment(commentId).getReply(replyId);
                 reply.addReact();
                 System.out.println("like added");
                 System.out.println(reply.getContent());
-                System.out.println(reply.getReacts());
+                System.out.println("number of reacts: "+reply.getReacts());
                 /////////send notifi
                 User liker = reply.getAuthor();
-                Postnotification postnotification = new Postnotification(author.getPost(postId), liker);
+                Postnotification postnotification = new Postnotification(post, liker);
                 postnotification.setContent("liked");
-                author.addPostNotifiObject(postnotification);
+                post.author.addPostNotifiObject(postnotification);
+                post.display_replies ( commentId, friend, post);
                 break;
             case 2:
-                addReply(commentId,friend);
+                post.addReply(commentId,friend,post);
+                post.display_replies ( commentId, friend, post);
                 break;
-//            case 3:
-//                break;
+            case 3: break;
             default:
-                display_replies(commentId,friend);
+                post.display_replies(commentId,friend,post);
         }
         }
          else{

@@ -21,10 +21,10 @@ public class Messenger {
     private List<Integer> noUnreadConversations;
     User user;
     public Messenger(User user) {
-        Messengerid=MessengerID;
         MessengerID++;
+        Messengerid=MessengerID;
         this.user=user;
-        this.conversations = new ArrayList<>();
+        this.conversations =user.getConversations();
     }
     public void addconversations(Conversation con){
         conversations.add(con);
@@ -65,9 +65,6 @@ public class Messenger {
                     if (!input.matches("[0-9]+")) {
                         System.out.println("Number of participants should contain digits only. Please try again.");
 
-                    } else if (!(no<99999999)) {
-                        System.out.println("Number of participants is not valid please Try again :( ");
-
                     } else {
                         no = Long.parseLong(input);
                         break; // Exit the loop if the input contains only digits
@@ -75,25 +72,54 @@ public class Messenger {
                 String username;
                 ArrayList<User>participants=new ArrayList<>();
                 participants.add(user);
+                Boolean check=false;
                 for(int i=1;i<no;i++)
                 {
                     System.out.println("Enter Participant "+i);
                     username=in.next();
                     for (User friend:user.getFriends()) {
-                        if(friend.getUserName().equals(username))
+                        if(friend.getUserName().equals(username)) {
                             participants.add(friend);
+                            check=true;
+                            break;
+                        }
                     }
                 }
+                if(check==false)
+                {
+                    System.out.println("Invalid User");
+                    MessengerFeed();
+                }
                 Conversation conversation=new Conversation(participants);
-                user.getMessenger().NewConversation(conversation);
+                //user.getMessenger().NewConversation(conversation);
+//
                 conversation.displayMessages(conversation);
+                for (User participant: conversation.getParticipants()) {
+                participant.setConversations(conversation);
+               }
                 Options(conversation);
+                for (User participant: conversation.getParticipants()) {
+                    participant.getMessenger().conversations.add(conversation);
+                }
                 break;
             case 2:
                 displayConversations();
                 System.out.println("Enter ID:");
-                int ID=in.nextInt();
-                Conversation conv=findConversation(ID);
+                int id;
+                Long No=new Long(0);
+                while (true) {
+                    System.out.println("Please enter conv ID (digits only): ");
+                    String input = in.next();
+
+                    if (!input.matches("[0-9]+")) {
+                        System.out.println("conv ID should contain digits only. Please try again.");
+
+                    } else {
+                        No = Long.parseLong(input);
+                        id=No.intValue();
+                        break; // Exit the loop if the input contains only digits
+                    }}
+                Conversation conv=findConversation(id);
                 if(conv !=null) {
                     conv.displayMessages(conv);
                     //conv.markAsRead();

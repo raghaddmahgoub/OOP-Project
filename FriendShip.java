@@ -30,6 +30,15 @@ class FriendShip {
     //private Pair Friends_Roles = new Pair(Friend1_Role, Friend2_Role);
     ArrayList<Post> Mutual_Posts = new ArrayList<>();
     Timestamp FriendsSince;
+public  ArrayList<Messages> arr  = new ArrayList<Messages>();
+
+    public ArrayList<Messages> getArr() {
+        return arr;
+    }
+
+    public void setArr(Messages MES) {
+        arr.add(MES);
+    }
 
     //////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////
     public FriendShip(User User1, User User2) {
