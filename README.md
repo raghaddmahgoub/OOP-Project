@@ -38,8 +38,8 @@ This project mimics Facebook's backend logic for managing users, posts, friendsh
 ## 📂 File Structure
 
 📁 src
-├── User.java
-├── FriendShip.java
+├── User.java 
+├── FriendShip.java 
 ├── FriendRequest.java
 ├── Post.java
 ├── Comment.java
